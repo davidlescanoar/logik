@@ -28,7 +28,6 @@ coverage==4.5
 crayons==0.3.1
 cycler==0.10.0
 distro-info===0.18ubuntu0.18.04.1
-dj-database-url==0.5.0
 Django==2.1.8
 django-celery==3.3.1
 django-celery-beat==2.0.0
