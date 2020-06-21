@@ -170,7 +170,6 @@ SQLAlchemy==1.1.11
 sqlparse==0.3.1
 sshtunnel==0.1.4
 stevedore==2.0.0
-system-service==0.3
 systemd-python==234
 Tcl==0.2
 testresources==2.0.1
