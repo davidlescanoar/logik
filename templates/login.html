@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}" />
+{% endblock %}
+
+<!--Título-->
+{% block title %} Login {% endblock %}
+
+<!--Contenido-->
+{% block content %}
+<div class="container logik-login">
+  <h1 class="text-center">Iniciar sesión</h1>
+
+  <br />
+
+  <div class="login-form-logik container">
+    <form method="POST">
+      <div class="form-group">
+        {{ form.as_p }}
+        {% csrf_token %}
+      </div>
+
+      <div class="container text-center">
+        <button class="btn btn-dark" type="submit">Login</button>
+      </div>
+    </form>
+  </div>
+
+  <hr />
+  <a href="/register">Registrar usuario</a>
+</div>
+{% endblock %}

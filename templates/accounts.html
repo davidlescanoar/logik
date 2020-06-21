@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/accounts.css' %}" />
+{% endblock %}
+
+<!--Título-->
+{% block title %} Cuentas {% endblock %}
+
+<!--Contenido-->
+{% block content %}
+<div class="accounts-form">
+    <div class="container">
+        {% if validar %}
+        <!--Para mostrar automaticamente el modal-->
+        <script>
+            $(document).ready(function(){
+                $("#staticBackdrop").modal('show');
+            });
+        </script>
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Verificar tu cuenta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                A continuación te indicamos qué debés hacer para validar los usuarios que completaste en el formulario.
+                <br/>
+                IMPORTANTE: Tenés solo 5 minutos para hacer lo pedido más abajo.
+                <br/>
+                Por favor, realizá lo indicado para cada uno de los jueces online que hayas completado.
+                <ul>
+                    <li>Si ingresaste tu usuario de Codeforces tenés que enviar un error de compilación al problema: <a href="https://codeforces.com/problemset/problem/38/A">https://codeforces.com/problemset/problem/38/A</a></li>
+                    <li>Si ingresaste tu usuario de OIAJ tenés que enviar un error de compilación al problema: <a href="http://juez.oia.unsam.edu.ar/#/task/es_bisiesto/statement">http://juez.oia.unsam.edu.ar/#/task/es_bisiesto/statement</a></li>
+                </ul>
+                Atención: Sólo se podrá validar la cuenta si ambos sitios funcionan correctamente y si podés validarlo. Tus datos se actualizarán automáticamente habiendo pasado el tiempo que se indicó arriba.
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <h1 class="text-center">Cuentas de jueces online</h1>
+
+            <br/>
+
+            <div class="form-group">
+                <label for="CF_Handle">Codeforces Handle</label>
+                <input type="text" class="form-control" name="CF_Handle" value="{{cuenta.CF_Handle}}">
+            </div>
+        
+            <br/>
+
+            <div class="form-group">
+                <label for="OIAJ_Handle">OIAJ Handle</label>
+                <input type="text" class="form-control" name="OIAJ_Handle" value="{{cuenta.OIAJ_Handle}}">
+            </div>
+
+            <br/>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-danger">Guardar cambios</button>
+                <a href="/accounts"><button type="button" class="btn btn-secondary">Borrar</button></a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

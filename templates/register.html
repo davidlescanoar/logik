@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/register.css' %}" />
+{% endblock %}
+
+<!--Título-->
+{% block title %} Registro {% endblock %}
+
+<!--Contenido-->
+{% block content %}
+<div class="container register-logic">
+  <h1 class="text-center">Registrar usuario</h1>
+
+  <br />
+
+  <div class="container registro-form-logic">
+    <form method="POST">
+      <div class="row">
+        <div class="centrar">
+          {{ form.as_p }}
+          {% csrf_token %}
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button class="btn btn-dark" type="submit">Registrar</button>
+      </div>
+    </form>
+  </div>
+
+  <hr />
+
+  <a href="/login">Iniciar sesión</a>
+</div>
+{% endblock %}

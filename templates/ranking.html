@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/ranking.css' %}" />
+{% endblock %}
+
+<!--Título-->
+{% block title %} Ranking {% endblock %}
+
+<!--Contenido-->
+{% block content %}
+<div class="container ranking">
+    <div class="titulo">
+        <br />
+        <h2 class="text-center">Ranking de resolución de problemas</h2>
+        <br />
+        <table class="table table-dark">
+            <thead class="text-center">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Usuario</th>
+                    <th scope="col">Puntaje</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i,j in ranking %}
+                <tr class="text-center">
+                    <th scope="row">{{forloop.counter}}</th>
+
+                    <td>{{i}}</td>
+                    <td>{{j}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
