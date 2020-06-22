@@ -74,6 +74,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'logik.wsgi.application'
 
+#Only in local
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
