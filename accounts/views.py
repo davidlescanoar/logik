@@ -5,15 +5,10 @@ from logik.tasks import validarCuentaCodeforces, validarCuentaOIAJ
 import datetime 
 from datetime import timedelta
 
-#Variables globales
-validar=0
-
 # Create your views here.
 def accounts(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-
-    global validar
 
     if request.method=='POST':
         CF_Handle_Input=request.POST['CF_Handle']
@@ -27,17 +22,20 @@ def accounts(request):
         validarCuentaCodeforces.apply_async((CF_Handle_Input, request.user.id, request.user.username, fechaNow), countdown=360)
         validarCuentaOIAJ.apply_async((OIAJ_Handle_Input, request.user.id, request.user.username, fechaNow), countdown=361)
 
-        validar=1
+        request.session['validar']=1
 
         return redirect("/accounts")
 
     cuenta=Account.objects.filter(AccountID=request.user.id)
 
-    validarCpy=validar
-
     validar=0
 
-    if cuenta:
-        return render(request, "accounts.html", {'cuenta': cuenta[0], 'validar':validarCpy}) 
+    if 'validar' in request.session and  request.session.get('validar', 1):
+        validar=1
 
-    return render(request, "accounts.html", {'validar':validarCpy})
+    request.session['validar']=0
+
+    if cuenta:
+        return render(request, "accounts.html", {'cuenta': cuenta[0], 'validar':validar}) 
+
+    return render(request, "accounts.html", {'validar':validar})
