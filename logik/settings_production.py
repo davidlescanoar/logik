@@ -14,4 +14,4 @@ DATABASES = {
 }
 
 # url del broker al que se conectará celery.
-CELERY_BROKER_URL=os.environ.get("REDISCLOUD_URL", "django://")
+CELERY_BROKER_URL=os.environ.get("REDIS_URL", "django://")
