@@ -26,7 +26,7 @@ SECRET_KEY = 's=)z(^huf(6u!#w=j)(z1plte+#+ud=xr@p($l$4c1j%2_3ib@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['logik-web-app.herokuapp.com']
 
 # Application definition
 
