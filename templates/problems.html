@@ -23,9 +23,8 @@
         <thead class="text-center">
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Nombre del problema</th>
+                <th scope="col">Problema</th>
                 <th scope="col">Puntos por resolverlo</th>
-                <th scope="col">Link del problema</th>
             </tr>
         </thead>
         <tbody>
@@ -33,9 +32,8 @@
             <tr class="text-center">
                 <th scope="row">{{forloop.counter}}</th>
 
-                <td>{{i.0}}</td>
+                <td><a href="{{i.2}}">{{i.0}}</a></td>
                 <td>{{i.1}}</td>
-                <td><a href="{{i.2}}">{{i.2}}</a></td>
             </tr>
             {% endfor %}
         </tbody>
