@@ -1,3 +1,4 @@
+import os
 import dj_database_url
 from decouple import config
 
@@ -11,3 +12,6 @@ DATABASES = {
         default=config('DATABASE_URL')
     )
 }
+
+# url del broker al que se conectará celery.
+CELERY_BROKER_URL=os.environ.get("REDISCLOUD_URL", "django://")
