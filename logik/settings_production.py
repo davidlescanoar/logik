@@ -15,3 +15,4 @@ DATABASES = {
 
 # url del broker al que se conectará celery.
 CELERY_BROKER_URL=os.environ.get("REDIS_URL")
+BROKER_URL=os.environ.get("REDIS_URL")
