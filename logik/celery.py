@@ -4,7 +4,7 @@ from celery import Celery
 from django.conf import settings
 
 # Establecer las opciones de django para la aplicación de celery.
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'logik.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'logik.settings.local')
 
 # Crear la aplicación de Celery
 app = Celery('logik')
