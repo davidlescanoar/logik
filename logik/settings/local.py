@@ -10,6 +10,7 @@ ALLOWED_HOSTS = []
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -19,4 +20,11 @@ DATABASES = {
         'HOST': 'localhost',
         'DATABASE_PORT': '5432',
     }
+}
+"""
+
+DATABASES = {
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
 }
