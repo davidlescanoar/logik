@@ -129,7 +129,8 @@ STATICFILES_DIRS = (
 )
 
 # url del broker al que se conectará celery.
-CELERY_BROKER_URL='redis://localhost:6379/0'
+#CELERY_BROKER_URL='redis://localhost:6379/0'
+CELERY_BROKER_URL=os.environ.get("REDIS_URL")
 
 #Whitenoise
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
