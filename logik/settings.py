@@ -12,21 +12,21 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import django_heroku
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 's=)z(^huf(6u!#w=j)(z1plte+#+ud=xr@p($l$4c1j%2_3ib@'
+SECRET_KEY = config('SECRET_KEY', default='Secret Key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = config('DJANGO_DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = ['logik-web-app.herokuapp.com']
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -73,6 +73,17 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'logik.wsgi.application'
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'logik',
+        'USER': 'postgres_logik',
+        'PASSWORD': 'oia2020',
+        'HOST': 'localhost',
+        'DATABASE_PORT': '5432',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -142,3 +153,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.messages.context_processors.messages",
     'django.core.context_processors.request',
 )
+
+if config('DJANGO_PRODUCTION', default=False, cast=bool):
+    from .settings_production import *
