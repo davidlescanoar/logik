@@ -19,6 +19,8 @@ from users.views import welcome, login, logout, register
 from accounts.views import accounts
 from problems.views import problems
 from ranking.views import ranking
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,4 +31,4 @@ urlpatterns = [
     path('accounts/', accounts),
     path('problems/', problems),
     path('ranking/', ranking),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
