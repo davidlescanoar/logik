@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from users.views import welcome, login, logout, register, usersBulkInsert
+from users.views import welcome, login, logout, register
 from accounts.views import accounts
 from problems.views import problems
 from ranking.views import ranking
@@ -31,5 +31,4 @@ urlpatterns = [
     path('accounts/', accounts),
     path('problems/', problems),
     path('ranking/', ranking),
-    path('usersBulkInsert/', usersBulkInsert),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
