@@ -24,7 +24,7 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Problema</th>
-                <th scope="col">Puntos por resolverlo</th>
+                <th scope="col">Puntos</th>
             </tr>
         </thead>
         <tbody>
@@ -33,7 +33,7 @@
                 <th scope="row">{{forloop.counter}}</th>
 
                 <td><a href="{{i.2}}">{{i.0}}</a></td>
-                <td>{{i.1}}</td>
+                <td class="display-puntaje {{i.4}}">{{i.3}}/{{i.1}}</td>
             </tr>
             {% endfor %}
         </tbody>

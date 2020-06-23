@@ -30,3 +30,25 @@
 
     font-weight: bold;
 }
+
+.fila-roja
+{
+    background-color: #FF5D1C !important;
+}
+
+.fila-verde
+{
+    background-color: #81FF5E !important;
+}
+
+.fila-amarilla
+{
+    background-color: #F8FF22 !important;
+}
+
+.display-puntaje
+{
+    color: black;
+
+    border-radius: 20px;
+}
