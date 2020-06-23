@@ -6,13 +6,14 @@ html, body
     margin: 0;
     padding: 0;
 
-    background: rgb(10,10,10);
-    background: linear-gradient(118deg, rgba(10,10,10,1) 26%, rgba(25,26,37,1) 100%);
+    background-color: rgba(25,26,37,1);
 }
 
 .navbar
 {
     font-family: 'Poppins', sans-serif;
+
+    background-color: rgba(25,26,37,1);
 }
 
 .navbar li>a

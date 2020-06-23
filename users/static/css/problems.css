@@ -14,3 +14,19 @@
 {
     background-color: #2E3038;
 }
+
+.problems td>a
+{
+    color: white;
+
+    transition: .3s;
+
+    text-decoration: none;
+}
+
+.problems td>a:hover
+{
+    color: #FF3030;
+
+    font-weight: bold;
+}
