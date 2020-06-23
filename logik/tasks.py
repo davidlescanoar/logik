@@ -174,7 +174,7 @@ def submissions_codeforces(user_handle):
 
     #Intentamos hacer la query
     try:
-        response = requests.request("GET", url, headers={}, data = {}, timeout=3)
+        response = requests.request("GET", url, headers={}, data = {}, timeout=1)
 
         #Se devuelve el JSON
         if response:
