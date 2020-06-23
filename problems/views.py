@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import json
 from problems.models import Problems
@@ -19,6 +19,10 @@ def asignarColor(puntaje):
     return "fila-amarilla"
 
 def problems(request):
+    #Si no está autenticado, no puede entrar
+    if not request.user.is_authenticated:
+        return redirect('/login')
+
     problemas=Problems.objects.all()
 
     listaProblemas=[]
@@ -28,7 +32,5 @@ def problems(request):
         color=asignarColor(puntaje)
 
         listaProblemas.append((i.problem_name, i.problem_points, i.problem_link, puntaje, color))
-
-
 
     return render(request, 'problems.html', {'problemas':listaProblemas})

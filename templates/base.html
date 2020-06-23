@@ -53,18 +53,21 @@
               <a class="nav-link" href="/accounts">Cuentas conectadas</a>
             </li>
             <li class="nav-item ml-auto navbar-usuario_logeado align-self-center">
-              <span class="nav-link">
-                ¡Hola 
+              <span class="nav-link"> 
                 {% if request.user.first_name %}
-                  {{request.user.first_name}}!
-                {% else %}
-                  {{request.user.username}}!
+                  ¡Hola {{request.user.first_name}}!
+                {% elif request.user.username %}
+                  ¡Hola {{request.user.username}}!
                 {% endif %}
               </span>
             </li>
             <li class="nav-item ml-auto navbar-usuario_logout align-self-center">
               <a class="nav-link" href="/logout">
-                <span>Logout</span>
+                {% if request.user.first_name %}
+                  <span>Logout</span>
+                {% elif request.user.username %}
+                  <span>Logout</span>
+                {% endif %}
               </a>
             </li>
           </ul>
