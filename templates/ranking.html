@@ -25,12 +25,12 @@
                 </tr>
             </thead>
             <tbody>
-                {% for i,j in ranking %}
+                {% for i,j,k in ranking %}
                 <tr class="text-center">
-                    <th scope="row">{{forloop.counter}}</th>
+                    <th scope="row">{{i}}</th>
 
-                    <td>{{i}}</td>
                     <td>{{j}}</td>
+                    <td>{{k}}</td>
                 </tr>
                 {% endfor %}
             </tbody>

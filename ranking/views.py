@@ -31,6 +31,24 @@ def ranking(request):
             data[_USER]+=_PUNTAJE
 
     #Ordeno por puntaje, esto es lo que se muestra en pantalla
-    ranking=sorted(data.items(), key=lambda item: item[1], reverse=True)
+    ordenar=sorted(data.items(), key=lambda item: item[1], reverse=True)
+
+    #Ranking final
+    ranking=[]
+
+    #Enteros que determinan el puesto de los usuarios
+    ultimoPuntaje=-1
+    puestoActual=1
+    puesto=1
+
+    #Armo el vector con los resultados
+    for i in ordenar:
+        if i[1]!=ultimoPuntaje:
+            ultimoPuntaje=i[1]
+            puestoActual=puesto
+
+        ranking.append([puestoActual, i[0], i[1]])
+
+        puesto+=1
 
     return render(request, 'ranking.html', {'ranking':ranking})
