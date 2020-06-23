@@ -177,7 +177,8 @@ def submissions_codeforces(user_handle):
         response = requests.request("GET", url, headers={}, data = {}, timeout=3)
 
         #Se devuelve el JSON
-        return response.json()
+        if response:
+            return response.json()
     except requests.exceptions.Timeout as err: 
         return "ERROR"
 
@@ -215,7 +216,6 @@ def update_ranking():
 
     #Por cada usuario
     for user in users:
-        print(str(user))
         #Obtengo la cuenta con nombres de usuario
         cuenta=Account.objects.filter(Logik_Handle=user)
 
@@ -259,33 +259,34 @@ def update_ranking():
             
         #Si tiene registrado su usuario de Codeforces
         if cuenta.exists() and cuenta[0].CF_Handle:
-            #Submissions del usuario
-            request_cf=submissions_codeforces(cuenta[0].CF_Handle)
-            
-            if request_cf['status']!='OK':
-                continue
-            
-            submissions=request_cf['result']
+            try:
+                #Submissions del usuario
+                request_cf=submissions_codeforces(cuenta[0].CF_Handle)
+                
+                if request_cf and request_cf['status']=='OK':
+                    submissions=request_cf['result']
 
-            #Problemas DB
-            problemas=Problems.objects.all()
+                    #Problemas DB
+                    problemas=Problems.objects.all()
 
-            #Por cada problema en la DB
-            for problema in problemas:
-                #Si es un problema de Codeforces
-                if problema.oiaj==0:
-                    #Paso el string a diccionario
-                    solved_by=json.loads(problema.solvedBy)
+                    #Por cada problema en la DB
+                    for problema in problemas:
+                        #Si es un problema de Codeforces
+                        if problema.oiaj==0:
+                            #Paso el string a diccionario
+                            solved_by=json.loads(problema.solvedBy)
 
-                    #Reviso todos los submissions
-                    for submission in submissions:
-                        #Si obtuvo AC en ese problema
-                        if (submission['verdict']=='OK' and 
-                            problema.problem_link=='https://codeforces.com/problemset/problem/'+
-                            str(submission['problem']['contestId'])+'/'+
-                            str(submission['problem']['index'])):
-                                #Actualizo score
-                                solved_by[str(user)]=problema.problem_points
+                            #Reviso todos los submissions
+                            for submission in submissions:
+                                #Si obtuvo AC en ese problema
+                                if (submission['verdict']=='OK' and 
+                                    problema.problem_link=='https://codeforces.com/problemset/problem/'+
+                                    str(submission['problem']['contestId'])+'/'+
+                                    str(submission['problem']['index'])):
+                                        #Actualizo score
+                                        solved_by[str(user)]=problema.problem_points
 
-                                #Hago el update en la DB
-                                Problems.objects.filter(problem_link=problema.problem_link).update(solvedBy=json.dumps(solved_by))
+                                        #Hago el update en la DB
+                                        Problems.objects.filter(problem_link=problema.problem_link).update(solvedBy=json.dumps(solved_by))
+            except requests.exceptions.Timeout as err: 
+                err
