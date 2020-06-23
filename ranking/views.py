@@ -4,6 +4,7 @@ from problems.models import Problems
 import json
 from accounts.models import Account
 from django.contrib.auth.models import User
+from blacklist.models import BlackList
 
 # Create your views here.
 def ranking(request):
@@ -18,7 +19,9 @@ def ranking(request):
 
     #Inicializo el diccionario con 0s
     for user in users:
-        data[str(user)]=0
+        #Solo agrego a los usuarios que no están en la blacklist
+        if not BlackList.objects.filter(black_user=str(user)).exists():
+            data[str(user)]=0
 
     #Recorro la lista de problemas
     for i in _GET:
@@ -27,6 +30,9 @@ def ranking(request):
 
         #Por cada usuario que haya resuelto el problema
         for _USER,_PUNTAJE in usuarios.items():
+            #No tengo que agregar a los usuarios de la blacklist
+            if BlackList.objects.filter(black_user=str(_USER)).exists():
+                continue
             #Sumo al puntaje de ese usuario
             data[_USER]+=_PUNTAJE
 

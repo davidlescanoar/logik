@@ -12,6 +12,8 @@ html, body
 .navbar
 {
     font-family: 'Poppins', sans-serif;
+
+    background-color: rgba(25,26,37,1);
 }
 
 .navbar li>a

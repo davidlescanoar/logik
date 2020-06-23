@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'users',
     'accounts',
     'problems',
+    'blacklist',
     'django_celery_beat',
 ]
 
