@@ -162,9 +162,10 @@ def submissions_by_user(user_handle):
         response = requests.request("POST", url, headers=headers, data = payload, timeout=1)
 
         #Devuelvo en JSON
-        return response.json()
+        if response:
+            return response.json()
     except requests.exceptions.Timeout as err: 
-        err
+        return "ERROR"
 
 #Devuelve lista de problemas que submiteó determinado usuario en Codeforces
 def submissions_codeforces(user_handle):
@@ -178,7 +179,7 @@ def submissions_codeforces(user_handle):
         #Se devuelve el JSON
         return response.json()
     except requests.exceptions.Timeout as err: 
-        err
+        return "ERROR"
 
     print(response.text.encode('utf8'))
 
@@ -214,39 +215,48 @@ def update_ranking():
 
     #Por cada usuario
     for user in users:
+        print(str(user))
         #Obtengo la cuenta con nombres de usuario
         cuenta=Account.objects.filter(Logik_Handle=user)
 
         #Si tiene registrado su usuario de OIAJ
         if  cuenta.exists() and cuenta[0].OIAJ_Handle:
-            #Problemas de OIAJ submiteados por el usuario
-            resueltos=submissions_by_user(cuenta[0].OIAJ_Handle)['scores']
-                    
-            #Por cada problema submiteado
-            for task in resueltos:
-                #Nombre de problema
-                task_name=task['name']
-                #Puntos que sacó en el problema
-                task_score=task['score']
+            try:
+                #Submissions del usuario
+                user_submissions_OIAJ_JSON=submissions_by_user(cuenta[0].OIAJ_Handle)
 
-                #Problemas DB
-                problemas=Problems.objects.all()
-
-                #Por cada problema de OIAJ
-                for i in problemas:
-                    #Si es un problema de OIAJ
-                    if i.oiaj==1:
-                        #Paso el string a diccionario
-                        solved_by=json.loads(i.solvedBy)
-
-                        #Si resolvió el problema
-                        if extraerProblemNameOIAJ(i.problem_link)==task_name:
-                            #Actualizo score
-                            solved_by[str(user)]=task_score
+                #Si los datos se obtuvieron correctamente
+                if user_submissions_OIAJ_JSON and 'scores' in user_submissions_OIAJ_JSON:
+                    #Problemas de OIAJ submiteados por el usuario
+                    resueltos=user_submissions_OIAJ_JSON['scores']
                             
-                            #Hago el update en la DB
-                            Problems.objects.filter(problem_link=i.problem_link).update(solvedBy=json.dumps(solved_by))
+                    #Por cada problema submiteado
+                    for task in resueltos:
+                        #Nombre de problema
+                        task_name=task['name']
+                        #Puntos que sacó en el problema
+                        task_score=task['score']
 
+                        #Problemas DB
+                        problemas=Problems.objects.all()
+
+                        #Por cada problema de OIAJ
+                        for i in problemas:
+                            #Si es un problema de OIAJ
+                            if i.oiaj==1:
+                                #Paso el string a diccionario
+                                solved_by=json.loads(i.solvedBy)
+
+                                #Si resolvió el problema
+                                if extraerProblemNameOIAJ(i.problem_link)==task_name:
+                                    #Actualizo score
+                                    solved_by[str(user)]=task_score
+                                    
+                                    #Hago el update en la DB
+                                    Problems.objects.filter(problem_link=i.problem_link).update(solvedBy=json.dumps(solved_by))
+            except requests.exceptions.Timeout as err: 
+                err
+            
         #Si tiene registrado su usuario de Codeforces
         if cuenta.exists() and cuenta[0].CF_Handle:
             #Submissions del usuario
@@ -265,7 +275,7 @@ def update_ranking():
                 #Si es un problema de Codeforces
                 if problema.oiaj==0:
                     #Paso el string a diccionario
-                    solved_by=json.loads(i.solvedBy)
+                    solved_by=json.loads(problema.solvedBy)
 
                     #Reviso todos los submissions
                     for submission in submissions:

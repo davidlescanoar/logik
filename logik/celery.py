@@ -16,9 +16,9 @@ app = Celery('logik')
 app.config_from_object('django.conf:settings')
 
 app.conf.beat_schedule={
-    'every-1-seconds':{
+    'every-5-seconds':{
         'task': 'logik.tasks.update_ranking',
-        'schedule': 1
+        'schedule': 5
     }
 }
 

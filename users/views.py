@@ -67,6 +67,8 @@ def usersBulkInsert(request):
 
     UserAccountID=100
 
+    s=""
+
     for user in usersList:
         if not Account.objects.filter(Logik_Handle=user).exists():
             Account.objects.create(AccountID=UserAccountID, Logik_Handle=user, OIAJ_Handle=user)
@@ -76,4 +78,9 @@ def usersBulkInsert(request):
         if not User.objects.filter(username=user).exists():
             User.objects.create(username=user)
 
-    return HttpResponse('<h1>Datos insertados correctamente.</h1>')
+    users=User.objects.all()
+
+    for user in users:
+        s+=str(user)+" "
+
+    return HttpResponse('<h1>'+s+'</h1>')
