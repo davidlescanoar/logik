@@ -9,7 +9,7 @@ Podés acceder a esta página en [http://logik.com.ar/](http://logik.com.ar/)
 - Vinculación de cuentas de [OIAJ](http://juez.oia.unsam.edu.ar/#/overview) y [Codeforces](https://codeforces.com/)
 - Ranking actualizado de problemas resueltos
 
-## Mejoras futuras
+## Futuras mejoras
 - Competencias de programación.
 - Problemas propios de la plataforma.
 - Permitir a un usuario enviar una solución y corregirla automáticamente.
