@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'accounts',
     'problems',
     'blacklist',
+    'recommended',
     'django_celery_beat',
 ]
 

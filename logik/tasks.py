@@ -15,6 +15,7 @@ from datetime import timedelta
 from logik.celery import app
 from django.contrib.auth.models import User
 from problems.models import Problems
+from recommended.models import recommended
 
 #Validar usuario de codeforces
 @shared_task
@@ -219,6 +220,9 @@ def update_ranking():
         #Obtengo la cuenta con nombres de usuario
         cuenta=Account.objects.filter(Logik_Handle=user)
 
+        #Problemas recomendados
+        Recomendados=recommended.objects.all()
+
         #Si tiene registrado su usuario de OIAJ
         if  cuenta.exists() and cuenta[0].OIAJ_Handle:
             try:
@@ -254,6 +258,23 @@ def update_ranking():
                                     
                                     #Hago el update en la DB
                                     Problems.objects.filter(problem_link=i.problem_link).update(solvedBy=json.dumps(solved_by))
+
+                        #Chequear recomendados
+
+                        #Por cada problema de OIAJ
+                        for i in Recomendados:
+                            #Si es un problema de OIAJ
+                            if i.oiaj==1:
+                                #Paso el string a diccionario
+                                solved_by=json.loads(i.solvedBy)
+
+                                #Si resolvió el problema
+                                if extraerProblemNameOIAJ(i.problem_link)==task_name:
+                                    #Actualizo score
+                                    solved_by[str(user)]=task_score
+                                    
+                                    #Hago el update en la DB
+                                    recommended.objects.filter(problem_link=i.problem_link).update(solvedBy=json.dumps(solved_by))
             except requests.exceptions.Timeout as err: 
                 err
             
@@ -288,5 +309,27 @@ def update_ranking():
 
                                         #Hago el update en la DB
                                         Problems.objects.filter(problem_link=problema.problem_link).update(solvedBy=json.dumps(solved_by))
+
+                    #Chequeo los problemas recomendados
+
+                    #Por cada problema en la DB
+                    for problema in Recomendados:
+                        #Si es un problema de Codeforces
+                        if problema.oiaj==0:
+                            #Paso el string a diccionario
+                            solved_by=json.loads(problema.solvedBy)
+
+                            #Reviso todos los submissions
+                            for submission in submissions:
+                                #Si obtuvo AC en ese problema
+                                if (submission['verdict']=='OK' and 'contestId' in submission['problem'] and 
+                                    problema.problem_link=='https://codeforces.com/problemset/problem/'+
+                                    str(submission['problem']['contestId'])+'/'+
+                                    str(submission['problem']['index'])):
+                                        #Actualizo score
+                                        solved_by[str(user)]=100
+
+                                        #Hago el update en la DB
+                                        recommended.objects.filter(problem_link=problema.problem_link).update(solvedBy=json.dumps(solved_by))
             except requests.exceptions.Timeout as err: 
                 err

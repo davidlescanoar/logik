@@ -19,6 +19,7 @@ from users.views import welcome, login, logout, register
 from accounts.views import accounts
 from problems.views import problems
 from ranking.views import ranking
+from recommended.views import recommended
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -31,4 +32,5 @@ urlpatterns = [
     path('accounts/', accounts),
     path('problems/', problems),
     path('ranking/', ranking),
+    path('recommended/', recommended),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
