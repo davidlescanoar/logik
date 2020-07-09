@@ -18,6 +18,22 @@ def asignarColor(puntaje):
         return "fila-verde"
     return "fila-amarilla"
 
+def cantidadIntentos(solvedBy):
+    JSON=json.loads(solvedBy)
+
+    return len(JSON)
+
+def cantidadAC(solvedBy):
+    JSON=json.loads(solvedBy)
+
+    Count_AC=0
+
+    for i in JSON:
+        if JSON[i]==100:
+            Count_AC+=1
+
+    return Count_AC
+
 def problems(request):
     #Si no está autenticado, no puede entrar
     if not request.user.is_authenticated:
@@ -31,6 +47,6 @@ def problems(request):
         puntaje=puntosObtenidos(i.solvedBy, request.user.username)
         color=asignarColor(puntaje)
 
-        listaProblemas.append((i.problem_name, i.problem_points, i.problem_link, puntaje, color))
+        listaProblemas.append((i.problem_name, i.problem_points, i.problem_link, puntaje, color, cantidadAC(i.solvedBy), cantidadIntentos(i.solvedBy)))
 
     return render(request, 'problems.html', {'problemas':listaProblemas})
