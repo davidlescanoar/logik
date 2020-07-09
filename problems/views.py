@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import json
 from problems.models import Problems
+from operator import itemgetter
 
 def puntosObtenidos(solvedBy, username):
     JSON=json.loads(solvedBy)
@@ -49,4 +50,4 @@ def problems(request):
 
         listaProblemas.append((i.problem_name, i.problem_points, i.problem_link, puntaje, color, cantidadAC(i.solvedBy), cantidadIntentos(i.solvedBy)))
 
-    return render(request, 'problems.html', {'problemas':listaProblemas})
+    return render(request, 'problems.html', {'problemas':sorted(listaProblemas, key=itemgetter(6), reverse=True)})
