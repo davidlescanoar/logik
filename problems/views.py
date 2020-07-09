@@ -50,4 +50,4 @@ def problems(request):
 
         listaProblemas.append((i.problem_name, i.problem_points, i.problem_link, puntaje, color, cantidadAC(i.solvedBy), cantidadIntentos(i.solvedBy)))
 
-    return render(request, 'problems.html', {'problemas':sorted(listaProblemas, key=itemgetter(6), reverse=True)})
+    return render(request, 'problems.html', {'problemas':sorted(listaProblemas, key=itemgetter(5), reverse=True)})
