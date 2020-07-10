@@ -212,8 +212,6 @@ def extraerProblemNameOIAJ(problem_link):
 #Periodic-task
 @shared_task
 def update_ranking():
-    return "IGNORANDO UPDATES"
-    """
     #Usuarios
     users=User.objects.all()
 
@@ -331,4 +329,3 @@ def update_ranking():
                                         recommended.objects.filter(problem_link=problema.problem_link).update(solvedBy=json.dumps(solved_by))
             except requests.exceptions.Timeout as err: 
                 err
-    """
