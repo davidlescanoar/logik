@@ -171,11 +171,11 @@ def submissions_by_user(user_handle):
 #Devuelve lista de problemas que submiteó determinado usuario en Codeforces
 def submissions_codeforces(user_handle):
     #URL de la API de Codeforces
-    url = "https://codeforces.com/api/user.status?handle="+user_handle
+    url = 'https://codeforces.com/api/user.status?handle='+user_handle+'&count=20'
 
     #Intentamos hacer la query
     try:
-        response = requests.request("GET", url, headers={}, data = {}, timeout=1)
+        response = requests.request("GET", url, headers={}, data = {}, timeout=.5)
 
         #Se devuelve el JSON
         if response:
@@ -212,16 +212,20 @@ def extraerProblemNameOIAJ(problem_link):
 #Periodic-task
 @shared_task
 def update_ranking():
+    return "IGNORANDO UPDATES"
+    """
     #Usuarios
     users=User.objects.all()
+
+    #Problemas recomendados
+    Recomendados=recommended.objects.all()
+    #Problemas DB
+    problemas=Problems.objects.all()
 
     #Por cada usuario
     for user in users:
         #Obtengo la cuenta con nombres de usuario
         cuenta=Account.objects.filter(Logik_Handle=user)
-
-        #Problemas recomendados
-        Recomendados=recommended.objects.all()
 
         #Si tiene registrado su usuario de OIAJ
         if  cuenta.exists() and cuenta[0].OIAJ_Handle:
@@ -240,9 +244,6 @@ def update_ranking():
                         task_name=task['name']
                         #Puntos que sacó en el problema
                         task_score=task['score']
-
-                        #Problemas DB
-                        problemas=Problems.objects.all()
 
                         #Por cada problema de OIAJ
                         for i in problemas:
@@ -287,9 +288,6 @@ def update_ranking():
                 if request_cf and request_cf['status']=='OK':
                     submissions=request_cf['result']
 
-                    #Problemas DB
-                    problemas=Problems.objects.all()
-
                     #Por cada problema en la DB
                     for problema in problemas:
                         #Si es un problema de Codeforces
@@ -333,3 +331,4 @@ def update_ranking():
                                         recommended.objects.filter(problem_link=problema.problem_link).update(solvedBy=json.dumps(solved_by))
             except requests.exceptions.Timeout as err: 
                 err
+    """
