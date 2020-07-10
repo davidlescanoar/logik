@@ -22,6 +22,15 @@ app.conf.beat_schedule={
     }
 }
 
+"""
+app.conf.beat_schedule={
+    'every-15-seconds':{
+        'task': 'logik.tasks.update_ranking',
+        'schedule': 15
+    }
+}
+"""
+
 # Este método auto-registra las tareas para el broker. 
 # Busca tareas dentro de todos los archivos `tasks.py` que haya en las apps
 # y las envía a Redis automáticamente.

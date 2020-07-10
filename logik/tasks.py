@@ -213,7 +213,7 @@ def extraerProblemNameOIAJ(problem_link):
 @shared_task
 def update_ranking():
     print("UPDATE RANKING")
-    
+
     #Usuarios
     users=User.objects.all()
 
@@ -285,7 +285,7 @@ def update_ranking():
                 #Submissions del usuario
                 request_cf=submissions_codeforces(cuenta[0].CF_Handle)
                 
-                if request_cf and request_cf['status']=='OK':
+                if request_cf and request_cf['status'] and request_cf['status']=='OK':
                     submissions=request_cf['result']
 
                     #Por cada problema en la DB
