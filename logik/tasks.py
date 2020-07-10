@@ -212,6 +212,8 @@ def extraerProblemNameOIAJ(problem_link):
 #Periodic-task
 @shared_task
 def update_ranking():
+    print("UPDATE RANKING")
+    
     #Usuarios
     users=User.objects.all()
 

@@ -1,2 +1,2 @@
 web: honcho start -f ProcfileHoncho
-worker: celery -A logik worker
+worker: celery -A logik worker -l info
