@@ -160,7 +160,7 @@ def submissions_by_user(user_handle):
 
     #Intentamos hacer la query
     try: 
-        response = requests.request("POST", url, headers=headers, data = payload, timeout=2)
+        response = requests.request("POST", url, headers=headers, data = payload, timeout=1)
 
         #Devuelvo en JSON
         if response:
@@ -175,7 +175,7 @@ def submissions_codeforces(user_handle):
 
     #Intentamos hacer la query
     try:
-        response = requests.request("GET", url, headers={}, data = {}, timeout=2)
+        response = requests.request("GET", url, headers={}, data = {}, timeout=.5)
 
         #Se devuelve el JSON
         if response:
@@ -217,15 +217,13 @@ def update_ranking():
     #Usuarios
     users=User.objects.all()
 
-    #Problemas recomendados
-    Recomendados=recommended.objects.all()
-    #Problemas DB
-    problemas=Problems.objects.all()
-
     #Por cada usuario
     for user in users:
         #Obtengo la cuenta con nombres de usuario
         cuenta=Account.objects.filter(Logik_Handle=user)
+
+        #Problemas recomendados
+        Recomendados=recommended.objects.all()
 
         #Si tiene registrado su usuario de OIAJ
         if  cuenta.exists() and cuenta[0].OIAJ_Handle:
@@ -244,6 +242,9 @@ def update_ranking():
                         task_name=task['name']
                         #Puntos que sacó en el problema
                         task_score=task['score']
+
+                        #Problemas DB
+                        problemas=Problems.objects.all()
 
                         #Por cada problema de OIAJ
                         for i in problemas:
@@ -287,6 +288,9 @@ def update_ranking():
                 
                 if request_cf and request_cf['status'] and request_cf['status']=='OK':
                     submissions=request_cf['result']
+
+                    #Problemas DB
+                    problemas=Problems.objects.all()
 
                     #Por cada problema en la DB
                     for problema in problemas:
