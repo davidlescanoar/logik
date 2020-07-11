@@ -160,7 +160,7 @@ def submissions_by_user(user_handle):
 
     #Intentamos hacer la query
     try: 
-        response = requests.request("POST", url, headers=headers, data = payload, timeout=1)
+        response = requests.request("POST", url, headers=headers, data = payload, timeout=2)
 
         #Devuelvo en JSON
         if response:
@@ -175,7 +175,7 @@ def submissions_codeforces(user_handle):
 
     #Intentamos hacer la query
     try:
-        response = requests.request("GET", url, headers={}, data = {}, timeout=.5)
+        response = requests.request("GET", url, headers={}, data = {}, timeout=2)
 
         #Se devuelve el JSON
         if response:
