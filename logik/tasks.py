@@ -88,7 +88,7 @@ def validarCuentaCodeforces(CF_Handle_Input, UserID, Logik_Handle, fNow):
                         Account.objects.filter(AccountID=UserID).update(CF_Handle=CF_Handle_Input)
                     #Si no existía en la DB, lo inserto
                     else:
-                        Account.objects.create(AccountID=UserID, Logik_Handle=Logik_Handle, CF_Handle=CF_Handle_Input, OIAJ_Handle='')
+                        Account.objects.create(AccountID=UserID, Logik_Handle=Logik_Handle, CF_Handle=CF_Handle_Input, OIAJ_Handle='', CSES_Handle='')
 
 #Validar usuario de OIAJ
 @shared_task
@@ -144,7 +144,17 @@ def validarCuentaOIAJ(OIAJ_Handle_Input, UserID, Logik_Handle, fNow):
                 Account.objects.filter(AccountID=UserID).update(OIAJ_Handle=OIAJ_Handle_Input)
             #Si no existía en la DB, lo inserto
             else:
-                Account.objects.create(AccountID=UserID, Logik_Handle=Logik_Handle, CF_Handle='', OIAJ_Handle=OIAJ_Handle_Input)
+                Account.objects.create(AccountID=UserID, Logik_Handle=Logik_Handle, CF_Handle='', OIAJ_Handle=OIAJ_Handle_Input, CSES_Handle='')
+
+#Actualizar cuenta de CSES
+@shared_task
+def actualizarCuentaCSES(CSES_Handle_Input, UserID, Logik_Handle, fNow):
+    #Si UserID existía en la DB, actualizo el handle de OIAJ
+    if Account.objects.filter(AccountID=UserID).exists():
+        Account.objects.filter(AccountID=UserID).update(CSES_Handle=CSES_Handle_Input)
+    #Si no existía en la DB, lo inserto
+    else:
+        Account.objects.create(AccountID=UserID, Logik_Handle=Logik_Handle, CF_Handle='', OIAJ_Handle='', CSES_Handle=CSES_Handle_Input)
 
 #Devuelve lista de problemas que submiteó determinado usuario en OIAJ
 def submissions_by_user(user_handle):
@@ -209,6 +219,48 @@ def extraerProblemNameOIAJ(problem_link):
     #Devuelvo el string dado vuelta, ya que se recorrió en orden inverso
     return problem_name[::-1]
 
+#CSES Submissions
+def get_CSES_submissions(CSES_ID):
+    #CSES URL
+    CSES_URL = 'https://cses.fi/problemset/user/'+str(CSES_ID)+'/'
+
+    #Headers
+    payload  = {}
+    headers = {
+        'Cookie': 'PHPSESSID=83dd884e97206f2e4bb806a8b47ca29a301de0ed'
+    }
+
+    #Problems TD
+    TD=[]
+    #Problems solved
+    solved={}
+
+    #Get HTML
+    response = requests.request("GET", CSES_URL, headers=headers, data = payload, timeout=1)
+
+    #BS4
+    soup=BeautifulSoup(response.content, 'html.parser')
+
+    #Problems TD
+    TD=soup.find_all('td')
+
+    #For every td
+    for i in TD:
+        #If the problem exists
+        if i.a:
+            #AC
+            if 'full' in str(i.a['class']):
+                solved['https://cses.fi'+i.a['href']]=100
+            #Tried
+            elif 'zero' in str(i.a['class']):
+                solved['https://cses.fi'+i.a['href']]=50
+            #Not tried
+            else:
+                solved['https://cses.fi'+i.a['href']]=0
+
+    #Return dict
+    return solved
+
 #Periodic-task
 @shared_task
 def update_ranking():
@@ -219,9 +271,6 @@ def update_ranking():
     for user in users:
         #Obtengo la cuenta con nombres de usuario
         cuenta=Account.objects.filter(Logik_Handle=user)
-
-        #Problemas recomendados
-        Recomendados=recommended.objects.all()
 
         #Si tiene registrado su usuario de OIAJ
         if  cuenta.exists() and cuenta[0].OIAJ_Handle:
@@ -247,7 +296,7 @@ def update_ranking():
                         #Por cada problema de OIAJ
                         for i in problemas:
                             #Si es un problema de OIAJ
-                            if i.oiaj==1:
+                            if i.judge=='OIAJ':
                                 #Paso el string a diccionario
                                 solved_by=json.loads(i.solvedBy)
 
@@ -260,11 +309,13 @@ def update_ranking():
                                     Problems.objects.filter(problem_link=i.problem_link).update(solvedBy=json.dumps(solved_by))
 
                         #Chequear recomendados
+                        #Problemas recomendados
+                        Recomendados=recommended.objects.all()
 
                         #Por cada problema de OIAJ
                         for i in Recomendados:
                             #Si es un problema de OIAJ
-                            if i.oiaj==1:
+                            if i.judge=='OIAJ':
                                 #Paso el string a diccionario
                                 solved_by=json.loads(i.solvedBy)
 
@@ -284,7 +335,7 @@ def update_ranking():
                 #Submissions del usuario
                 request_cf=submissions_codeforces(cuenta[0].CF_Handle)
                 
-                if request_cf and request_cf['status'] and request_cf['status']=='OK':
+                if request_cf and str(request_cf)!='ERROR' and request_cf['status'] and request_cf['status']=='OK':
                     submissions=request_cf['result']
 
                     #Problemas DB
@@ -293,7 +344,7 @@ def update_ranking():
                     #Por cada problema en la DB
                     for problema in problemas:
                         #Si es un problema de Codeforces
-                        if problema.oiaj==0:
+                        if problema.judge=='Codeforces':
                             #Paso el string a diccionario
                             solved_by=json.loads(problema.solvedBy)
 
@@ -311,11 +362,13 @@ def update_ranking():
                                         Problems.objects.filter(problem_link=problema.problem_link).update(solvedBy=json.dumps(solved_by))
 
                     #Chequeo los problemas recomendados
+                    #Problemas recomendados
+                    Recomendados=recommended.objects.all()
 
                     #Por cada problema en la DB
                     for problema in Recomendados:
                         #Si es un problema de Codeforces
-                        if problema.oiaj==0:
+                        if problema.judge=='Codeforces':
                             #Paso el string a diccionario
                             solved_by=json.loads(problema.solvedBy)
 
@@ -331,5 +384,55 @@ def update_ranking():
 
                                         #Hago el update en la DB
                                         recommended.objects.filter(problem_link=problema.problem_link).update(solvedBy=json.dumps(solved_by))
+            except requests.exceptions.Timeout as err: 
+                err
+
+        #Si tiene registrado su usuario de CSES
+        if cuenta.exists() and cuenta[0].CSES_Handle:
+            try:
+                #Submissions del usuario
+                submissions_cses=get_CSES_submissions(cuenta[0].CSES_Handle)
+
+                if submissions_cses:
+                    #Problemas DB
+                    problemas=Problems.objects.all()
+
+                    #Por cada problema en la DB
+                    for problema in problemas:
+                        #Si es un problema de CSES
+                        if problema.judge=='CSES':
+                            #Paso el string a diccionario
+                            solved_by=json.loads(problema.solvedBy)
+
+                            #Reviso todos los submissions
+                            for submission_link, submission_points in submissions_cses.items():
+                                #Si es ese problema
+                                if problema.problem_link==submission_link:
+                                        #Actualizo score
+                                        solved_by[str(user)]=submission_points
+
+                                        #Hago el update en la DB
+                                        Problems.objects.filter(problem_link=problema.problem_link).update(solvedBy=json.dumps(solved_by))
+
+                    #Chequeo los problemas recomendados
+                    #Problemas recomendados
+                    Recomendados=recommended.objects.all()
+
+                    #Por cada problema en la DB
+                    for problema in Recomendados:
+                        #Si es un problema de CSES
+                        if problema.judge=='CSES':
+                            #Paso el string a diccionario
+                            solved_by=json.loads(problema.solvedBy)
+
+                            #Reviso todos los submissions
+                            for submission_link, submission_points in submissions_cses.items():
+                                #Si es ese problema
+                                if problema.problem_link==submission_link:
+                                    #Actualizo score
+                                    solved_by[str(user)]=submission_points
+
+                                    #Hago el update en la DB
+                                    recommended.objects.filter(problem_link=problema.problem_link).update(solvedBy=json.dumps(solved_by))
             except requests.exceptions.Timeout as err: 
                 err

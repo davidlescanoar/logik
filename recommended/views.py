@@ -30,18 +30,12 @@ def recommended(request):
         #Obtengo los datos del formulario
         _ProblemName=request.POST['problem_name']
         _ProblemLink=request.POST['problem_link']
-
-        #Inicializo la variable en 0
-        _OIAJ=0
+        _OnlineJudge=request.POST['Online-Judge']
         
-        #Si 'OIAJ' se obtuvo es porque se tildó, entonces lo pongo en 1
-        if 'OIAJ' in request.POST:
-            _OIAJ=1
-
         #Si el problema no existía
         if not Recomendados.objects.filter(problem_link=_ProblemLink).exists():
             #Inserto el problema en la DB
-            Recomendados.objects.create(problem_name=_ProblemName, problem_link=_ProblemLink, oiaj=_OIAJ, solvedBy="{}")
+            Recomendados.objects.create(problem_name=_ProblemName, problem_link=_ProblemLink, judge=_OnlineJudge, solvedBy="{}")
 
         #Recargo la página
         return redirect('/recommended')

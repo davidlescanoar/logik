@@ -85,11 +85,19 @@
                                     <input type="text" class="form-control" id="problem_link" name="problem_link"
                                         aria-describedby="emailHelp" required>
                                 </div>
-                                <div class="form-check">
+                                <div class="form-group">
+                                    <!--
                                     <input class="form-check-input" type="checkbox" value="" id="OIAJ" name="OIAJ">
                                     <label class="form-check-label" for="OIAJ">
                                         Es un problema de OIAJ
                                     </label>
+                                    -->
+                                    <label class="form-check-label" for="Online-Judge">Seleccionar juez online</label>
+                                    <select id="Online-Judge" name="Online-Judge" class="form-control">
+                                        <option>OIAJ</option>
+                                        <option>Codeforces</option>
+                                        <option>CSES</option>
+                                    </select>
                                 </div>
                             </form>
                         </div>

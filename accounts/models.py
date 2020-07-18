@@ -7,3 +7,4 @@ class Account(models.Model):
     Logik_Handle=models.CharField(max_length=30, blank=True, null=True)
     CF_Handle=models.CharField(max_length=30, blank=True, null=True)
     OIAJ_Handle=models.CharField(max_length=30, blank=True, null=True)
+    CSES_Handle=models.IntegerField(blank=True, null=True)

@@ -1,8 +1,14 @@
 from django.db import models
 
+CHOICES = (
+   ('OIAJ', 'OIAJ'),
+   ('Codeforces', 'Codeforces'),
+   ('CSES', 'CSES')
+)
+
 # Create your models here.
 class Problems(models.Model):
-    oiaj=models.BooleanField()
+    judge=models.CharField(choices=CHOICES, max_length=50, default='CSES')
     problem_link=models.CharField(max_length=100)
     problem_name=models.CharField(max_length=50)
     problem_points=models.IntegerField()

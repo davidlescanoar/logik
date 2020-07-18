@@ -39,8 +39,9 @@
                 <ul>
                     <li>Si ingresaste tu usuario de Codeforces tenés que enviar un error de compilación al problema: <a href="https://codeforces.com/problemset/problem/38/A">https://codeforces.com/problemset/problem/38/A</a></li>
                     <li>Si ingresaste tu usuario de OIAJ tenés que enviar un error de compilación al problema: <a href="http://juez.oia.unsam.edu.ar/#/task/es_bisiesto/statement">http://juez.oia.unsam.edu.ar/#/task/es_bisiesto/statement</a></li>
+                    <li>Para tu usuario de CSES no es necesaria la verificación.</a></li>
                 </ul>
-                Atención: Sólo se podrá validar la cuenta si ambos sitios funcionan correctamente y si podés validarlo. Tus datos se actualizarán automáticamente habiendo pasado el tiempo que se indicó arriba.
+                Atención: Sólo se podrá validar la cuenta si los sitios funcionan correctamente. Tus datos se actualizarán automáticamente habiendo pasado el tiempo que se indicó arriba.
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -67,6 +68,13 @@
             <div class="form-group">
                 <label for="OIAJ_Handle">OIAJ Handle</label>
                 <input type="text" class="form-control" name="OIAJ_Handle" value="{{cuenta.OIAJ_Handle}}">
+            </div>
+
+            <br/>
+
+            <div class="form-group">
+                <label for="CSES_Handle">CSES ID</label>
+                <input type="number" class="form-control" name="CSES_Handle" value="{{cuenta.CSES_Handle}}">
             </div>
 
             <br/>
