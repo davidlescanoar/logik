@@ -336,7 +336,6 @@ def update_ranking():
                 request_cf=submissions_codeforces(cuenta[0].CF_Handle)
 
                 if request_cf and str(request_cf)!='ERROR' and request_cf['status'] and request_cf['status']=='OK':
-                    print(str(user), request_cf)
                     submissions=request_cf['result']
 
                     #Problemas DB
