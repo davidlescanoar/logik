@@ -181,7 +181,7 @@ def submissions_by_user(user_handle):
 #Devuelve lista de problemas que submiteó determinado usuario en Codeforces
 def submissions_codeforces(user_handle):
     #URL de la API de Codeforces
-    url = 'https://codeforces.com/api/user.status?handle='+user_handle+'&count=20'
+    url = 'https://codeforces.com/api/user.status?handle='+user_handle
 
     #Intentamos hacer la query
     try:
@@ -334,7 +334,7 @@ def update_ranking():
             try:
                 #Submissions del usuario
                 request_cf=submissions_codeforces(cuenta[0].CF_Handle)
-                
+
                 if request_cf and str(request_cf)!='ERROR' and request_cf['status'] and request_cf['status']=='OK':
                     submissions=request_cf['result']
 
