@@ -185,7 +185,7 @@ def submissions_codeforces(user_handle):
 
     #Intentamos hacer la query
     try:
-        response = requests.request("GET", url, headers={}, data = {}, timeout=.5)
+        response = requests.request("GET", url, headers={}, data = {}, timeout=5)
 
         #Se devuelve el JSON
         if response:
@@ -336,6 +336,7 @@ def update_ranking():
                 request_cf=submissions_codeforces(cuenta[0].CF_Handle)
 
                 if request_cf and str(request_cf)!='ERROR' and request_cf['status'] and request_cf['status']=='OK':
+                    print(str(user), request_cf)
                     submissions=request_cf['result']
 
                     #Problemas DB
@@ -351,7 +352,7 @@ def update_ranking():
                             #Reviso todos los submissions
                             for submission in submissions:
                                 #Si obtuvo AC en ese problema
-                                if (submission['verdict']=='OK' and 
+                                if ('contestId' in submission['problem'] and submission['verdict']=='OK' and 
                                     problema.problem_link=='https://codeforces.com/problemset/problem/'+
                                     str(submission['problem']['contestId'])+'/'+
                                     str(submission['problem']['index'])):
