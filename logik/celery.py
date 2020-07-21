@@ -5,6 +5,7 @@ from django.conf import settings
 
 # Establecer las opciones de django para la aplicación de celery.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'logik.settings')
+os.environ.setdefault('FORKED_BY_MULTIPROCESSING', '1')
 
 # Crear la aplicación de Celery
 app = Celery('logik')
