@@ -299,8 +299,7 @@ def update_ranking():
                             if i.judge=='OIAJ':
                                 #Paso el string a diccionario
                                 solved_by=json.loads(i.solvedBy)
-                                solved_by2=json.loads(i.solvedBy)
-                                solved_by2=json.loads(i.solvedBy)
+                                #solved_by2=json.loads(i.solvedBy)
                                 
                                 
                                 #Si resolvió el problema
