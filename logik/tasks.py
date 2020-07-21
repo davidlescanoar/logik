@@ -302,6 +302,12 @@ def update_ranking():
                                 #solved_by2=json.loads(i.solvedBy)
                                 #solved_by2=json.loads(i.solvedBy)
                                 #solved_by2=json.loads(i.solvedBy)
+                                #solved_by2=json.loads(i.solvedBy)
+                                #solved_by2=json.loads(i.solvedBy)
+                                #solved_by2=json.loads(i.solvedBy)
+                                #solved_by2=json.loads(i.solvedBy)
+                                #solved_by2=json.loads(i.solvedBy)
+                                #solved_by2=json.loads(i.solvedBy)
                                 
                                 
                                 #Si resolvió el problema
