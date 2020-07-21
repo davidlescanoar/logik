@@ -65,7 +65,7 @@ def validarCuentaCodeforces(CF_Handle_Input, UserID, Logik_Handle, fNow):
                 fechaUser=""
 
                 cntGreater=0
-
+#TEST COMIT CAMBIO
                 #Tengo que avanzar la variable tds hasta que haya pasado dos '>' porque luego del td viene un <span> que no me interesa
                 #luego de esas dos cosas viene la fecha
                 while  tds<len(submission) and cntGreater<2:
@@ -299,7 +299,7 @@ def update_ranking():
                             if i.judge=='OIAJ':
                                 #Paso el string a diccionario
                                 solved_by=json.loads(i.solvedBy)
-
+#CAMBIO #2
                                 #Si resolvió el problema
                                 if extraerProblemNameOIAJ(i.problem_link)==task_name:
                                     #Actualizo score
