@@ -179,11 +179,11 @@ def submissions_OIAJ(user_handle):
 #Devuelve lista de problemas que submiteó determinado usuario en Codeforces
 def submissions_codeforces(user_handle):
     #URL de la API de Codeforces
-    url = 'https://codeforces.com/api/user.status?handle='+user_handle+'&count=20'
+    url = 'https://codeforces.com/api/user.status?handle='+user_handle#+'&count=20'
 
     #Intentamos hacer la query
     try:
-        response = requests.request("GET", url, headers={}, data = {}, timeout=5)
+        response = requests.request("GET", url, headers={}, data = {}, timeout=10)
         #Se devuelve el JSON
         return response.json()
     except BaseException as e:
