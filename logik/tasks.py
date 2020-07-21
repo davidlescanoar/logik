@@ -255,9 +255,6 @@ def update_ranking():
     #Usuarios
     users=User.objects.all()
 
-    vaciarSolvedBy()
-    return 1
-
     for user in users:
         cuenta=Account.objects.filter(Logik_Handle=user)
         if  cuenta.exists():
