@@ -17,7 +17,6 @@ from django.contrib.auth.models import User
 from problems.models import Problems
 from recommended.models import recommended
 
-
 #Actualizar cuenta de CSES
 @shared_task
 def actualizarCuentaCSES(CSES_Handle_Input, UserID, Logik_Handle, fNow):
@@ -35,7 +34,6 @@ def submissions_CSES(CSES_ID):
         soup = BeautifulSoup(response.content, "html.parser")
         accepted = dict(('https://cses.fi'+x["href"], 100) for x in soup.findAll("a", attrs = {"class" : "full"}))
         return accepted
-        
     except BaseException as e:
         raise ValueError("Funcion API: submissions_CSES. Error: {}".format(str(e)))
 

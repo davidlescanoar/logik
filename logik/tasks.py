@@ -73,7 +73,7 @@ def update_ranking():
                         update_CSES(user, Problems, request_cses)
                         update_CSES(user, recommended, request_cses)
                     except BaseException as e:
-                        print("Error? Con el usuario {} ({}) al llamar update_CSES. Error: {}".format(cuenta[0].CSES_Handle, user, str(e)))               
+                        print("Error con el usuario {} ({}) al llamar update_CSES. Error: {}".format(cuenta[0].CSES_Handle, user, str(e)))               
                 except BaseException as e:
                     print("Error en update_ranking: {}".format(str(e)))
 
