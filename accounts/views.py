@@ -12,9 +12,7 @@ def accounts(request):
 
     if request.method=='POST':
         CF_Handle_Input=request.POST['CF_Handle']
-
         OIAJ_Handle_Input=request.POST['OIAJ_Handle']
-
         CSES_Handle_Input=request.POST['CSES_Handle']
 
         #Fecha y hora actual

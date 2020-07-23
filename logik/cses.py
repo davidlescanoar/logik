@@ -20,12 +20,18 @@ from recommended.models import recommended
 #Actualizar cuenta de CSES
 @shared_task
 def actualizarCuentaCSES(CSES_Handle_Input, UserID, Logik_Handle, fNow):
-    #Si UserID existía en la DB, actualizo el handle de OIAJ
-    if Account.objects.filter(AccountID=UserID).exists():
-        Account.objects.filter(AccountID=UserID).update(CSES_Handle=CSES_Handle_Input)
-    #Si no existía en la DB, lo inserto
-    else:
-        Account.objects.create(AccountID=UserID, Logik_Handle=Logik_Handle, CF_Handle='', OIAJ_Handle='', CSES_Handle=CSES_Handle_Input)
+    if len(str(CSES_Handle_Input)) < 1:
+        return "Campo CSES_Handle_Input vacio"
+
+    try:
+        if Account.objects.filter(AccountID=UserID).exists():
+            Account.objects.filter(AccountID=UserID).update(CSES_Handle=CSES_Handle_Input)
+        #Si no existía en la DB, lo inserto
+        else:
+            Account.objects.create(AccountID=UserID, Logik_Handle=Logik_Handle, CF_Handle='', OIAJ_Handle='', CSES_Handle=CSES_Handle_Input)
+        print("Usuario {} asoció su handle de CSES: {}".format(Logik_Handle, CSES_Handle_Input))
+    except BaseException as e:
+        raise ValueError("Error al asociar cuenta de CSES: {}".format(str(e)))
 
 def submissions_CSES(CSES_ID):
     try:
