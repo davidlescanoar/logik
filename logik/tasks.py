@@ -39,17 +39,15 @@ def update_ranking():
             #Update OIAJ
             if cuenta[0].OIAJ_Handle:
                 print("Llamando a la funcion update_OIAJ para user {} ({})".format(cuenta[0].OIAJ_Handle, user))
-
                 try:
                     request_oiaj = submissions_OIAJ(cuenta[0].OIAJ_Handle)
                     try:
                         update_OIAJ(user, Problems, request_oiaj)
                         update_OIAJ(user, recommended, request_oiaj)
                     except BaseException as e:
-                        print('Fallo aca: ' + str(e))
-                        print("Error? Con el usuario {} ({}) al llamar update_OIAJ".format(cuenta[0].OIAJ_Handle, user))
+                        print("Error con el usuario {} ({}) al llamar update_OIAJ. Error: {}".format(cuenta[0].OIAJ_Handle, user, str(e)))
                 except BaseException as e:
-                    print('Fallo aca: ' + str(e))
+                    print("Error en update_ranking: {}".format(str(e)))
 
 
             #Update Codeforces
@@ -61,10 +59,9 @@ def update_ranking():
                         update_Codeforces(user, Problems, request_cf)
                         update_Codeforces(user, recommended, request_cf)
                     except BaseException as e:
-                        print('Fallo aca: ' + str(e))
-                        print("Error? Con el usuario {} ({}) al llamar update_Codeforces".format(cuenta[0].CF_Handle, user))               
+                        print("Error con el usuario {} ({}) al llamar update_Codeforces. Error: {}".format(cuenta[0].CF_Handle, user, str(e)))               
                 except BaseException as e:
-                    print('Fallo aca: ' + str(e))
+                    print("Error en update_ranking: {}".format(str(e)))
 
                     
             #Update CSES
@@ -76,10 +73,9 @@ def update_ranking():
                         update_CSES(user, Problems, request_cses)
                         update_CSES(user, recommended, request_cses)
                     except BaseException as e:
-                        print('Fallo aca: ' + str(e))
-                        print("Error? Con el usuario {} ({}) al llamar update_CSES".format(cuenta[0].CSES_Handle, user))               
+                        print("Error? Con el usuario {} ({}) al llamar update_CSES. Error: {}".format(cuenta[0].CSES_Handle, user, str(e)))               
                 except BaseException as e:
-                    print('Fallo aca: ' + str(e))
+                    print("Error en update_ranking: {}".format(str(e)))
 
 """
 Script para testear esta función y medir tiempo

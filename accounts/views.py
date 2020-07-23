@@ -20,9 +20,8 @@ def accounts(request):
         #Fecha y hora actual
         fechaNow=int(datetime.datetime.now().timestamp())
 
-        print("Recibida la peticion para {} con tiempo {}".format(CF_Handle_Input, fechaNow))
         #Asíncrono para validar las cuentas
-        validarCuentaCodeforces.apply_async((CF_Handle_Input, request.user.id, request.user.username, fechaNow), countdown=20)
+        validarCuentaCodeforces.apply_async((CF_Handle_Input, request.user.id, request.user.username, fechaNow), countdown=360)
         validarCuentaOIAJ.apply_async((OIAJ_Handle_Input, request.user.id, request.user.username, fechaNow), countdown=361)
         actualizarCuentaCSES.apply_async((CSES_Handle_Input, request.user.id, request.user.username, fechaNow), countdown=362)
 
