@@ -1,16 +1,10 @@
 1) Activar entorno virtual
 2) Seleccionar el interprete de python del entorno local
 3) python manage.py runserver 8000
-4) celery -A logik worker -l info
-
-
-5) celery -A logik beat
-
-
+4) celery -A logik worker -l info --pidfile= 
+5) celery -A logik beat --pidfile= 
 6) python manage.py collectstatic
-
 7) python manage.py makemigrations
-
 
 8) python manage.py migrate
 9) Testear update_ranking

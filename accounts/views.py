@@ -18,10 +18,11 @@ def accounts(request):
         CSES_Handle_Input=request.POST['CSES_Handle']
 
         #Fecha y hora actual
-        fechaNow=datetime.datetime.now()
+        fechaNow=int(datetime.datetime.now().timestamp())
 
+        print("Recibida la peticion para {} con tiempo {}".format(CF_Handle_Input, fechaNow))
         #Asíncrono para validar las cuentas
-        validarCuentaCodeforces.apply_async((CF_Handle_Input, request.user.id, request.user.username, fechaNow), countdown=360)
+        validarCuentaCodeforces.apply_async((CF_Handle_Input, request.user.id, request.user.username, fechaNow), countdown=20)
         validarCuentaOIAJ.apply_async((OIAJ_Handle_Input, request.user.id, request.user.username, fechaNow), countdown=361)
         actualizarCuentaCSES.apply_async((CSES_Handle_Input, request.user.id, request.user.username, fechaNow), countdown=362)
 
