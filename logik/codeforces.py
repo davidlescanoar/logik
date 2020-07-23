@@ -47,7 +47,7 @@ def update_Codeforces(user, database, request_cf):
 
 @shared_task
 def validarCuentaCodeforces(CF_Handle_Input, UserID, Logik_Handle, timeInit):
-    request_cf = submissions_codeforces(CF_Handle_Input, 2000000)
+    request_cf = submissions_codeforces(CF_Handle_Input)
 
     if not(request_cf and str(request_cf)!='ERROR' and request_cf['status'] and request_cf['status']=='OK'):
         raise ValueError("Error al llamar a API de Codeforces")
@@ -64,8 +64,9 @@ def validarCuentaCodeforces(CF_Handle_Input, UserID, Logik_Handle, timeInit):
                 print("Usuario {} asoció su handle de codeforces: {}".format(Logik_Handle, CF_Handle_Input))
 
                 try:
-                    update_Codeforces(Logik_Handle, Problems, request_cf)
-                    update_Codeforces(Logik_Handle, recommended, request_cf)
+                    request_cf2 = submissions_codeforces(CF_Handle_Input, 2000000)
+                    update_Codeforces(Logik_Handle, Problems, request_cf2)
+                    update_Codeforces(Logik_Handle, recommended, request_cf2)
                     
                     print("Usuario {} actualizo correctamente los submissions de codeforces: {}".format(Logik_Handle, CF_Handle_Input))
                 except BaseException as e:

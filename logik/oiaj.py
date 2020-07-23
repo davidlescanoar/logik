@@ -81,7 +81,7 @@ def submissions_OIAJ(user_handle):
     url = "http://juez.oia.unsam.edu.ar/api/user"
 
     #Parámetros
-    payload = '{\n    \"action\": \"get\",\n    \"username\":\"'+user_handle+'\"\n}'
+    payload = '{"action": "get", "username": "' + user_handle + '"}'
     headers = {
     'Content-Type': 'application/json',
     'Cookie': '__cfduid=d7719a9f82edfdbfb79cffbe9600b07ff1590280585'
@@ -90,7 +90,6 @@ def submissions_OIAJ(user_handle):
     #Intentamos hacer la query
     try: 
         response = requests.request("POST", url, headers=headers, data = payload, timeout=2)
-        #Devuelvo en JSON
         return response.json()
     except BaseException as e:
         raise ValueError("Funcion API: submissions_OIAJ. Error: {}".format(str(e)))
