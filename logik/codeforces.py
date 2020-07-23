@@ -28,6 +28,7 @@ def submissions_codeforces(user_handle, count=20):
     except BaseException as e:
         raise ValueError("Funcion API: submissions_codeforces. Error: {}".format(str(e)))
 
+
 def update_Codeforces(user, database, request_cf):
     if not(request_cf and str(request_cf)!='ERROR' and request_cf['status'] and request_cf['status']=='OK'):
         raise ValueError("Error al llamar a API de Codeforces")
@@ -44,6 +45,7 @@ def update_Codeforces(user, database, request_cf):
         except:
             solved_by[str(user)]=100 # Actualizo score
         database.objects.filter(problem_link=p.problem_link).update(solvedBy=json.dumps(solved_by)) # Hago el update en la DB
+
 
 @shared_task
 def validarCuentaCodeforces(CF_Handle_Input, UserID, Logik_Handle, timeInit):
@@ -66,11 +68,9 @@ def validarCuentaCodeforces(CF_Handle_Input, UserID, Logik_Handle, timeInit):
                         Account.objects.create(AccountID=UserID, Logik_Handle=Logik_Handle, CF_Handle=CF_Handle_Input, OIAJ_Handle='', CSES_Handle='')
 
                     print("Usuario {} asoció su handle de codeforces: {}".format(Logik_Handle, CF_Handle_Input))
-
-                    request_cf2 = submissions_codeforces(CF_Handle_Input, 2000000)
+                    request_cf2 = submissions_codeforces(CF_Handle_Input, count=2000000)
                     update_Codeforces(Logik_Handle, Problems, request_cf2)
                     update_Codeforces(Logik_Handle, recommended, request_cf2)
-                        
                     print("Usuario {} actualizo correctamente todos los submissions de codeforces: {}".format(Logik_Handle, CF_Handle_Input))
                     
                     return

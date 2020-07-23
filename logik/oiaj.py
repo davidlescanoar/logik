@@ -17,6 +17,33 @@ from django.contrib.auth.models import User
 from problems.models import Problems
 from recommended.models import recommended
 
+#Devuelve lista de problemas que submiteó determinado usuario en OIAJ
+def submissions_OIAJ(user_handle):
+    url = "http://juez.oia.unsam.edu.ar/api/user"
+    payload = {"action":"get", "username": user_handle}
+    headers = {"Content-Type": "application/json;charset=UTF-8"}
+    #Intentamos hacer la query
+    try: 
+        response = requests.request("POST", url, headers=headers, data=json.dumps(payload), timeout=2)
+        return response.json()
+    except BaseException as e:
+        raise ValueError("Funcion API: submissions_OIAJ. Error: {}".format(str(e)))
+
+
+def update_OIAJ(user, database, request_oiaj):
+    if not(request_oiaj and 'scores' in request_oiaj):
+        raise ValueError("Error al llamar a API de OIAJ")
+
+    envios = request_oiaj['scores']
+    problemas = database.objects.filter(judge = 'OIAJ')
+    validos = [(p, r['score']) for p in problemas for r in envios if p.problem_link.split('/')[5] == r['name']]
+    
+    for p in validos:
+        solved_by = json.loads(p[0].solvedBy) # Convierto a dict
+        solved_by[str(user)] = p[1] # Actualizo score
+        database.objects.filter(problem_link=p[0].problem_link).update(solvedBy=json.dumps(solved_by)) # Hago el update en la DB
+
+
 #Validar usuario de OIAJ
 @shared_task
 def validarCuentaOIAJ(OIAJ_Handle_Input, UserID, Logik_Handle, timeInicio):
@@ -44,32 +71,10 @@ def validarCuentaOIAJ(OIAJ_Handle_Input, UserID, Logik_Handle, timeInicio):
                     Account.objects.create(AccountID=UserID, Logik_Handle=Logik_Handle, CF_Handle='', OIAJ_Handle=OIAJ_Handle_Input, CSES_Handle='')
                 
                 print("Usuario {} asoció su handle de OIAJ: {}".format(Logik_Handle, OIAJ_Handle_Input))
+                request_oiaj = submissions_OIAJ(OIAJ_Handle_Input)
+                update_OIAJ(Logik_Handle, Problems, request_oiaj)
+                update_OIAJ(Logik_Handle, recommended, request_oiaj)
+                print("Usuario {} actualizo correctamente todos los submissions de OIAJ: {}".format(Logik_Handle, OIAJ_Handle_Input))
                 return
     except BaseException as e:
         raise ValueError("Error al asociar cuenta de OIAJ: {}".format(str(e)))
-
-#Devuelve lista de problemas que submiteó determinado usuario en OIAJ
-def submissions_OIAJ(user_handle):
-    url = "http://juez.oia.unsam.edu.ar/api/user"
-    payload = {"action":"get", "username": user_handle}
-    headers = {"Content-Type": "application/json;charset=UTF-8"}
-    #Intentamos hacer la query
-    try: 
-        response = requests.request("POST", url, headers=headers, data=json.dumps(payload), timeout=2)
-        return response.json()
-    except BaseException as e:
-        raise ValueError("Funcion API: submissions_OIAJ. Error: {}".format(str(e)))
-
-
-def update_OIAJ(user, database, request_oiaj):
-    if not(request_oiaj and 'scores' in request_oiaj):
-        raise ValueError("Error al llamar a API de OIAJ")
-
-    envios = request_oiaj['scores']
-    problemas = database.objects.filter(judge = 'OIAJ')
-    validos = [(p, r['score']) for p in problemas for r in envios if p.problem_link.split('/')[5] == r['name']]
-    
-    for p in validos:
-        solved_by = json.loads(p[0].solvedBy) # Convierto a dict
-        solved_by[str(user)] = p[1] # Actualizo score
-        database.objects.filter(problem_link=p[0].problem_link).update(solvedBy=json.dumps(solved_by)) # Hago el update en la DB

@@ -17,22 +17,6 @@ from django.contrib.auth.models import User
 from problems.models import Problems
 from recommended.models import recommended
 
-#Actualizar cuenta de CSES
-@shared_task
-def actualizarCuentaCSES(CSES_Handle_Input, UserID, Logik_Handle, fNow):
-    if len(str(CSES_Handle_Input)) < 1:
-        return "Campo CSES_Handle_Input vacio"
-
-    try:
-        if Account.objects.filter(AccountID=UserID).exists():
-            Account.objects.filter(AccountID=UserID).update(CSES_Handle=CSES_Handle_Input)
-        #Si no existía en la DB, lo inserto
-        else:
-            Account.objects.create(AccountID=UserID, Logik_Handle=Logik_Handle, CF_Handle='', OIAJ_Handle='', CSES_Handle=CSES_Handle_Input)
-        print("Usuario {} asoció su handle de CSES: {}".format(Logik_Handle, CSES_Handle_Input))
-    except BaseException as e:
-        raise ValueError("Error al asociar cuenta de CSES: {}".format(str(e)))
-
 def submissions_CSES(CSES_ID):
     try:
         CSES_URL = 'https://cses.fi/problemset/user/'+str(CSES_ID)+'/'
@@ -42,6 +26,7 @@ def submissions_CSES(CSES_ID):
         return accepted
     except BaseException as e:
         raise ValueError("Funcion API: submissions_CSES. Error: {}".format(str(e)))
+
 
 def update_CSES(user, database, envios):
     if not envios:
@@ -54,3 +39,25 @@ def update_CSES(user, database, envios):
         solved_by = json.loads(p[0].solvedBy) # Convierto a dict
         solved_by[str(user)] = p[1] # Actualizo score
         database.objects.filter(problem_link=p[0].problem_link).update(solvedBy=json.dumps(solved_by)) # Hago el update en la DB
+
+
+#Actualizar cuenta de CSES
+@shared_task
+def actualizarCuentaCSES(CSES_Handle_Input, UserID, Logik_Handle, fNow):
+    if len(str(CSES_Handle_Input)) < 1:
+        return "Campo CSES_Handle_Input vacio"
+
+    try:
+        if Account.objects.filter(AccountID=UserID).exists():
+            Account.objects.filter(AccountID=UserID).update(CSES_Handle=CSES_Handle_Input)
+        #Si no existía en la DB, lo inserto
+        else:
+            Account.objects.create(AccountID=UserID, Logik_Handle=Logik_Handle, CF_Handle='', OIAJ_Handle='', CSES_Handle=CSES_Handle_Input)
+
+        print("Usuario {} asoció su handle de CSES: {}".format(Logik_Handle, CSES_Handle_Input))
+        request_cses = submissions_CSES(CSES_Handle_Input)
+        update_CSES(Logik_Handle, Problems, request_cses)
+        update_CSES(Logik_Handle, recommended, request_cses)
+        print("Usuario {} actualizo correctamente todos los submissions de CSES: {}".format(Logik_Handle, CSES_Handle_Input))
+    except BaseException as e:
+        raise ValueError("Error al asociar cuenta de CSES: {}".format(str(e)))
