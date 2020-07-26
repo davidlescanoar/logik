@@ -6,6 +6,9 @@ import json
 
 # Create your views here.
 
+#Constantes
+cantidad_problemas=12
+
 #Vista de contest
 def contest(request):
     return render(request, 'contests.html')
@@ -53,8 +56,68 @@ def contestManager(request):
     #Render
     return render(request, 'contestManager.html', {'contests':contests})
 
+#Funcion para extraer problemas del JSON del contest
+def extraerProblemasDeContest(JSON):
+    #Lista de problemas del contest
+    listaProblemas=[]
+    #Por cada problema extraemos sus datos
+    for problema in JSON:
+        #Insertamos el problema en la lista
+        listaProblemas.append((problema['problem_name'], problema['problem_link'], problema['problem_judge']))
+    #Si la lista tiene menos de 12 problemas, rellenamos sin valores
+    while(len(listaProblemas)<12):
+        #Dejamos los campos vacios
+        listaProblemas.append(('','',''))
+    #Devolvemos la lista de problemas
+    return listaProblemas
+
 #Editar contest
 def editContest(request):
+    #Si es POST, modificamos los datos y redireccionamos a contestManager
+    if request.method=='POST':
+        #Nombre original del contest
+        contest_name_original=''
+        #Si tengo los datos que envía contestManager
+        if 'editContest' in request.session:
+            #Contest name
+            contest_name_original=request.session['editContest']
+        #Nombre del contest a modificar
+        contest_name=request.POST['contest_name']
+        #Duración en minutos del contest a modificar
+        contest_length=request.POST['contest_length']
+        #Nombres de los problemas del contest a modificar
+        problem_names=request.POST.getlist('problem_name')
+        #Links de los problemas del contest a modificar
+        problem_links=request.POST.getlist('problem_link')
+        #Jueces de los problemas del contest a modificar
+        problem_judges=request.POST.getlist('Online-Judge')
+        #Traigo la lista de contest de la base de datos
+        contests=Contest.objects.all()
+        #Miro la lista de contest para buscar el que quiero editar
+        for contest in contests:
+            #Lo paso a JSON
+            JSON=json.loads(contest.contest_info)
+            #Si coincide con el nombre del contest que se quiere editar
+            if JSON['contest_name']==contest_name_original:
+                #Cambiamos el nombre del contest
+                JSON['contest_name']=contest_name
+                #Cambiamos la duración en minutos del contest
+                JSON['contest_length']=contest_length
+                #Iteramos por cada uno de los cantidad_problemas problemas para actualizar sus datos
+                for problema in range(cantidad_problemas):
+                    #Actualizamos nombre de problema
+                    JSON['problems'][problema]['problem_name']=problem_names[problema]
+                    #Actualizamos link de problema
+                    JSON['problems'][problema]['problem_link']=problem_links[problema]
+                    #Actualizamos juez de problema
+                    JSON['problems'][problema]['problem_judge']=problem_judges[problema]
+                #Actualizo los datos del contest en la base de datos
+                Contest.objects.filter(contest_info=contest.contest_info).update(contest_info=json.dumps(JSON))
+                #Dejamos de iterar porque ya editamos el contest
+                break
+        #Datos de contest actualizado, redirecciono a página de contestManager
+        return redirect("/contestManager")
+
     #Parámetros a pasarle al html
     datosContest=[]
     #Si tengo los datos que envía contestManager
@@ -69,8 +132,12 @@ def editContest(request):
             JSON=json.loads(contest.contest_info)
             #Si coincide con el nombre del contest que se quiere editar
             if JSON['contest_name']==contest_name:
-                #Pasamos los datos a 'datosContest'
-                datosContest=(JSON['contest_name'], JSON['contest_length'])
+                #Ponemos en la lista el nombre del contest
+                datosContest.append(JSON['contest_name'])
+                #Ponemos en la lista la duración en minutos del contest
+                datosContest.append(JSON['contest_length'])
+                #Ponemos en la lista los problemas del contest
+                datosContest.append(extraerProblemasDeContest(JSON['problems']))
                 #Dejamos de iterar porque ya encontramos el contest
                 break
     #Render
