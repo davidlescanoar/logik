@@ -29,7 +29,7 @@ def vaciarSolvedBy():
     
 #Periodic-task
 @shared_task
-def update_ranking():
+def update_ranking(CF_submissions_count = 20):
     #Usuarios
     users=User.objects.all()
 
@@ -54,7 +54,7 @@ def update_ranking():
             if cuenta[0].CF_Handle:
                 print("Llamando a la funcion update_Codeforces para user {} ({})".format(cuenta[0].CF_Handle, user))
                 try:
-                    request_cf = submissions_codeforces(cuenta[0].CF_Handle)
+                    request_cf = submissions_codeforces(cuenta[0].CF_Handle, CF_submissions_count)
                     try:
                         update_Codeforces(user, Problems, request_cf)
                         update_Codeforces(user, recommended, request_cf)
@@ -84,10 +84,22 @@ python manage.py shell
 
 from timeit import default_timer as timer
 from logik.tasks import update_ranking as f
-
 start = timer()
 f.apply()
 end = timer()
 print(end - start)
 
 """
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+@receiver(post_save, sender=Problems, dispatch_uid="update_solved_new_problem")
+def update_solved_new_problem(sender, instance, **kwargs):
+    print("Llamando a update_ranking porque agregue un problema nuevo")
+    update_ranking.apply_async([200000], countdown=10)
+
+@receiver(post_save, sender=recommended, dispatch_uid="update_solved_new_recommended")
+def update_solved_new_recommended(sender, instance, **kwargs):
+    print("Llamando a update_ranking porque agregue un recomendado nuevo")
+    update_ranking.apply_async([200000], countdown=10)
