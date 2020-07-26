@@ -20,6 +20,7 @@ from accounts.views import accounts
 from problems.views import problems
 from ranking.views import ranking
 from recommended.views import recommended
+from contest.views import contest, contestManager, editContest
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -33,4 +34,7 @@ urlpatterns = [
     path('problems/', problems),
     path('ranking/', ranking),
     path('recommended/', recommended),
+    path('contests/', contest),
+    path('contestManager/', contestManager),
+    path('editContest/', editContest),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

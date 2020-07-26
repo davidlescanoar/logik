@@ -1,0 +1,31 @@
+.editContest form
+{
+    width: 100%;
+    padding:30px;
+    background-color: #FFFFFF !important;
+    border-radius: 5px;
+}
+
+.editContest hr 
+{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 5px solid rgba(93, 108, 255, 1);
+}
+
+.editContest h1
+{
+    color: #5D6CFF !important;
+    display: inline;
+}
+
+.editContest small
+{
+    color: #5D6CFF !important;
+}
+
+.headerForm a
+{
+    float: right;
+}
