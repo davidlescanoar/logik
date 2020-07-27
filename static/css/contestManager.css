@@ -46,6 +46,12 @@
     font-weight: bold;
 }
 
+.modalButton a
+{
+    padding:0;
+    margin:0;
+}
+
 .modal-content
 {
     background-color: #3B3A49;

@@ -64,8 +64,8 @@ def extraerProblemasDeContest(JSON):
     for problema in JSON:
         #Insertamos el problema en la lista
         listaProblemas.append((problema['problem_name'], problema['problem_link'], problema['problem_judge']))
-    #Si la lista tiene menos de 12 problemas, rellenamos sin valores
-    while(len(listaProblemas)<12):
+    #Si la lista tiene menos de cantidad_problemas problemas, rellenamos sin valores
+    while(len(listaProblemas)<cantidad_problemas):
         #Dejamos los campos vacios
         listaProblemas.append(('','',''))
     #Devolvemos la lista de problemas
@@ -142,3 +142,15 @@ def editContest(request):
                 break
     #Render
     return render(request, 'editContest.html', {'contest':datosContest})
+
+#Crear contest
+def createContest(request):
+    #Creamos datos vacíos para el template de crear contest
+    emptyContest=[]
+    #Agregamos un nombre en blanco
+    emptyContest.append('')
+    #Agregamos 0 minutos como tiempo inicial
+    emptyContest.append(0)
+    #Agregamos la cantidad de problemas vacíos necesaria
+    emptyContest.append(extraerProblemasDeContest(""))
+    return render(request, 'createContest.html', {'contest':emptyContest})
