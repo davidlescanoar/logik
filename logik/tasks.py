@@ -19,6 +19,7 @@ from recommended.models import recommended
 from logik.oiaj import *
 from logik.codeforces import *
 from logik.cses import *
+from logik.spoj import *
 
 def vaciarSolvedBy():
     for p in Problems.objects.all():
@@ -76,7 +77,22 @@ def update_ranking(CF_submissions_count = 20):
                         print("Error con el usuario {} ({}) al llamar update_CSES. Error: {}".format(cuenta[0].CSES_Handle, user, str(e)))               
                 except BaseException as e:
                     print("Error en update_ranking: {}".format(str(e)))
-
+            
+            
+            #Update SPOJ
+            if cuenta[0].SPOJ_Handle:
+                print("Llamando a la funcion update_SPOJ para user {} ({})".format(cuenta[0].SPOJ_Handle, user))
+                try:
+                    request_spoj = submissions_SPOJ(cuenta[0].SPOJ_Handle)
+                    try:
+                        update_SPOJ(user, Problems, request_spoj)
+                        update_SPOJ(user, recommended, request_spoj)
+                    except BaseException as e:
+                        print("Error con el usuario {} ({}) al llamar update_SPOJ. Error: {}".format(cuenta[0].SPOJ_Handle, user, str(e)))               
+                except BaseException as e:
+                    print("Error en update_ranking: {}".format(str(e)))
+            
+            
 """
 Script para testear esta función y medir tiempo
 

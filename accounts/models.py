@@ -8,3 +8,4 @@ class Account(models.Model):
     CF_Handle=models.CharField(max_length=30, blank=True, null=True)
     OIAJ_Handle=models.CharField(max_length=30, blank=True, null=True)
     CSES_Handle=models.IntegerField(blank=True, null=True)
+    SPOJ_Handle=models.CharField(max_length=30, blank=True, null=True)

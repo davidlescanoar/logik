@@ -23,7 +23,8 @@ def submissions_CSES(CSES_ID):
         response = requests.request("GET", CSES_URL, headers = {'Cookie': 'PHPSESSID=83dd884e97206f2e4bb806a8b47ca29a301de0ed'}, data = {}, timeout=2)
         soup = BeautifulSoup(response.content, "html.parser")
         accepted = dict(('https://cses.fi'+x["href"], 100) for x in soup.findAll("a", attrs = {"class" : "full"}))
-        return accepted
+        failed = dict(('https://cses.fi'+x["href"], 0) for x in soup.findAll("a", attrs = {"class" : "zero"}))
+        return {**accepted, **failed}
     except BaseException as e:
         raise ValueError("Funcion API: submissions_CSES. Error: {}".format(str(e)))
 

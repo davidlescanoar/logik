@@ -3,7 +3,8 @@ from django.db import models
 CHOICES = (
    ('OIAJ', 'OIAJ'),
    ('Codeforces', 'Codeforces'),
-   ('CSES', 'CSES')
+   ('CSES', 'CSES'),
+   ('SPOJ', 'SPOJ')
 )
 
 # Create your models here.
