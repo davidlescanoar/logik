@@ -1,5 +1,5 @@
 {
-  "python.pythonPath": "d:\\DATOS\\Documents\\Programacion\\proyectos\\logik\\Scripts\\python.exe",
+  "python.pythonPath": "/home/david/environments/logik/bin/python3.7",
   "____restoreTerminals.artificialDelayMilliseconds": 2000,
   "restoreTerminals.terminals": [
     {
@@ -7,10 +7,8 @@
         {
           "name": "Activar entorno virtual",
           "commands": [
-            "cd..",
-            "cd scripts",
-            "activate",
-            "cd..",
+            "cd ..",
+            "source bin/activate",
             "cd logik"
           ]
         }
@@ -21,10 +19,8 @@
         {
           "name": "Servidor",
           "commands": [
-            "cd..",
-            "cd scripts",
-            "activate",
-            "cd..",
+            "cd ..",
+            "source bin/activate",
             "cd logik",
             "python manage.py runserver 8000"
           ]
@@ -36,10 +32,8 @@
         {
           "name": "Worker",
           "commands": [
-            "cd..",
-            "cd scripts",
-            "activate",
-            "cd..",
+            "cd ..",
+            "source bin/activate",
             "cd logik",
             "celery -A logik worker -l info --pidfile= "
           ]
@@ -51,10 +45,8 @@
         {
           "name": "Beat",
           "commands": [
-            "cd..",
-            "cd scripts",
-            "activate",
-            "cd..",
+            "cd ..",
+            "source bin/activate",
             "cd logik",
             "celery -A logik beat --pidfile= "
           ]
