@@ -15,5 +15,3 @@ Podés acceder a esta página en [http://logik.com.ar/](http://logik.com.ar/)
 - Permitir a un usuario enviar una solución y corregirla automáticamente.
 - Recomendación de problemas automática.
 - Otras funcionalidades a determinar.
-
-### Desarrollado por David Lescano.
