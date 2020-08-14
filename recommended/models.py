@@ -4,7 +4,8 @@ CHOICES = (
    ('OIAJ', 'OIAJ'),
    ('Codeforces', 'Codeforces'),
    ('CSES', 'CSES'),
-   ('SPOJ', 'SPOJ')
+   ('SPOJ', 'SPOJ'),
+   ('OnlineJudge', 'OnlineJudge')
 )
 
 # Create your models here.

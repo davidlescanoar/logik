@@ -41,6 +41,7 @@
                     <li>Si ingresaste tu usuario de OIAJ tenés que enviar un error de compilación al problema: <a href="http://juez.oia.unsam.edu.ar/#/task/es_bisiesto/statement">http://juez.oia.unsam.edu.ar/#/task/es_bisiesto/statement</a></li>
                     <li>Para tu usuario de CSES no es necesaria la verificación.</a></li>
                     <li>Para tu usuario de SPOJ no es necesaria la verificación.</a></li>
+                    <li>Para tu usuario de OnlineJudge no es necesaria la verificación.</a></li>
                 </ul>
                 Atención: Sólo se podrá validar la cuenta si los sitios funcionan correctamente. Tus datos se actualizarán automáticamente habiendo pasado el tiempo que se indicó arriba.
                 </div>
@@ -78,9 +79,18 @@
                 <input type="number" class="form-control" name="CSES_Handle" value="{{cuenta.CSES_Handle}}">
             </div>
 
+            <br/>
+
             <div class="form-group">
-                <label for="CSES_Handle">SPOJ Handle</label>
+                <label for="SPOJ_Handle">SPOJ Handle</label>
                 <input type="text" class="form-control" name="SPOJ_Handle" value="{{cuenta.SPOJ_Handle}}">
+            </div>
+
+            <br/>
+
+            <div class="form-group">
+                <label for="OnlineJudge_Handle">OnlineJudge ID</label>
+                <input type="number" class="form-control" name="OnlineJudge_Handle" value="{{cuenta.OnlineJudge_Handle}}">
             </div>
 
             <br/>

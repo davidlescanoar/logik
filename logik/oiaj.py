@@ -68,7 +68,7 @@ def validarCuentaOIAJ(OIAJ_Handle_Input, UserID, Logik_Handle, timeInicio):
                     Account.objects.filter(AccountID=UserID).update(OIAJ_Handle=OIAJ_Handle_Input)
                 #Si no existía en la DB, lo inserto
                 else:
-                    Account.objects.create(AccountID=UserID, Logik_Handle=Logik_Handle, CF_Handle='', OIAJ_Handle=OIAJ_Handle_Input, CSES_Handle='')
+                    Account.objects.create(AccountID=UserID, Logik_Handle=Logik_Handle, CF_Handle='', OIAJ_Handle=OIAJ_Handle_Input, CSES_Handle='', SPOJ_Handle='', OnlineJudge_Handle='')
                 
                 print("Usuario {} asoció su handle de OIAJ: {}".format(Logik_Handle, OIAJ_Handle_Input))
                 request_oiaj = submissions_OIAJ(OIAJ_Handle_Input)

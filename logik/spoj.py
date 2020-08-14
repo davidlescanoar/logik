@@ -55,7 +55,7 @@ def actualizarCuentaSPOJ(SPOJ_Handle_Input, UserID, Logik_Handle, fNow):
             Account.objects.filter(AccountID=UserID).update(SPOJ_Handle=SPOJ_Handle_Input)
         #Si no existía en la DB, lo inserto
         else:
-            Account.objects.create(AccountID=UserID, Logik_Handle=Logik_Handle, CF_Handle='', OIAJ_Handle='', CSES_Handle=CSES_Handle_Input, SPOJ_Handle=SPOJ_Handle_Input)
+            Account.objects.create(AccountID=UserID, Logik_Handle=Logik_Handle, CF_Handle='', OIAJ_Handle='', CSES_Handle='', SPOJ_Handle=SPOJ_Handle_Input, OnlineJudge_Handle='')
 
         print("Usuario {} asoció su handle de SPOJ: {}".format(Logik_Handle, SPOJ_Handle_Input))
         request_spoj = submissions_SPOJ(SPOJ_Handle_Input)

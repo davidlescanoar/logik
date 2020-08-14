@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from accounts.models import Account
-from logik.tasks import validarCuentaCodeforces, validarCuentaOIAJ, actualizarCuentaCSES, actualizarCuentaSPOJ
+from logik.tasks import validarCuentaCodeforces, validarCuentaOIAJ, actualizarCuentaCSES, actualizarCuentaSPOJ, actualizarCuentaOnlineJudge
 import datetime 
 from datetime import timedelta
 
@@ -15,6 +15,7 @@ def accounts(request):
         OIAJ_Handle_Input=request.POST['OIAJ_Handle']
         CSES_Handle_Input=request.POST['CSES_Handle']
         SPOJ_Handle_Input=request.POST['SPOJ_Handle']
+        OnlineJudge_Handle_Input=request.POST['OnlineJudge_Handle']
 
         #Fecha y hora actual
         fechaNow=int(datetime.datetime.now().timestamp())
@@ -24,6 +25,7 @@ def accounts(request):
         validarCuentaOIAJ.apply_async((OIAJ_Handle_Input, request.user.id, request.user.username, fechaNow), countdown=361)
         actualizarCuentaCSES.apply_async((CSES_Handle_Input, request.user.id, request.user.username, fechaNow), countdown=362)
         actualizarCuentaSPOJ.apply_async((SPOJ_Handle_Input, request.user.id, request.user.username, fechaNow), countdown=363)
+        actualizarCuentaOnlineJudge.apply_async((OnlineJudge_Handle_Input, request.user.id, request.user.username, fechaNow), countdown=364)
 
         request.session['validar']=1
 

@@ -20,6 +20,7 @@ from logik.oiaj import *
 from logik.codeforces import *
 from logik.cses import *
 from logik.spoj import *
+from logik.OnlineJudge import *
 
 def vaciarSolvedBy():
     for p in Problems.objects.all():
@@ -92,6 +93,18 @@ def update_ranking(CF_submissions_count = 20):
                 except BaseException as e:
                     print("Error en update_ranking: {}".format(str(e)))
             
+            #Update OnlineJudge
+            if cuenta[0].OnlineJudge_Handle:
+                print("Llamando a la funcion update_OnlineJudge para user {} ({})".format(cuenta[0].OnlineJudge_Handle, user))
+                try:
+                    request_OnlineJudge = submissions_OnlineJudge(cuenta[0].OnlineJudge_Handle)
+                    try:
+                        update_OnlineJudge(user, Problems, request_OnlineJudge)
+                        update_OnlineJudge(user, recommended, request_OnlineJudge)
+                    except BaseException as e:
+                        print("Error con el usuario {} ({}) al llamar update_OnlineJudge. Error: {}".format(cuenta[0].OnlineJudge_Handle, user, str(e)))               
+                except BaseException as e:
+                    print("Error en update_ranking: {}".format(str(e)))
             
 """
 Script para testear esta función y medir tiempo
