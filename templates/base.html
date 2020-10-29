@@ -22,7 +22,7 @@
   <link rel="stylesheet" href="{% static 'css/navbar.css' %}" />
 
   <!--Icono-->
-  <link rel="icon" type="image/png" href="{% static 'img/caballo.png' %}">
+  <link rel="icon" type="image/png" href="{% static 'img/LogoLogikSolo.png' %}">
 
   <!--Scripts-->
   <script src="https://kit.fontawesome.com/2d8167ed13.js" crossorigin="anonymous"></script>
@@ -36,7 +36,9 @@
     {% if not no_logik_form %}
     <div class="container fixed-top">
       <nav class="navbar navbar-expand-lg">
-        <a class="navbar-brand" href="/">Logik</a>
+        <a class="navbar-brand" href="/">
+          <img src="{% static 'img/LogoLogik.png' %}" class="img-navbar-logik">
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <i class="fas fa-bars fa-2x"></i>
