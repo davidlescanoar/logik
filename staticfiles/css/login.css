@@ -6,8 +6,9 @@ html, body
     margin: 0;
     padding: 0;
 
-    background: rgb(10,10,10);
-    background: linear-gradient(118deg, rgba(10,10,10,1) 26%, rgba(25,26,37,1) 100%);
+    /*background: rgb(10,10,10);
+    background: linear-gradient(118deg, rgba(10,10,10,1) 26%, rgba(25,26,37,1) 100%);*/
+    background-color: white;
 }
 
 .login-form-logik p
@@ -52,7 +53,8 @@ html, body
 {
     height: 40px;
 
-    outline-color: #070611;
+    /*outline-color: #070611;*/
+    outline-color: black;
 }
 
 .logik-login
@@ -65,10 +67,10 @@ html, body
 
     border-radius: 7px;
 
-    color: #EFEEFF;
+    color: black;
 }
 
 .logik-login a
 {
-    color: #EFEEFF !important;
+    color: black !important;
 }

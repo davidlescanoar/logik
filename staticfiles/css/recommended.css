@@ -24,14 +24,14 @@
 
 .modal-content
 {
-    background-color: #2D50FF;
+    
 
-    color:white;
+    color:black;
 }
 
 .modal-content h5>span
 {
-    color: #1CFF00;
+    color: #6498FF;
 
     font-weight: bold;
 }
@@ -48,21 +48,16 @@
 
 .recommended h2
 {
-    color: white;
+    color: black;
 
     margin-bottom: 0;
 }
 
-.titulo
-{
-    background-color: #2E3038;
-}
-
 .recommended td>a
 {
-    color: white;
+    color: black;
 
-    transition: .3s;
+    transition: .2s;
 
     text-decoration: none;
 }
@@ -98,8 +93,6 @@
 
 .nav-tabs li
 {
-    background-color: #2E3038;
-
     border-radius: 5px 5px 0px 0px;
 
     border: 0;
@@ -107,9 +100,9 @@
 
 .nav-tabs li .active
 {
-    background-color: #2E3038 !important;
+    color: black !important;
 
-    color: white !important;
+    font-weight: bold;
 
     border: 0;
 }

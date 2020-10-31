@@ -5,21 +5,21 @@
 
 .problems h2
 {
-    color: white;
+    color: black;
 
     margin-bottom: 0;
 }
 
 .titulo
 {
-    background-color: #2E3038;
+    color: black !important;
 }
 
 .problems td>a
 {
-    color: white;
+    color: black;
 
-    transition: .3s;
+    transition: .2s;
 
     text-decoration: none;
 }
@@ -48,7 +48,7 @@
 
 .display-puntaje
 {
-    color: black;
+    color: white;
 
     border-radius: 20px;
 }

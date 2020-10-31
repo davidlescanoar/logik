@@ -19,6 +19,7 @@ from users.views import welcome, login, logout, register
 from accounts.views import accounts
 from problems.views import problems
 from ranking.views import ranking
+from tutorial.views import tutorial,leerTutorial
 from recommended.views import recommended
 from contest.views import contest, contestManager, editContest, createContest
 from django.conf import settings
@@ -38,4 +39,6 @@ urlpatterns = [
     path('contestManager/', contestManager),
     path('editContest/', editContest),
     path('createContest/', createContest),
+    path('tutorial/', tutorial),
+    path('tutorial/<int:id_tutorial>/', leerTutorial),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

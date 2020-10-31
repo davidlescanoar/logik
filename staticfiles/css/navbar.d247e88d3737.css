@@ -21,7 +21,7 @@ html, body
 .navbar li>a
 {
     /*color: #EFEEFF !important;*/
-    color: black;
+    color: #0000FF;
     
     font-size: 17px;
 
@@ -30,7 +30,7 @@ html, body
 
 .navbar li a:hover, .navbar-brand:hover
 {
-    color: blue !important;
+    color: #FF3030 !important;
     font-weight: bold;
 }
 
@@ -47,7 +47,7 @@ html, body
 
 .navbar-toggler
 {
-    color: #E30037 !important;
+    color: #EFEEFF !important;
 }
 
 .navbar-usuario_logeado  span
