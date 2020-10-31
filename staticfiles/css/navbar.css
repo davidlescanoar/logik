@@ -6,28 +6,32 @@ html, body
     margin: 0;
     padding: 0;
 
-    background-color: rgba(25,26,37,1);
+    /*background-color: rgba(25,26,37,1);*/
+    background-color: white;
 }
 
 .navbar
 {
     font-family: 'Poppins', sans-serif;
 
-    background-color: rgba(25,26,37,1);
+    /*background-color: rgba(25,26,37,1);*/
+    background-color: white;
 }
 
 .navbar li>a
 {
-    color: #EFEEFF !important;
+    /*color: #EFEEFF !important;*/
+    color: black;
     
-    font-size: 18px;
+    font-size: 17px;
 
-    transition: .5s;
+    transition: .2s;
 }
 
 .navbar li a:hover, .navbar-brand:hover
 {
-    color: #FF3030 !important;
+    color: blue !important;
+    font-weight: bold;
 }
 
 .navbar-brand
@@ -43,21 +47,21 @@ html, body
 
 .navbar-toggler
 {
-    color: #EFEEFF !important;
+    color: #E30037 !important;
 }
 
 .navbar-usuario_logeado  span
 {
-    color: #7E8AFF !important;
+    color: #FF003E !important;
 
-    font-size: 18px;
+    font-size: 17px;
 
     margin-left: 50px;
 }
 
 .navbar-usuario_logout span
 {
-    color: #FFFD88 !important;
+    color: #FF9300 !important;
 
     font-size: 15px;
 }
@@ -68,10 +72,11 @@ html, body
     margin-top:1px;
     padding-top: 10px;
     padding-right: 10px;
-    background: rgb(10,10,10);
+    /*background: rgb(10,10,10);*/
+    background-color: white;
 }
 
 .img-navbar-logik
 {
-    width: 150px;
+    width: 100px;
 }

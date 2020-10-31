@@ -34,7 +34,7 @@
 <body>
   <header>
     {% if not no_logik_form %}
-    <div class="container fixed-top">
+    <div class="container">
       <nav class="navbar navbar-expand-lg">
         <a class="navbar-brand" href="/">
           <img src="{% static 'img/LogoLogik.png' %}" class="img-navbar-logik">
@@ -58,6 +58,9 @@
             </li>
             <li class="nav-item ml-auto align-self-center">
               <a class="nav-link" href="/ranking">Ranking</a>
+            </li>
+            <li class="nav-item ml-auto align-self-center">
+              <a class="nav-link" href="/tutorial">Tutoriales</a>
             </li>
             <li class="nav-item ml-auto align-self-center">
               <a class="nav-link" href="/accounts">Cuentas conectadas</a>
@@ -90,7 +93,7 @@
   {% block content %}
 
   {% endblock %}
-
+  
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"

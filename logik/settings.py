@@ -47,7 +47,9 @@ INSTALLED_APPS = [
     'blacklist',
     'recommended',
     'contest',
+    'tutorial',
     'django_celery_beat',
+    'django_tex',
 ]
 
 MIDDLEWARE = [
@@ -76,6 +78,12 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
         },
+    },
+    {
+        'NAME': 'tex',
+        'BACKEND': 'django_tex.engine.TeXEngine', 
+        'APP_DIRS': True,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
     },
 ]
 
