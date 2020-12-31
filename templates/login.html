@@ -2,34 +2,78 @@
 
 {% load static %}
 
-{% block extra_head %}
-<link rel="stylesheet" href="{% static 'css/login.css' %}" />
-{% endblock %}
-
 <!--Título-->
 {% block title %} Login {% endblock %}
 
 <!--Contenido-->
 {% block content %}
-<div class="container logik-login">
-  <h1 class="text-center">Iniciar sesión</h1>
+    <div class="d-flex align-items-center h-100 logik-primary-gradient">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4 mx-auto logik-white-bg p-5 logik-rounded-div">
+                    <div class="text-center mb-4">
+                        <img src="{% static 'img/LogoLogik.png' %}" class="w-50">
+                    </div>
+                    <h2 class="text-center mb-4 logik-red-letter"><strong>Ingresá en tu cuenta</strong></h2>
 
-  <br />
+                    {% if form.errors %}
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger">
+                                    <small><strong>{{ error|escape }}</strong></small>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                <small><strong>{{ error|escape }}</strong></small>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
 
-  <div class="login-form-logik container">
-    <form method="POST">
-      <div class="form-group">
-        {{ form.as_p }}
-        {% csrf_token %}
-      </div>
+                    <div class="text-center">
+                        <form method="POST">
+                            <div class="form-group">
+                                {% csrf_token %}
+                                <div class="input-group mb-4">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text logik-transparent-bg logik-red-letter"
+                                              id="basic-addon1"><i
+                                                class="fas fa-user"></i></span>
+                                    </div>
+                                    <input id="id_username" name="username"
+                                           type="text" class="form-control p-3"
+                                           placeholder="Nombre de usuario">
+                                </div>
 
-      <div class="container text-center">
-        <button class="btn btn-dark" type="submit">Login</button>
-      </div>
-    </form>
-  </div>
+                                <div class="input-group mb-4">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text logik-transparent-bg logik-red-letter"
+                                              id="basic-addon1"><i
+                                                class="fas fa-lock"></i></span>
+                                    </div>
+                                    <input id="id_password" name="password"
+                                           type="password" class="form-control p-3"
+                                           placeholder="Contraseña">
+                                </div>
 
-  <hr />
-  <a href="/register">Registrar usuario</a>
-</div>
+                                <button class="btn logik-primary-gradient mb-4 py-3 btn-block logik-pill-btn border-0"
+                                        type="submit">
+                                    <h3 class="m-0"><strong class="logik-white-letter">Login</strong></h3>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <hr class="mb-4"/>
+
+                    <span class="logik-gray-letter">
+                        ¿Primera vez en Logik?
+                        <a href="/register" class="logik-blue-letter"><strong>Registrar usuario</strong></a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
 {% endblock %}

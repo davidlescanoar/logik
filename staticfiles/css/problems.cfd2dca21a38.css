@@ -1,0 +1,63 @@
+.problems
+{
+    padding-top: 60px;
+}
+
+.problems h2
+{
+    color: black;
+
+    margin-bottom: 0;
+}
+
+.titulo
+{
+    color: black !important;
+}
+
+.problems td>a
+{
+    color: black;
+
+    transition: .2s;
+
+    text-decoration: none;
+}
+
+.problems td>a:hover
+{
+    color: #FF3030;
+
+    font-weight: bold;
+}
+
+.fila-roja
+{
+    background-color: #FF5D1C !important;
+}
+
+.fila-verde
+{
+    background-color: #81FF5E !important;
+}
+
+.fila-amarilla
+{
+    background-color: #F8FF22 !important;
+}
+
+.display-puntaje
+{
+    color: white;
+
+    border-radius: 20px;
+}
+
+.badge
+{
+    margin-left: 5px;
+    padding:5px;
+    background-color: #1E217E !important;
+    color: #FF1236 !important;
+    font-size: 14px;
+}
