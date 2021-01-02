@@ -9,21 +9,14 @@
 {% block content %}
     <div class="d-flex align-items-center h-100 logik-primary-gradient">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-4 mx-auto logik-white-bg p-5 logik-rounded-div">
+            <div class="row logik-primary-gradient">
+                <div class="col-md-4 mx-auto logik-white-bg p-4 logik-rounded-div">
                     <div class="text-center mb-4">
                         <img src="{% static 'img/LogoLogik.png' %}" class="w-50">
                     </div>
-                    <h2 class="text-center mb-4 logik-red-letter"><strong>Ingresá en tu cuenta</strong></h2>
+                    <h2 class="text-center mb-4 logik-red-letter"><strong>Ingresá a tu cuenta</strong></h2>
 
                     {% if form.errors %}
-                        {% for field in form %}
-                            {% for error in field.errors %}
-                                <div class="alert alert-danger">
-                                    <small><strong>{{ error|escape }}</strong></small>
-                                </div>
-                            {% endfor %}
-                        {% endfor %}
                         {% for error in form.non_field_errors %}
                             <div class="alert alert-danger">
                                 <small><strong>{{ error|escape }}</strong></small>
@@ -31,39 +24,49 @@
                         {% endfor %}
                     {% endif %}
 
-                    <div class="text-center">
-                        <form method="POST">
-                            <div class="form-group">
-                                {% csrf_token %}
-                                <div class="input-group mb-4">
-                                    <div class="input-group-prepend">
+                    <form method="POST">
+                        <div class="form-group">
+                            {% csrf_token %}
+                            <div class="input-group mb-1">
+                                <div class="input-group-prepend">
                                         <span class="input-group-text logik-transparent-bg logik-red-letter"
                                               id="basic-addon1"><i
                                                 class="fas fa-user"></i></span>
-                                    </div>
-                                    <input id="id_username" name="username"
-                                           type="text" class="form-control p-3"
-                                           placeholder="Nombre de usuario">
                                 </div>
+                                <input id="id_username" name="username"
+                                       type="text" class="form-control p-3"
+                                       placeholder="Nombre de usuario">
+                            </div>
 
-                                <div class="input-group mb-4">
-                                    <div class="input-group-prepend">
+                            <div class="mb-4">
+                                {% for error in form.username.errors %}
+                                    <small class="text-danger"><strong>{{ error }}</strong></small>
+                                {% endfor %}
+                            </div>
+
+                            <div class="input-group mb-1">
+                                <div class="input-group-prepend">
                                         <span class="input-group-text logik-transparent-bg logik-red-letter"
                                               id="basic-addon1"><i
                                                 class="fas fa-lock"></i></span>
-                                    </div>
-                                    <input id="id_password" name="password"
-                                           type="password" class="form-control p-3"
-                                           placeholder="Contraseña">
                                 </div>
-
-                                <button class="btn logik-primary-gradient mb-4 py-3 btn-block logik-pill-btn border-0"
-                                        type="submit">
-                                    <h3 class="m-0"><strong class="logik-white-letter">Login</strong></h3>
-                                </button>
+                                <input id="id_password" name="password"
+                                       type="password" class="form-control p-3"
+                                       placeholder="Contraseña">
                             </div>
-                        </form>
-                    </div>
+
+                            <div class="mb-4">
+                                {% for error in form.password.errors %}
+                                    <small class="text-danger"><strong>{{ error }}</strong></small>
+                                {% endfor %}
+                            </div>
+
+                            <button class="btn logik-primary-gradient mb-4 py-3 btn-block logik-pill-btn border-0"
+                                    type="submit">
+                                <h3 class="m-0"><strong class="logik-white-letter">Login</strong></h3>
+                            </button>
+                        </div>
+                    </form>
 
                     <hr class="mb-4"/>
 
@@ -74,6 +77,5 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 {% endblock %}
