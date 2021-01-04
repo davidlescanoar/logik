@@ -3,14 +3,18 @@
 .logik-white-letter{ color: #FFFFFF; !important; }
 .logik-blue-letter{ color: #2064AD; !important; }
 .logik-red-letter{ color: #C7233F; !important; }
+.logik-light-gray-letter{ color: #B3B3B3; !important; }
 .logik-gray-letter{ color: #717171; !important; }
+.logik-green-letter{ color: #20D800; !important; }
 
 /* Background */
 .logik-transparent-bg{background: rgba(0,0,0,0);}
 .logik-white-bg{ background: #FFFFFF; !important; }
 .logik-blue-bg{ background: #2064AD; !important; }
 .logik-red-bg{ background: #C7233F; !important; }
+.logik-light-gray-bg{ background: #B3B3B3; !important; }
 .logik-gray-bg{ background: #717171; !important; }
+.logik-green-bg{ background: #20D800; !important; }
 
 /* Gradient */
 .logik-primary-gradient{

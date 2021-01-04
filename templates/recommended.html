@@ -2,143 +2,142 @@
 
 {% load static %}
 
-{% block extra_head %}
-<link rel="stylesheet" href="{% static 'css/recommended.css' %}" />
-{% endblock %}
-
 <!--Título-->
 {% block title %} Recomendados {% endblock %}
 
 <!--Contenido-->
 {% block content %}
-<div class="container recommended">
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" id="problems-tab" data-toggle="tab" href="#problems" role="tab"
-                aria-controls="problems" aria-selected="true">Problemas</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="ranking-tab" data-toggle="tab" href="#ranking" role="tab" aria-controls="ranking"
-                aria-selected="false">Ranking</a>
-        </li>
-    </ul>
-    <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="problems" role="tabpanel" aria-labelledby="problems-tab">
-            <div class="text-center">
-                <br />
-                <h2>Problemas recomendados</h2>
-                <br />
-            </div>
+    <div class="container recommended">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="problems" data-toggle="tab" href="#problems" role="tab"
+                   aria-controls="problems" aria-selected="true">Problemas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="ranking" data-toggle="tab" href="#ranking" role="tab" aria-controls="ranking"
+                   aria-selected="false">Ranking</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="problems" role="tabpanel" aria-labelledby="problems-tab">
+                <div class="text-center">
+                    <br/>
+                    <h2>Problemas recomendados</h2>
+                    <br/>
+                </div>
 
-            <!-- Tabla de problemas -->
-            <table class="table table-light">
-                <thead class="text-center">
+                <!-- Tabla de problemas -->
+                <table class="table table-light">
+                    <thead class="text-center">
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Problema</th>
                         <th scope="col">Puntos</th>
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     {% for i in problemas %}
-                    <tr class="text-center">
-                        <th scope="row">{{forloop.counter}}</th>
+                        <tr class="text-center">
+                            <th scope="row">{{ forloop.counter }}</th>
 
-                        <td><a href="{{i.2}}">{{i.0}}</a></td>
-                        <td class="display-puntaje {{i.4}}">{{i.3}}/{{i.1}}</td>
-                    </tr>
+                            <td><a href="{{ i.2 }}">{{ i.0 }}</a></td>
+                            <td class="display-puntaje {{ i.4 }}">{{ i.3 }}/{{ i.1 }}</td>
+                        </tr>
                     {% endfor %}
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
 
-            <!-- Button -->
-            <button type="button" class="btn btn-danger modalButton" data-toggle="modal" data-target="#exampleModal">
-                Proponer problema
-            </button>
+                <!-- Button -->
+                <button type="button" class="btn btn-danger modalButton" data-toggle="modal"
+                        data-target="#exampleModal">
+                    Proponer problema
+                </button>
 
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <!-- Modal header -->
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Proponer problema como
-                                <span>{{request.user.username}}</span></h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <!-- Modal header -->
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Proponer problema como
+                                    <span>{{ request.user.username }}</span></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
 
-                        <!--Modal body-->
-                        <div class="modal-body">
-                            <form id="formulario" method="POST">
-                                {{ form.as_p }}
-                                {% csrf_token %}
-                                <div class="form-group">
-                                    <label for="problem_name">Nombre del problema</label>
-                                    <input type="text" class="form-control" id="problem_name" name="problem_name"
-                                        aria-describedby="emailHelp" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="problem_link">Link del problema</label>
-                                    <input type="text" class="form-control" id="problem_link" name="problem_link"
-                                        aria-describedby="emailHelp" required>
-                                </div>
-                                <div class="form-group">
-                                    <!--
-                                    <input class="form-check-input" type="checkbox" value="" id="OIAJ" name="OIAJ">
-                                    <label class="form-check-label" for="OIAJ">
-                                        Es un problema de OIAJ
-                                    </label>
-                                    -->
-                                    <label class="form-check-label" for="Online-Judge">Seleccionar juez online</label>
-                                    <select id="Online-Judge" name="Online-Judge" class="form-control">
-                                        <option>OIAJ</option>
-                                        <option>Codeforces</option>
-                                        <option>CSES</option>
-                                        <option>SPOJ</option>
-                                        <option>OnlineJudge</option>
-                                    </select>
-                                </div>
-                            </form>
-                        </div>
+                            <!--Modal body-->
+                            <div class="modal-body">
+                                <form id="formulario" method="POST">
+                                    {{ form.as_p }}
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="problem_name">Nombre del problema</label>
+                                        <input type="text" class="form-control" id="problem_name" name="problem_name"
+                                               aria-describedby="emailHelp" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="problem_link">Link del problema</label>
+                                        <input type="text" class="form-control" id="problem_link" name="problem_link"
+                                               aria-describedby="emailHelp" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <!--
+                                        <input class="form-check-input" type="checkbox" value="" id="OIAJ" name="OIAJ">
+                                        <label class="form-check-label" for="OIAJ">
+                                            Es un problema de OIAJ
+                                        </label>
+                                        -->
+                                        <label class="form-check-label" for="Online-Judge">Seleccionar juez
+                                            online</label>
+                                        <select id="Online-Judge" name="Online-Judge" class="form-control">
+                                            <option>OIAJ</option>
+                                            <option>Codeforces</option>
+                                            <option>CSES</option>
+                                            <option>SPOJ</option>
+                                            <option>OnlineJudge</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
 
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" form="formulario" class="btn btn-danger">Proponer</button>
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" form="formulario" class="btn btn-danger">Proponer</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="tab-pane fade" id="ranking" role="tabpanel" aria-labelledby="ranking-tab">
-            <div class="titulo">
-                <br />
-                <h2 class="text-center">Ranking de problemas recomendados</h2>
-                <br />
-                <table class="table table-light">
-                    <thead class="text-center">
+            <div class="tab-pane fade" id="ranking" role="tabpanel" aria-labelledby="ranking-tab">
+                <div class="titulo">
+                    <br/>
+                    <h2 class="text-center">Ranking de problemas recomendados</h2>
+                    <br/>
+                    <table class="table table-light">
+                        <thead class="text-center">
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Usuario</th>
                             <th scope="col">Puntaje</th>
                         </tr>
-                    </thead>
-                    <tbody>
+                        </thead>
+                        <tbody>
                         {% for i,j,k in ranking %}
-                        <tr class="text-center">
-                            <th scope="row">{{i}}</th>
+                            <tr class="text-center">
+                                <th scope="row">{{ i }}</th>
 
-                            <td>{{j}}</td>
-                            <td>{{k}}</td>
-                        </tr>
+                                <td>{{ j }}</td>
+                                <td>{{ k }}</td>
+                            </tr>
                         {% endfor %}
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}

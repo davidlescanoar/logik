@@ -3,7 +3,6 @@
 {% load static %}
 
 {% block extra_head %}
-<link rel="stylesheet" href="{% static 'css/problems.css' %}" />
 {% endblock %}
 
 <!--Título-->
@@ -11,27 +10,39 @@
 
 <!--Contenido-->
 {% block content %}
-<div class="container problems">
-    <h2 class="text-center titulo">Lista de problemas:</h2>
-    <br /> <br />
-    <table class="table table-light">
-        <thead class="text-center">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Problema</th>
-                <th scope="col">Puntos</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for i in problemas %}
-            <tr class="text-center">
-                <th scope="row">{{forloop.counter}}</th>
-
-                <td><a href="{{i.2}}">{{i.0}} <span class="badge">{{i.5}} / {{i.6}}</span></a></td>
-                <td class="display-puntaje {{i.4}}">{{i.3}}/{{i.1}}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-4 col-md-3 mx-auto text-center">
+                <h4 class="logik-red-letter font-weight-bold">URL</h4>
+            </div>
+            <div class="col-3 col-md-4 mx-auto text-center">
+                <h4 class="logik-red-letter font-weight-bold">Puntaje</h4>
+            </div>
+            <div class="col-4 col-md-3 mx-auto text-center">
+                <h4 class="logik-red-letter font-weight-bold">AC</h4>
+            </div>
+        </div>
+        <div class="p-0 mb-2 m-0 logik-primary-gradient" style="height: 2px;"></div>
+        {% for i in problemas %}
+            <div class="row pb-3">
+                <div class="col-5 col-md-3 mx-auto">
+                    <span><a class="logik-blue-letter" href="{{ i.2 }}">{{ i.0 }}</a></span>
+                </div>
+                <div class="col-3 col-md-4 mx-auto">
+                    <div class="text-center">
+                        <span><span class="logik-blue-letter">{{ i.3 }}%</span></span>
+                    </div>
+                    <div class="progress logik-light-gray-bg" style="height: 2px;">
+                        <div class="progress-bar logik-primary-gradient" role="progressbar" style="width: {{ i.3 }}%;"
+                             aria-valuenow="{{ i.3 }}"
+                             aria-valuemin="0" aria-valuemax="100">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 col-md-3 mx-auto text-center">
+                    <span class="logik-blue-letter"><i class="fas fa-check-circle"></i> {{ i.5 }} / {{ i.6 }}</span>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
