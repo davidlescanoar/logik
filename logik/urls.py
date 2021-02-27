@@ -15,13 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from users.views import welcome, login, logout, register
-from accounts.views import accounts
-from problems.views import problems
-from ranking.views import ranking
-from tutorial.views import tutorial,leerTutorial
-from recommended.views import recommended
-from contest.views import contest, contestManager, editContest, createContest
+from app.views import *
 from django.conf import settings
 from django.conf.urls.static import static
 

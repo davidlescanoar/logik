@@ -2,8 +2,7 @@ from __future__ import absolute_import, unicode_literals
 from celery import shared_task, Celery  
 from celery.schedules import crontab
 from time import sleep
-from accounts.models import Account
-import users
+from app.models import *
 import requests
 import urllib.request
 import time
@@ -14,8 +13,6 @@ import json
 from datetime import timedelta
 from logik.celery import app
 from django.contrib.auth.models import User
-from problems.models import Problems
-from recommended.models import recommended
 
 #Devuelve lista de problemas que submiteó determinado usuario en Codeforces
 def submissions_codeforces(user_handle, count=20):
