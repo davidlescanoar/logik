@@ -12,7 +12,8 @@ media
 # Backup files # 
 *.bak 
 
-# If you are using PyCharm # 
+# If you are using PyCharm #
+.idea/
 .idea/**/workspace.xml 
 .idea/**/tasks.xml 
 .idea/dictionaries 
@@ -73,7 +74,8 @@ coverage.xml
 .python-version 
 
 # celery 
-celerybeat-schedule.* 
+celerybeat-schedule
+celerybeat.pid
 
 # SageMath parsed files 
 *.sage.py 

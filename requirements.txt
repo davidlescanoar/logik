@@ -38,7 +38,7 @@ Jinja2==2.11.2
 keyring==21.8.0
 kombu==5.0.2
 lockfile==0.12.2
-MarkupSafe==1.1.1
+Macelerybeat-schedulerkupSafe==1.1.1
 msgpack==1.0.2
 packaging==20.8
 pastel==0.2.1
