@@ -43,7 +43,7 @@ msgpack==1.0.2
 packaging==20.8
 pastel==0.2.1
 pexpect==4.8.0
-pkg-resources==0.0.0
+pkg-resources
 pkginfo==1.6.1
 poetry==1.1.4
 poetry-core==1.0.0
