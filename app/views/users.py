@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout as do_logout
+from django.views import View
 
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
@@ -7,15 +8,22 @@ from django.contrib.auth import login as do_login
 
 from django.contrib.auth.forms import UserCreationForm
 
+from app.forms import *
+
+from logik.tasks import sendEmail
+
 # Create your views here.
 
-def welcome(request):
-    if request.user.is_authenticated:
-        #De momento, arrancamos en la vista de problemas
-        #return render(request, "welcome.html")
-        return redirect('/problems')
+class welcome(View):
+    def get(self, request, *args, **kwargs):
+        contactForm=ContactForm()
+        return render(request, 'welcome.html', {'form':contactForm})
+    def post(self, request, *args, **kwargs):
+        form=ContactForm(request.POST)
+        if form.is_valid():
+            sendEmail.delay(form.cleaned_data['text'])
+        return redirect('/')
 
-    return redirect('/login')
 
 def register(request):
     form = UserCreationForm()
@@ -29,8 +37,8 @@ def register(request):
             if user is not None:
                 do_login(request, user)
 
-                #De momento, arrancamos en la vista de problemas
-                return redirect('/problems')
+                #De momento, arrancamos en home
+                return redirect('/')
 
     return render(request, "register.html", {'form': form, 'no_logik_form':1})
 
@@ -48,8 +56,8 @@ def login(request):
 
             if user is not None:
                 do_login(request, user)
-                #De momento, arrancamos en la vista de problemas
-                return redirect('/problems')
+                #De momento, arrancamos en home
+                return redirect('/')
 
     return render(request, "login.html", {'form': form, 'no_logik_form':1})
 

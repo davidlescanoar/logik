@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from app.models import recommended as Recomendados
+from app.models import Recommended as Recomendados
 import json
 from django.contrib.auth.models import User
 

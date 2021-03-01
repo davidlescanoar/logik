@@ -1,6 +1,7 @@
 /* Letter */
 .logik-transparent-letter{color: rgba(0,0,0,0);}
 .logik-white-letter{ color: #FFFFFF; !important; }
+.logik-light-blue-letter{ color: #66B7FF; !important; }
 .logik-blue-letter{ color: #2064AD; !important; }
 .logik-red-letter{ color: #C7233F; !important; }
 .logik-light-gray-letter{ color: #B3B3B3; !important; }
@@ -10,6 +11,7 @@
 /* Background */
 .logik-transparent-bg{background: rgba(0,0,0,0);}
 .logik-white-bg{ background: #FFFFFF; !important; }
+.logik-light-blue-bg{ background: #D9EDFF; !important; }
 .logik-blue-bg{ background: #2064AD; !important; }
 .logik-red-bg{ background: #C7233F; !important; }
 .logik-light-gray-bg{ background: #B3B3B3; !important; }

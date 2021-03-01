@@ -75,7 +75,7 @@ TEMPLATES = [
     },
     {
         'NAME': 'tex',
-        'BACKEND': 'django_tex.engine.TeXEngine', 
+        'BACKEND': 'django_tex.engine.TeXEngine',
         'APP_DIRS': True,
         'DIRS': [os.path.join(BASE_DIR, 'app/templates')],
     },
@@ -83,7 +83,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'logik.wsgi.application'
 
-#Only in local
+# Only in local
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -113,7 +113,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -127,7 +126,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
@@ -139,10 +137,10 @@ STATICFILES_DIRS = (
 )
 
 # url del broker al que se conectará celery.
-CELERY_BROKER_URL='redis://localhost:6379/0'
-BROKER_URL='redis://localhost:6379/0'
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+BROKER_URL = 'redis://localhost:6379/0'
 
-#Whitenoise
+# Whitenoise
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Activate Django-Heroku.
@@ -167,3 +165,11 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 if config('DJANGO_PRODUCTION', default=False, cast=bool):
     from .settings_production import *
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = config('EMAIL_PORT')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS')
+LOGIK_EMAIL = config('LOGIK_EMAIL')

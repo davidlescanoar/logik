@@ -1,5 +1,5 @@
 from django.contrib import admin
-from app.models import Account, BlackList, Problems, recommended, Tutorial
+from app.models import Account, BlackList, Problems, Recommended, Tutorial
 
 
 class AdminAccount(admin.ModelAdmin):
@@ -24,7 +24,7 @@ class TutorialAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Tutorial, TutorialAdmin)
-admin.site.register(recommended, AdminRecommended)
+admin.site.register(Recommended, AdminRecommended)
 admin.site.register(Problems, Problem)
 admin.site.register(Account, AdminAccount)
 admin.site.register(BlackList, AdminBlackList)

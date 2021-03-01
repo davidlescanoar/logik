@@ -19,6 +19,13 @@ from logik.cses import *
 from logik.spoj import *
 from logik.OnlineJudge import *
 
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.core.mail import send_mail
+from logik.settings import EMAIL_HOST_USER as sender
+from logik.settings import LOGIK_EMAIL as logikEmail
+from django.conf import settings
+
 def vaciarSolvedBy():
     for p in Problems.objects.all():
         Problems.objects.filter(problem_link=p.problem_link).update(solvedBy="{}") # Hago el update en la DB
@@ -117,15 +124,18 @@ print(end - start)
 
 """
 
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-
 @receiver(post_save, sender=Problems, dispatch_uid="update_solved_new_problem")
 def update_solved_new_problem(sender, instance, **kwargs):
     print("Llamando a update_ranking porque agregue un problema nuevo")
     update_ranking.apply_async([200000], countdown=10)
 
-@receiver(post_save, sender=recommended, dispatch_uid="update_solved_new_recommended")
+@receiver(post_save, sender=Recommended, dispatch_uid="update_solved_new_recommended")
 def update_solved_new_recommended(sender, instance, **kwargs):
     print("Llamando a update_ranking porque agregue un recomendado nuevo")
     update_ranking.apply_async([200000], countdown=10)
+
+@shared_task
+def sendEmail(contact):
+    subject='Logik - Nuevo mensaje'
+    body=contact
+    send_mail(subject, body, sender, [logikEmail])
