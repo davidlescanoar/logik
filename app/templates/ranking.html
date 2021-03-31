@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block extra_head %}
-<link rel="stylesheet" href="{% static 'css/ranking.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/ranking.css' %}"/>
 {% endblock %}
 
 <!--Título-->
@@ -11,29 +11,33 @@
 
 <!--Contenido-->
 {% block content %}
-<div class="container ranking">
-    <div>
-        <h2 class="text-center">Ranking de resolución de problemas</h2>
-        <br /> <br />
-        <table class="table table-light">
-            <thead class="text-center">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Usuario</th>
-                    <th scope="col">Puntaje</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for i,j,k in ranking %}
-                <tr class="text-center">
-                    <th scope="row">{{i}}</th>
-
-                    <td>{{j}}</td>
-                    <td>{{k}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="container">
+        <div class="row">
+            <div class="col-1 col-md-1 mx-auto text-center">
+                <h4 class="logik-red-letter font-weight-bold">#</h4>
+            </div>
+            <div class="col-4 col-md-4 mx-auto text-center">
+                <h4 class="logik-red-letter font-weight-bold">Usuario</h4>
+            </div>
+            <div class="col-3 col-md-3 mx-auto text-center">
+                <h4 class="logik-red-letter font-weight-bold">AC</h4>
+            </div>
+        </div>
+        <div class="p-0 mb-2 m-0 logik-primary-gradient" style="height: 2px;"></div>
+        {% for i,j,k in ranking %}
+            <div class="row pb-3">
+                <div class="col-1 col-md-1 mx-auto text-center">
+                    <span><strong>{{ i }}</strong></span>
+                </div>
+                <div class="col-4 col-md-4 mx-auto">
+                    <div class="text-center">
+                        <span><span class="logik-red-letter"><strong>{{ j }}</strong></span></span>
+                    </div>
+                </div>
+                <div class="col-3 col-md-3 mx-auto text-center">
+                    <span class="logik-blue-letter"><i class="fas fa-star"></i> {{ k }}</span>
+                </div>
+            </div>
+        {% endfor %}
     </div>
-</div>
 {% endblock %}
