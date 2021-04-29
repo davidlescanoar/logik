@@ -15,6 +15,9 @@ def ranking(request):
     #Todos los usuarios registrados en el sistema de Logik
     users=User.objects.all()
 
+    #Blacklist
+    bl = set(bu.black_user for bu in BlackList.objects.all())
+
     #Inicializo el diccionario con 0s
     for user in users:
         #Solo agrego a los usuarios que no están en la blacklist
@@ -28,11 +31,10 @@ def ranking(request):
 
         #Por cada usuario que haya resuelto el problema
         for _USER,_PUNTAJE in usuarios.items():
-            #No tengo que agregar a los usuarios de la blacklist
-            if BlackList.objects.filter(black_user=str(_USER)).exists():
-                continue
-            #Sumo al puntaje de ese usuario
-            data[_USER]+=_PUNTAJE
+            #Si el usuario no está en la lista de users que no hay que mostrar
+            if _USER not in bl:
+                # Sumo al puntaje de ese usuario
+                data[_USER] += _PUNTAJE
 
     #Ordeno por puntaje, esto es lo que se muestra en pantalla
     ordenar=sorted(data.items(), key=lambda item: item[1], reverse=True)
