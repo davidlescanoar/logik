@@ -19,4 +19,3 @@ Podés acceder a esta página en [http://logik.com.ar/](http://logik.com.ar/)
 - Otras funcionalidades a determinar.
 =======
 - Otras funcionalidades a determinar.
->>>>>>> 8c8a1a7245c372b6a7e600126c5cb719a52149c8
