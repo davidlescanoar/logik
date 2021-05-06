@@ -1,0 +1,110 @@
+{% load static %}
+
+<sl-drawer label="Drawer" class="drawer-overview" no-header>
+    <div class="container">
+        <div class="text-center">
+            <a class="navbar-brand mb-4" href="/">
+                <img src="{% static 'img/LogoLogik.png' %}" style="width: 150px;">
+            </a>
+            <div class="row pb-3">
+                <div class="col-12 text-center">
+                    <h5 class="nav-link logik-blue-letter align-self-center p-0 m-0 pr-3">
+                        {% if request.user.first_name %}
+                            ¡Hola <strong>{{ request.user.first_name }}</strong>!
+                        {% elif request.user.username %}
+                            ¡Hola <strong>{{ request.user.username }}</strong>!
+                        {% endif %}
+                        <a href="/logout">
+                            <sl-button type="default" size="medium" pill class="align-self-center sl-btn-red"><i
+                                    class="fas fa-sign-out-alt"></i>Salir
+                            </sl-button>
+                        </a>
+                    </h5>
+                </div>
+            </div>
+            <div class="row equal justify-content-center">
+                <div class="col-6 col-xs-5 d-flex pb-3">
+                    <a href="/" class="card card-shadow border-0" style="border-radius: 15px;"
+                       id="logikCard">
+                        <img class="card-img-top" src="{% static "img/home.svg" %}"/>
+                        <div class="card-body text-center p-2 d-flex flex-column justify-content-end">
+                            <h5 class="card-text bebasNeue">Inicio</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6 col-xs-5 d-flex pb-3">
+                    <a href="/problems" class="card card-shadow border-0" style="border-radius: 15px;"
+                       id="logikCard">
+                        <img class="card-img-top" src="{% static "img/documents.svg" %}"/>
+                        <div class="card-body text-center p-2 d-flex flex-column justify-content-end">
+                            <h5 class="card-text bebasNeue">Problemas</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6 col-xs-5 d-flex pb-3">
+                    <a href="/recommended" class="card card-shadow border-0" style="border-radius: 15px;"
+                       id="logikCard">
+                        <img class="card-img-top" src="{% static "img/posts.svg" %}"/>
+                        <div class="card-body text-center p-2 d-flex flex-column justify-content-end">
+                            <h5 class="card-text bebasNeue">Recomendados</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6 col-xs-5 d-flex pb-3">
+                    <a href="/ranking" class="card card-shadow border-0" style="border-radius: 15px;"
+                       id="logikCard">
+                        <img class="card-img-top" src="{% static "img/cup.svg" %}"/>
+                        <div class="card-body text-center p-2 d-flex flex-column justify-content-end">
+                            <h5 class="card-text bebasNeue">Ranking</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6 col-xs-5 d-flex pb-3">
+                    <a href="/tutorial" class="card card-shadow border-0" style="border-radius: 15px;"
+                       id="logikCard">
+                        <img class="card-img-top" src="{% static "img/education.svg" %}"/>
+                        <div class="card-body text-center p-2 d-flex flex-column justify-content-end">
+                            <h5 class="card-text bebasNeue">Tutoriales</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6 col-xs-5 d-flex pb-3">
+                    <a href="/accounts" class="card card-shadow border-0" style="border-radius: 15px;"
+                       id="logikCard">
+                        <img class="card-img-top" src="{% static "img/profile.svg" %}"/>
+                        <div class="card-body text-center p-2 d-flex flex-column justify-content-end">
+                            <h5 class="card-text bebasNeue">Cuentas
+                                conectadas</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <sl-button size="medium" class="sl-btn-red" type="danger" slot="footer" pill id="closeDrawer">
+        <strong>Cerrar</strong></sl-button>
+</sl-drawer>
+
+{% if not no_logik_form %}
+    <div class="container">
+        <nav class="navbar navbar-expand-lg">
+            <a class="navbar-brand" href="/">
+                <img src="{% static 'img/LogoLogik.png' %}" style="width: 100px;">
+            </a>
+            {% if user.is_authenticated %}
+                <button class="navbar-toggler" type="button" id="navbarToggler">
+                    <i class="fas fa-bars fa-2x logik-red-letter"></i>
+                </button>
+            {% endif %}
+            <div class="navbar-nav-color ml-auto" id="navbarNav">
+                {% include "common/navbar-content.html" %}
+            </div>
+        </nav>
+    </div>
+    <script type="text/javascript">
+        var width = $(window).width();
+        var isAuthenticated ={{ user.is_authenticated|yesno:"true,false" }};
+        if (width < 768 && isAuthenticated)
+            $("#navbarNav").addClass('collapse');
+    </script>
+{% endif %}

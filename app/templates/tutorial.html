@@ -1,0 +1,30 @@
+{% extends "common/base.html" %}
+
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/tutorial.css' %}" />
+{% endblock %}
+
+<!--Título-->
+{% block title %} Tutorial {% endblock %}
+
+<!--Contenido-->
+{% block content %}
+<div class="container">
+    <br />
+    <div class="h1 text-center">Tutoriales de algoritmos, estructuras de datos, etc.</div>
+    <hr />
+    {% for key,data in tutorialData.items %}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{data.0}}</h5>
+            <p class="card-text">{{data.1}}</p>
+            <p class="card-text autor-tuto">Autor: {{data.2}}</p>
+            <a href="{{key}}" class="btn btn-primary">Leer</a>
+        </div>
+    </div>
+    <br />
+    {% endfor %}
+</div>
+{% endblock %}

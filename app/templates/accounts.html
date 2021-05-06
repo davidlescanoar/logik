@@ -1,0 +1,124 @@
+{% extends "common/base.html" %}
+
+{% load static %}
+
+{% block extra_head %}
+
+{% endblock %}
+
+<!--Título-->
+{% block title %} Cuentas {% endblock %}
+
+<!--Contenido-->
+{% block content %}
+    <div class="accounts-form">
+        <div class="container">
+            {% if validar %}
+                <!--Para mostrar automaticamente el modal-->
+                <script>
+                    $(document).ready(function () {
+                        $("#staticBackdrop").modal('show');
+                    });
+                </script>
+                <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+                     role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Verificar tu cuenta</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                A continuación te indicamos qué debés hacer para validar los usuarios que completaste en
+                                el formulario.
+                                <br/>
+                                IMPORTANTE: Tenés solo 5 minutos para hacer lo pedido más abajo.
+                                <br/>
+                                Por favor, realizá lo indicado para cada uno de los jueces online que hayas completado.
+                                <ul>
+                                    <li>Si ingresaste tu usuario de Codeforces tenés que enviar un error de compilación
+                                        al problema: <a href="https://codeforces.com/problemset/problem/38/A">https://codeforces.com/problemset/problem/38/A</a>
+                                    </li>
+                                    <li>Si ingresaste tu usuario de OIAJ tenés que enviar un error de compilación al
+                                        problema: <a href="http://juez.oia.unsam.edu.ar/#/task/es_bisiesto/statement">http://juez.oia.unsam.edu.ar/#/task/es_bisiesto/statement</a>
+                                    </li>
+                                    <li>Para tu usuario de CSES no es necesaria la verificación.</a></li>
+                                    <li>Para tu usuario de SPOJ no es necesaria la verificación.</a></li>
+                                    <li>Para tu usuario de OnlineJudge no es necesaria la verificación.</a></li>
+                                </ul>
+                                Atención: Sólo se podrá validar la cuenta si los sitios funcionan correctamente. Tus
+                                datos se actualizarán automáticamente habiendo pasado el tiempo que se indicó arriba.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form method="POST">
+                            {% csrf_token %}
+
+                            <h1 class="text-center logik-blue-letter">Cuentas de jueces online</h1>
+
+                            <br/>
+
+                            <div class="form-group">
+                                <label for="CF_Handle" class="logik-red-letter"><strong>Codeforces Handle</strong></label>
+                                <input type="text" class="form-control" name="CF_Handle" value="{{ cuenta.CF_Handle | default_if_none:""  }}">
+                            </div>
+
+                            <br/>
+
+                            <div class="form-group">
+                                <label for="OIAJ_Handle" class="logik-red-letter"><strong>OIAJ Handle</strong></label>
+                                <input type="text" class="form-control" name="OIAJ_Handle"
+                                       value="{{ cuenta.OIAJ_Handle | default_if_none:""  }}">
+                            </div>
+
+                            <br/>
+
+                            <div class="form-group">
+                                <label for="CSES_Handle" class="logik-red-letter"><strong>CSES ID</strong></label>
+                                <input type="number" class="form-control" name="CSES_Handle"
+                                       value="{{ cuenta.CSES_Handle | default_if_none:""  }}">
+                            </div>
+
+                            <br/>
+
+                            <div class="form-group">
+                                <label for="SPOJ_Handle" class="logik-red-letter"><strong>SPOJ Handle</strong></label>
+                                <input type="text" class="form-control" name="SPOJ_Handle"
+                                       value="{{ cuenta.SPOJ_Handle | default_if_none:"" }}">
+                            </div>
+
+                            <br/>
+
+                            <div class="form-group">
+                                <label for="OnlineJudge_Handle" class="logik-red-letter"><strong>OnlineJudge ID</strong></label>
+                                <input type="number" class="form-control" name="OnlineJudge_Handle"
+                                       value="{{ cuenta.OnlineJudge_Handle | default_if_none:""  }}">
+                            </div>
+
+                            <br/>
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-danger logik-pill-btn px-3 py-2">Guardar cambios</button>
+                                <a href="/accounts">
+                                    <button type="button" class="btn btn-secondary logik-pill-btn px-3 py-2">Borrar</button>
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

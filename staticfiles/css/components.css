@@ -1,0 +1,54 @@
+/* General */
+html, body {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/* Components */
+a {
+    color: #C7233F;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.logik-pill-btn {
+    border-radius: 100px;
+}
+
+.logik-rounded-div {
+    border-radius: 10px;
+}
+
+.card-shadow {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.card:hover {
+    background: #2064AD;
+!important;
+    color: white !important;
+    transition: 1.5s;
+}
+
+.sl-btn-red::part(base) {
+    background: #C7233F !important;
+    border: none;
+    color: white;
+}
+
+.sl-btn-blue::part(base) {
+    background: #2064AD !important;
+    border: none;
+    color: white;
+}
+
+.sl-btn-gray::part(base) {
+    background: #24292e !important;
+    border: none;
+    color: white;
+}

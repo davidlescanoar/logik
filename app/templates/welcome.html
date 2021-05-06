@@ -1,0 +1,88 @@
+{% extends "common/base.html" %}
+
+{% load static %}
+
+{% block extra_head %}
+{% endblock %}
+
+<!--Título-->
+{% block title %} Inicio {% endblock %}
+
+<!--Contenido-->
+{% block content %}
+    <div class="container">
+        <div class="row my-4 align-self-center">
+            <div class="col-sm-12 col-md-6">
+                <h3 class="alfaSlabOne logik-red-letter text-center">¡Te damos la bienvenida a Logik!</h3>
+                <h5 class="archivo logik-gray-letter my-4">
+                    Te ayudamos a organizarte para que aprendas y practiques programación competitiva.
+                </h5>
+                <div class="row equal justify-content-center">
+                    <div class="col-6 col-xs-5 d-flex pb-3">
+                        <a href="/tutorial" class="card card-shadow border-0" style="border-radius: 15px;"
+                           id="logikCard">
+                            <img class="card-img-top" src="{% static "img/book_reading.svg" %}"/>
+                            <div class="card-body text-center p-2 d-flex flex-column justify-content-end">
+                                <h3 class="card-text bebasNeue">Aprender</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6 col-xs-5 d-flex pb-3">
+                        <a href="/problems" class="card card-shadow border-0" style="border-radius: 15px;"
+                           id="logikCard">
+                            <img class="card-img-top" src="{% static "img/developer_2.svg" %}"/>
+                            <div class="card-body text-center p-2 d-flex flex-column justify-content-end">
+                                <h3 class="card-text bebasNeue">Practicar</h3>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 d-none d-sm-block d-sm-none d-md-block">
+                <img src="{% static "img/code_review_red.svg" %}" class="img-fluid"/>
+            </div>
+        </div>
+
+        <hr class="my-3"/>
+
+        <div class="row my-4 align-self-center">
+            <div class="col-md-6 d-none d-sm-block d-sm-none d-md-block">
+                <img src="{% static "img/developer_desk.svg" %}" class="img-fluid" style="width: 80%;"/>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <h3 class="alfaSlabOne logik-blue-letter text-center">¿Qué podés encontrar en esta página?</h3>
+                <h5 class="archivo logik-gray-letter my-4">
+                    En Logik vas a poder aprender y poner en práctica tus conocimientos gracias a las funcionalidades
+                    que ponemos a tu disposición.
+                    También podés contribuir a la comunidad y al sitio proponiendo problemas en la sección de
+                    recomendados.
+                </h5>
+                <h3 class="alfaSlabOne logik-blue-letter text-center">¿Tenés alguna idea o sugerencia?</h3>
+                <h5 class="archivo logik-gray-letter my-4">
+                    Todo comentario nos ayuda a mejorar el sitio y que más personas puedan encontrar utilidad en él.
+                    Si tenés alguna idea, aporte o comentario nos lo podés dejar en el formulario que encontrarás
+                    debajo.
+                </h5>
+            </div>
+        </div>
+
+        <hr class="my-3"/>
+
+        <div class="container">
+            <form method="post">
+                <div class="form-group">
+                    <h3 class="alfaSlabOne logik-red-letter text-center">Formulario de contacto</h3>
+                    <h5 class="archivo logik-gray-letter">Mediante el siguiente cuadro de texto te vas a poder contactar
+                        con
+                        nosotros. Te responderemos a la brevedad. ¡Gracias por tomarte el tiempo!</h5>
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <a href="javascript:$('form').submit()">
+                        <sl-button size="medium" type="submit" pill submit class="sl-btn-red"><strong>Enviar</strong>
+                        </sl-button>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

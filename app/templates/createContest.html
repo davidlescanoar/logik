@@ -1,0 +1,97 @@
+{% extends "common/base.html" %}
+
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/editContest.css' %}" />
+{% endblock %}
+
+<!--Título-->
+{% block title %} Editar contest {% endblock %}
+
+<!--Contenido-->
+{% block content %}
+{% if user.is_staff %}
+<div class="container h-100 editContest">
+    <div class="row h-100 justify-content-center align-items-center">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="headerForm">
+                <h1>Crear contest</h1>
+                <a class="btn btn-primary mr-auto" href="/contestManager" role="button"><i
+                        class="fas fa-chevron-left"></i> Volver a lista de contest</a>
+            </div>
+            <hr />
+            <div class="form-group">
+                <label for="contest_name">Nombre del contest</label>
+                <input type="text" class="form-control" id="contest_name" name="contest_name" aria-describedby="contest_name"
+                    value="{{contest.0}}" required>
+                <small id="contest_name_help" class="form-text text-muted">Por favor, ingresá un nombre único</small>
+            </div>
+            <div class="form-group">
+                <label for="contest_length">Duración del contest</label>
+                <input type="number" class="form-control" id="contest_length" name="contest_length" aria-describedby="contest_length"
+                    value="{{contest.1}}">
+                <small id="contest_length_help" class="form-text text-muted">Duración en minutos</small>
+            </div>
+            <div class="form-group">
+                <label for="problems_label">Problemas del contest</label>
+                <table class="table">
+                    <thead class="text-center">
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Link</th>
+                            <th scope="col">Juez</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in contest.2 %}
+                        <tr class="text-center col-names">
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="problem_name" name="problem_name"
+                                        aria-describedby="problem_name" value="{{i.0}}">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="problem_link" name="problem_link"
+                                        aria-describedby="problem_link" value="{{i.1}}">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <select id="Online-Judge" name="Online-Judge" class="form-control">
+                                        <option>----------</option>
+                                        <option {% if i.2 == 'OIAJ' %} selected="selected" {% endif %}>OIAJ</option>
+                                        <option {% if i.2 == 'Codeforces' %} selected="selected" {% endif %}>Codeforces</option>
+                                        <option {% if i.2 == 'CSES' %} selected="selected" {% endif %}>CSES</option>
+                                        <option {% if i.2 == 'SPOJ' %} selected="selected" {% endif %}>SPOJ</option>
+                                        <option {% if i.2 == 'OnlineJudge' %} selected="selected" {% endif %}>OnlineJudge</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-danger boton-guardar-editar">Crear contest</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% else %}
+<div class="container h-100 d-flex">
+    <div class="jumbotron my-auto">
+        <h1 class="display-4">Error</h1>
+        <p class="lead">No tenés permitido ver la página ya que solo el staff debe tener acceso para poder administrar
+            las funcionalidades.</p>
+        <hr class="my-4">
+        <p>Si sos staff, recordá hacer el login para poder acceder.</p>
+        <a class="btn btn-primary btn-lg" href="/" role="button">Login</a>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

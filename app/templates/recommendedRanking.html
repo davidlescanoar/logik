@@ -1,0 +1,26 @@
+<div class="tab-pane fade" id="ranking" role="tabpanel" aria-labelledby="ranking-tab">
+    <div class="titulo">
+        <br/>
+        <h2 class="text-center">Ranking de problemas recomendados</h2>
+        <br/>
+        <table class="table table-light">
+            <thead class="text-center">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Usuario</th>
+                <th scope="col">Puntaje</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for i,j,k in ranking %}
+                <tr class="text-center">
+                    <th scope="row">{{ i }}</th>
+
+                    <td>{{ j }}</td>
+                    <td>{{ k }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

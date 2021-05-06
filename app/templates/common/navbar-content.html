@@ -1,0 +1,59 @@
+{% load static %}
+<ul class="navbar-nav">
+    {% if user.is_authenticated %}
+        <li class="nav-item align-self-center">
+            <a class="nav-link logik-red-letter font-weight-bold" href="/">Inicio</a>
+        </li>
+        <li class="nav-item align-self-center">
+            <a class="nav-link logik-red-letter font-weight-bold" href="/problems">Problemas</a>
+        </li>
+        <!--
+        <li class="nav-item align-self-center">
+          <a class="nav-link" href="/contests">Contests</a>
+        </li>
+        -->
+        <li class="nav-item align-self-center">
+            <a class="nav-link logik-red-letter font-weight-bold" href="/recommended">Recomendados</a>
+        </li>
+        <li class="nav-item align-self-center">
+            <a class="nav-link logik-red-letter font-weight-bold" href="/ranking">Ranking</a>
+        </li>
+        <li class="nav-item align-self-center">
+            <a class="nav-link logik-red-letter font-weight-bold" href="/tutorial">Tutoriales</a>
+        </li>
+        <li class="nav-item align-self-center">
+            <a class="nav-link logik-red-letter font-weight-bold" href="/accounts">Cuentas
+                conectadas</a>
+        </li>
+        <li class="nav-item navbar-usuario_logeado align-self-center">
+                          <span class="nav-link logik-blue-letter">
+                            {% if request.user.first_name %}
+                                ¡Hola <strong>{{ request.user.first_name }}</strong>!
+                            {% elif request.user.username %}
+                                ¡Hola <strong>{{ request.user.username }}</strong>!
+                            {% endif %}
+                          </span>
+        </li>
+        <li class="nav-item navbar-usuario_logout align-self-center">
+            <a class="nav-link" href="/logout">
+                {% if request.user.first_name %}
+                    <span>Logout</span>
+                {% elif request.user.username %}
+                    <span>Logout</span>
+                {% endif %}
+            </a>
+        </li>
+    {% else %}
+        <li class="nav-item align-self-center">
+            <a href="/login"><sl-button size="medium" class="sl-btn-red" type="danger" pill><strong>Iniciá sesión</strong></sl-button></a>
+        </li>
+        <div class="mr-3 visible-xs"></div>
+        <li class="nav-item align-self-center">
+            <a class="logik-gray-letter" href="/register">
+                <span style="font-size: var(--sl-font-size-small)">
+                    Registrate
+                </span>
+            </a>
+        </li>
+    {% endif %}
+</ul>

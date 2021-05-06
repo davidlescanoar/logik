@@ -1,0 +1,43 @@
+{% extends "common/base.html" %}
+
+{% load static %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'css/ranking.css' %}"/>
+{% endblock %}
+
+<!--Título-->
+{% block title %} Ranking {% endblock %}
+
+<!--Contenido-->
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-1 col-md-1 mx-auto text-center">
+                <h4 class="logik-red-letter font-weight-bold">#</h4>
+            </div>
+            <div class="col-4 col-md-4 mx-auto text-center">
+                <h4 class="logik-red-letter font-weight-bold">Usuario</h4>
+            </div>
+            <div class="col-3 col-md-3 mx-auto text-center">
+                <h4 class="logik-red-letter font-weight-bold">AC</h4>
+            </div>
+        </div>
+        <div class="p-0 mb-2 m-0 logik-primary-gradient" style="height: 2px;"></div>
+        {% for i,j,k in ranking %}
+            <div class="row pb-3">
+                <div class="col-1 col-md-1 mx-auto text-center">
+                    <span><strong>{{ i }}</strong></span>
+                </div>
+                <div class="col-4 col-md-4 mx-auto">
+                    <div class="text-center">
+                        <span><span class="logik-red-letter"><strong>{{ j }}</strong></span></span>
+                    </div>
+                </div>
+                <div class="col-3 col-md-3 mx-auto text-center">
+                    <span class="logik-blue-letter"><i class="fas fa-star"></i> {{ k }}</span>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
