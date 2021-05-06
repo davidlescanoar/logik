@@ -1,0 +1,2 @@
+web: gunicorn logik.wsgi
+celery_beat: celery -A logik beat
