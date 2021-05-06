@@ -15,7 +15,4 @@ Podés acceder a esta página en [http://logik.com.ar/](http://logik.com.ar/)
 - Problemas propios de la plataforma.
 - Permitir a un usuario enviar una solución y corregirla automáticamente.
 - Recomendación de problemas automática.
-<<<<<<< HEAD
-- Otras funcionalidades a determinar.
-=======
 - Otras funcionalidades a determinar.
