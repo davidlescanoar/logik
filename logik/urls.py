@@ -22,23 +22,24 @@ from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
+router.register(r'problems', ProblemsViewSet, basename='Problems')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     #path('', welcome.as_view()),
-    path('login/', login),
-    path('logout/', logout),
-    path('register/', register),
-    path('accounts/', accounts),
-    path('problems/', problems),
-    path('ranking/', ranking),
-    path('recommended/', recommended),
-    path('contests/', contest),
-    path('contestManager/', contestManager),
-    path('editContest/', editContest),
-    path('createContest/', createContest),
-    path('tutorial/', tutorial),
-    path('tutorial/<int:id_tutorial>/', leerTutorial),
+    #path('login/', login),
+    #path('logout/', logout),
+    #path('register/', register),
+    #path('accounts/', accounts),
+    #path('problems/', problems),
+    #path('ranking/', ranking),
+    #path('recommended/', recommended),
+    #path('contests/', contest),
+    #path('contestManager/', contestManager),
+    #path('editContest/', editContest),
+    #path('createContest/', createContest),
+    #path('tutorial/', tutorial),
+    #path('tutorial/<int:id_tutorial>/', leerTutorial),
 
     #API
     path('', include(router.urls)),
