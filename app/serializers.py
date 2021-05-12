@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import ProblemItem, Problems
+from .models import *
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -8,7 +8,14 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ["username"]
 
+
 class ProblemSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProblemItem
+        fields = '__all__'
+
+
+class RecommendedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RecommendedItem
         fields = '__all__'

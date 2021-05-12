@@ -22,7 +22,6 @@ from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
-#router.register(r'problems', Problems)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,7 +30,6 @@ urlpatterns = [
     #path('logout/', logout),
     #path('register/', register),
     #path('accounts/', accounts),
-    #path('problems/', problems),
     #path('ranking/', ranking),
     #path('recommended/', recommended),
     #path('contests/', contest),
@@ -44,5 +42,6 @@ urlpatterns = [
     #API
     path('', include(router.urls)),
     path('problems/', ProblemList.as_view()),
+    path('recommended/', RecommendedList.as_view()),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

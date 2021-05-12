@@ -34,10 +34,11 @@ class Problems(models.Model):
     problem_points = models.IntegerField()
     solvedBy = models.TextField()
 
+
 class ProblemItem(models.Model):
     name = models.CharField(max_length=500)
     link = models.CharField(max_length=500)
-    user_points = models.IntegerField()
+    score = models.FloatField()
     acceptance = models.FloatField()
 
 
@@ -46,6 +47,12 @@ class Recommended(models.Model):
     problem_link = models.CharField(max_length=500)
     problem_name = models.CharField(max_length=50)
     solvedBy = models.TextField()
+
+
+class RecommendedItem(models.Model):
+    name = models.CharField(max_length=500)
+    link = models.CharField(max_length=500)
+    score = models.FloatField()
 
 
 class Tutorial(models.Model):

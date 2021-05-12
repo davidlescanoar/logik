@@ -6,7 +6,7 @@ from rest_framework.response import Response
 
 
 class ProblemList(APIView):
-    def submissionPoints(self, solvedBy, username):
+    def getSubmissionScore(self, solvedBy, username):
         JSON = json.loads(solvedBy)
         return JSON[username] if username in JSON else 0
 
@@ -29,7 +29,7 @@ class ProblemList(APIView):
                 id=problem.id,
                 name=problem.problem_name,
                 link=problem.problem_link,
-                user_points=self.submissionPoints(problem.solvedBy, username),
+                score=self.getSubmissionScore(problem.solvedBy, username),
                 acceptance=self.getAcceptance(
                     self.getAcceptedSubmissions(problem.solvedBy),
                     self.getAttemptsNumber(problem.solvedBy)
@@ -37,7 +37,7 @@ class ProblemList(APIView):
             )
             for problem in Problems.objects.all()
         ]
-        return sorted(problemList, key=lambda x: x.acceptance, reverse=True)
+        return problemList
 
     def get(self, request, format=None):
         username = request.GET['username']
