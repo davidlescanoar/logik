@@ -67,3 +67,8 @@ class Tutorial(models.Model):
 
 class Contact(models.Model):
     text = models.TextField(blank=False, null=False)
+
+class Ranking(models.Model):
+    rank = models.IntegerField()
+    user = models.CharField(max_length=500)
+    score = models.FloatField()

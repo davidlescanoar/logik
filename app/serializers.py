@@ -19,3 +19,9 @@ class RecommendedSerializer(serializers.ModelSerializer):
     class Meta:
         model = RecommendedItem
         fields = '__all__'
+
+
+class RankingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ranking
+        exclude = ['id']

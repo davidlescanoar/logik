@@ -1,60 +1,51 @@
-from django.shortcuts import render
-from django.http import HttpResponse
 from app.models import *
 import json
 from django.contrib.auth.models import User
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from app.serializers import RankingSerializer
 
-# Create your views here.
-def ranking(request):
-    #Problemas
-    _GET=Problems.objects.all()
 
-    #Diccionario par almacenar el puntaje de cada usuario
-    data={}
+class RankingTable(APIView):
+    def exists(self, user, db):
+        return user in db
 
-    #Todos los usuarios registrados en el sistema de Logik
-    users=User.objects.all()
+    def getUsers(self, input):
+        return json.loads(input).items()
 
-    #Blacklist
-    bl = set(bu.black_user for bu in BlackList.objects.all())
+    def getScores(self, problems, users, blacklist):
+        scores = {str(user): 0 for user in users if not self.exists(user, blacklist)}
+        for problem in problems:
+            for user, score in self.getUsers(problem.solvedBy):
+                if not self.exists(user, blacklist):
+                    scores[user] += score
+        return sorted(scores.items(), key=lambda item: item[1], reverse=True)
 
-    #Inicializo el diccionario con 0s
-    for user in users:
-        #Solo agrego a los usuarios que no están en la blacklist
-        if not BlackList.objects.filter(black_user=str(user)).exists():
-            data[str(user)]=0
+    def getTable(self, scores):
+        ranking_table = []
+        lastScore, currentRanking, ranking = -1, 1, 1
+        for score in scores:
+            if score[1] != lastScore:
+                lastScore, currentRanking = score[1], ranking
+            ranking_table.append(
+                Ranking(
+                    rank=currentRanking,
+                    user=score[0],
+                    score=score[1]
+                )
+            )
+            ranking += 1
+        return ranking_table
 
-    #Recorro la lista de problemas
-    for i in _GET:
-        #Paso string a diccionario para saber quienes resolvieron el problema y qué puntaje obtuvieron
-        usuarios=json.loads(i.solvedBy)
+    def getRanking(self):
+        problems = Problems.objects.all()
+        users = User.objects.all()
+        blacklist = set(bu.black_user for bu in BlackList.objects.all())
+        scores = self.getScores(problems, users, blacklist)
+        ranking = self.getTable(scores)
+        return ranking
 
-        #Por cada usuario que haya resuelto el problema
-        for _USER,_PUNTAJE in usuarios.items():
-            #Si el usuario no está en la lista de users que no hay que mostrar
-            if _USER not in bl:
-                # Sumo al puntaje de ese usuario
-                data[_USER] += _PUNTAJE
-
-    #Ordeno por puntaje, esto es lo que se muestra en pantalla
-    ordenar=sorted(data.items(), key=lambda item: item[1], reverse=True)
-
-    #Ranking final
-    ranking=[]
-
-    #Enteros que determinan el puesto de los usuarios
-    ultimoPuntaje=-1
-    puestoActual=1
-    puesto=1
-
-    #Armo el vector con los resultados
-    for i in ordenar:
-        if i[1]!=ultimoPuntaje:
-            ultimoPuntaje=i[1]
-            puestoActual=puesto
-
-        ranking.append([puestoActual, i[0], i[1]])
-
-        puesto+=1
-
-    return render(request, 'ranking.html', {'ranking':ranking})
+    def get(self, request, format=None):
+        ranking = self.getRanking()
+        serializer = RankingSerializer(ranking, many=True)
+        return Response(serializer.data)
