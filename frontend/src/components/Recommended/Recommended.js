@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 
 const token = process.env.REACT_APP_TOKEN;
 
-export default class Problems extends React.Component {
+export default class Recommended extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -15,7 +15,7 @@ export default class Problems extends React.Component {
                 rows: [],
                 columns: [],
                 order: 'desc',
-                orderBy: 'acceptance',
+                orderBy: 'score',
             }
         };
     }
@@ -26,11 +26,9 @@ export default class Problems extends React.Component {
             let name = problems[i].name;
             let link = problems[i].link;
             let score = problems[i].score;
-            let acceptance = problems[i].acceptance.toFixed(1) + "%";
             var problem = [
                 [name, link],
                 [score, null],
-                [acceptance, null],
             ];
             problemList.push(problem);
         }
@@ -38,7 +36,7 @@ export default class Problems extends React.Component {
     }
 
     getTable = async event => {
-        const response = await API.get("problems/?username="+this.props.username, {headers: {'Authorization': token}});
+        const response = await API.get("recommended/?username="+this.props.username, {headers: {'Authorization': token}});
         const problemList = this.getProblemTable(response.data);
         this.setState({
             table: {
@@ -57,12 +55,6 @@ export default class Problems extends React.Component {
                         disablePadding: false,
                         label: 'Puntaje'
                     },
-                    {
-                        id: 'acceptance',
-                        numeric: true,
-                        disablePadding: false,
-                        label: 'Aceptación'
-                    },
                 ],
             }
         });
@@ -77,7 +69,7 @@ export default class Problems extends React.Component {
         return (
             <div>
                 <Typography variant="h5" gutterBottom>
-                    Problemas
+                    Recomendados
                 </Typography>
                 <Table source={this.state.table}/>
             </div>
