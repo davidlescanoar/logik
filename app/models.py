@@ -35,13 +35,10 @@ class Problems(models.Model):
     solvedBy = models.TextField()
 
 class ProblemItem(models.Model):
-    problem_name = models.CharField(max_length=500)
-    problem_points = models.IntegerField()
-    problem_link = models.CharField(max_length=500)
-    puntaje = models.IntegerField()
-    color = models.CharField(max_length=500)
-    cantidadAC = models.IntegerField()
-    cantidadIntentos = models.IntegerField()
+    name = models.CharField(max_length=500)
+    link = models.CharField(max_length=500)
+    user_points = models.IntegerField()
+    acceptance = models.FloatField()
 
 
 class Recommended(models.Model):

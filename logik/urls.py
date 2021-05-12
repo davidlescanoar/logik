@@ -22,7 +22,7 @@ from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
-router.register(r'problems', ProblemsViewSet, basename='Problems')
+#router.register(r'problems', Problems)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -43,5 +43,6 @@ urlpatterns = [
 
     #API
     path('', include(router.urls)),
+    path('problems/', ProblemList.as_view()),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

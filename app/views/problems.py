@@ -1,69 +1,46 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
 import json
-from app.models import Problems
-from operator import itemgetter
-from rest_framework import viewsets
-from rest_framework import authentication, permissions
+from app.models import Problems, ProblemItem
 from rest_framework.views import APIView
 from app.serializers import ProblemSerializer
 from rest_framework.response import Response
 
 
-def puntosObtenidos(solvedBy, username):
-    JSON = json.loads(solvedBy)
+class ProblemList(APIView):
+    def submissionPoints(self, solvedBy, username):
+        JSON = json.loads(solvedBy)
+        return JSON[username] if username in JSON else 0
 
-    if username not in JSON:
-        return 0
+    def getAttemptsNumber(self, solvedBy):
+        JSON = json.loads(solvedBy)
+        return len(JSON)
 
-    return JSON[username]
+    def getAcceptedSubmissions(self, solvedBy):
+        JSON = json.loads(solvedBy)
+        return sum(i == 100 for i in JSON.values())
 
+    def getAcceptance(self, ac, wa):
+        if wa == 0:
+            return 0
+        return (ac / wa) * 100
 
-def asignarColor(puntaje):
-    if puntaje == 0:
-        return "fila-roja"
-    if puntaje == 100:
-        return "fila-verde"
-    return "fila-amarilla"
+    def getProblems(self, username):
+        problemList = [
+            ProblemItem(
+                id=problem.id,
+                name=problem.problem_name,
+                link=problem.problem_link,
+                user_points=self.submissionPoints(problem.solvedBy, username),
+                acceptance=self.getAcceptance(
+                    self.getAcceptedSubmissions(problem.solvedBy),
+                    self.getAttemptsNumber(problem.solvedBy)
+                ),
+            )
+            for problem in Problems.objects.all()
+        ]
+        return sorted(problemList, key=lambda x: x.acceptance, reverse=True)
 
-
-def cantidadIntentos(solvedBy):
-    JSON = json.loads(solvedBy)
-
-    return len(JSON)
-
-
-def cantidadAC(solvedBy):
-    JSON = json.loads(solvedBy)
-
-    Count_AC = 0
-
-    for i in JSON:
-        if JSON[i] == 100:
-            Count_AC += 1
-
-    return Count_AC
-
-
-def getProblems():
-    problemas = Problems.objects.all()
-
-    listaProblemas = []
-
-    for i in problemas:
-        #puntaje = puntosObtenidos(i.solvedBy, request.user.username)
-        puntaje = 0
-        color = asignarColor(puntaje)
-
-        listaProblemas.append((i.problem_name, i.problem_points, i.problem_link, puntaje, color, cantidadAC(i.solvedBy),
-                               cantidadIntentos(i.solvedBy)))
-
-    return sorted(listaProblemas, key=itemgetter(5), reverse=True)
-
-class ProblemsViewSet(viewsets.ModelViewSet):
-    #queryset = Problems.objects.all()
-    serializer_class = ProblemSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        return json.dumps({'puntaje':0})
+    def get(self, request, format=None):
+        username = request.GET['username']
+        problems = self.getProblems(username)
+        serializer = ProblemSerializer(problems, many=True)
+        return Response(serializer.data)
