@@ -7,6 +7,7 @@ import Login from './components/Login/Login'
 import Menu from "./components/Menu/Menu";
 import {Container} from "react-bootstrap";
 import Recommended from "./components/Recommended/Recommended";
+import Ranking from "./components/Ranking/Ranking";
 
 class App extends React.Component {
     constructor(props) {
@@ -23,7 +24,7 @@ class App extends React.Component {
 
     render() {
         const user = 'DavidLescano';
-        const sections = [<Home/>, <Problems username={user}/>, <Recommended username={user}/>];
+        const sections = [<Home/>, <Problems username={user}/>, <Recommended username={user}/>, <Ranking username={user}/>];
         return (
             <BrowserRouter>
                 <Container>

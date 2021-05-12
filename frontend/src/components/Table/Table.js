@@ -61,10 +61,10 @@ function EnhancedTableHead(props) {
     return (
         <TableHead>
             <TableRow>
-                {props.headCells.map((headCell) => (
+                {props.headCells.map((headCell, index) => (
                     <TableCell
                         key={headCell.id}
-                        align={headCell.numeric ? 'right' : 'left'}
+                        align={index == 0 ? 'left' : 'right'}
                         padding={headCell.disablePadding ? 'none' : 'default'}
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
@@ -156,9 +156,9 @@ TablePaginationActions.propTypes = {
 
 const preventDefault = (event) => event.preventDefault();
 
-function getSortFieldIndex(cols, orderBy){
-    for(var i=0;i<cols.length;i++){
-        if(cols[i].id==orderBy) {
+function getSortFieldIndex(cols, orderBy) {
+    for (var i = 0; i < cols.length; i++) {
+        if (cols[i].id == orderBy) {
             return i;
         }
     }
@@ -169,9 +169,9 @@ function descendingComparator(a, b, orderBy, index, columns) {
     let numeric = columns[index].numeric;
     let A = a[index][0];
     let B = b[index][0];
-    if(numeric){
-        A=parseFloat(A);
-        B=parseFloat(B);
+    if (numeric) {
+        A = parseFloat(A);
+        B = parseFloat(B);
     }
     if (B < A) {
         return -1;
@@ -245,7 +245,7 @@ export default function Table(props) {
                         headCells={props.source.columns}
                     />
                     <TableBody>
-                        {stableSort(props.source.rows, getComparator(order, orderBy, getSortFieldIndex(props.source.columns,orderBy), props.source.columns))
+                        {stableSort(props.source.rows, getComparator(order, orderBy, getSortFieldIndex(props.source.columns, orderBy), props.source.columns))
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row, index) => {
                                 return (
