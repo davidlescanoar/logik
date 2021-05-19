@@ -33,6 +33,7 @@ class Problems(models.Model):
     problem_name = models.CharField(max_length=50)
     problem_points = models.IntegerField()
     solvedBy = models.TextField()
+    year = models.IntegerField(default=2020)
 
 
 class Recommended(models.Model):
