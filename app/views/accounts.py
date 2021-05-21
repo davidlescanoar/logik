@@ -34,7 +34,7 @@ def accounts(request):
                 request.user.id,
                 request.user.username,
             ),
-            countdown=30
+            countdown=360
         )
 
         request.session['validar'] = 1
