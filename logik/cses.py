@@ -40,7 +40,6 @@ def update_CSES(user, database, envios):
 
 
 #Actualizar cuenta de CSES
-@shared_task
 def actualizarCuentaCSES(CSES_Handle_Input, UserID, Logik_Handle, fNow):
     if len(str(CSES_Handle_Input)) < 1:
         return "Campo CSES_Handle_Input vacio"

@@ -1,5 +1,5 @@
 from __future__ import absolute_import, unicode_literals
-from celery import shared_task, Celery  
+from celery import shared_task, Celery
 from celery.schedules import crontab
 from time import sleep
 from app.models import *
@@ -43,8 +43,6 @@ def update_Codeforces(user, database, request_cf):
             solved_by[str(user)]=100 # Actualizo score
         database.objects.filter(problem_link=p.problem_link).update(solvedBy=json.dumps(solved_by)) # Hago el update en la DB
 
-
-@shared_task
 def validarCuentaCodeforces(CF_Handle_Input, UserID, Logik_Handle, timeInit):
     if len(str(CF_Handle_Input)) < 1:
         return "Campo CF_Handle_Input vacio"

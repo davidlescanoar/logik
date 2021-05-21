@@ -42,7 +42,6 @@ def update_SPOJ(user, database, envios):
 
 
 #Actualizar cuenta de SPOJ
-@shared_task
 def actualizarCuentaSPOJ(SPOJ_Handle_Input, UserID, Logik_Handle, fNow):
     if len(str(SPOJ_Handle_Input)) < 1:
         return "Campo SPOJ_Handle_Input vacio"

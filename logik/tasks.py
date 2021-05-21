@@ -1,5 +1,5 @@
 from __future__ import absolute_import, unicode_literals
-from celery import shared_task, Celery  
+from celery import shared_task, Celery
 from celery.schedules import crontab
 from time import sleep
 from app.models import *
@@ -7,7 +7,7 @@ import requests
 import urllib.request
 import time
 from bs4 import BeautifulSoup
-import datetime 
+import datetime
 from datetime import timedelta
 import json
 from datetime import timedelta
@@ -26,23 +26,35 @@ from logik.settings import EMAIL_HOST_USER as sender
 from logik.settings import LOGIK_EMAIL as logikEmail
 from django.conf import settings
 
+
 def vaciarSolvedBy():
     for p in Problems.objects.all():
-        Problems.objects.filter(problem_link=p.problem_link).update(solvedBy="{}") # Hago el update en la DB
-    
+        Problems.objects.filter(problem_link=p.problem_link).update(solvedBy="{}")  # Hago el update en la DB
+
     for p in recommended.objects.all():
-        recommended.objects.filter(problem_link=p.problem_link).update(solvedBy="{}") # Hago el update en la DB
-    
-#Periodic-task
+        recommended.objects.filter(problem_link=p.problem_link).update(solvedBy="{}")  # Hago el update en la DB
+
+
 @shared_task
-def update_ranking(CF_submissions_count = 20):
-    #Usuarios
-    users=User.objects.all()
+def validarCuentas(fechaNow, CF_Handle_Input, OIAJ_Handle_Input, CSES_Handle_Input, SPOJ_Handle_Input,
+                   OnlineJudge_Handle_Input, UserID, Username):
+    validarCuentaCodeforces(CF_Handle_Input, UserID, Username, fechaNow)
+    validarCuentaOIAJ(OIAJ_Handle_Input, UserID, Username, fechaNow)
+    actualizarCuentaCSES(CSES_Handle_Input, UserID, Username, fechaNow)
+    actualizarCuentaSPOJ(SPOJ_Handle_Input, UserID, Username, fechaNow)
+    actualizarCuentaOnlineJudge(OnlineJudge_Handle_Input, UserID, Username, fechaNow)
+
+
+# Periodic-task
+@shared_task
+def update_ranking(CF_submissions_count=20):
+    # Usuarios
+    users = User.objects.all()
 
     for user in users:
-        cuenta=Account.objects.filter(Logik_Handle=user)
-        if  cuenta.exists():
-            #Update OIAJ
+        cuenta = Account.objects.filter(Logik_Handle=user)
+        if cuenta.exists():
+            # Update OIAJ
             if cuenta[0].OIAJ_Handle:
                 print("Llamando a la funcion update_OIAJ para user {} ({})".format(cuenta[0].OIAJ_Handle, user))
                 try:
@@ -51,12 +63,12 @@ def update_ranking(CF_submissions_count = 20):
                         update_OIAJ(user, Problems, request_oiaj)
                         update_OIAJ(user, recommended, request_oiaj)
                     except BaseException as e:
-                        print("Error con el usuario {} ({}) al llamar update_OIAJ. Error: {}".format(cuenta[0].OIAJ_Handle, user, str(e)))
+                        print("Error con el usuario {} ({}) al llamar update_OIAJ. Error: {}".format(
+                            cuenta[0].OIAJ_Handle, user, str(e)))
                 except BaseException as e:
                     print("Error en update_ranking: {}".format(str(e)))
 
-
-            #Update Codeforces
+            # Update Codeforces
             if cuenta[0].CF_Handle:
                 print("Llamando a la funcion update_Codeforces para user {} ({})".format(cuenta[0].CF_Handle, user))
                 try:
@@ -65,12 +77,12 @@ def update_ranking(CF_submissions_count = 20):
                         update_Codeforces(user, Problems, request_cf)
                         update_Codeforces(user, recommended, request_cf)
                     except BaseException as e:
-                        print("Error con el usuario {} ({}) al llamar update_Codeforces. Error: {}".format(cuenta[0].CF_Handle, user, str(e)))               
+                        print("Error con el usuario {} ({}) al llamar update_Codeforces. Error: {}".format(
+                            cuenta[0].CF_Handle, user, str(e)))
                 except BaseException as e:
                     print("Error en update_ranking: {}".format(str(e)))
 
-                    
-            #Update CSES
+            # Update CSES
             if cuenta[0].CSES_Handle:
                 print("Llamando a la funcion update_CSES para user {} ({})".format(cuenta[0].CSES_Handle, user))
                 try:
@@ -79,12 +91,12 @@ def update_ranking(CF_submissions_count = 20):
                         update_CSES(user, Problems, request_cses)
                         update_CSES(user, recommended, request_cses)
                     except BaseException as e:
-                        print("Error con el usuario {} ({}) al llamar update_CSES. Error: {}".format(cuenta[0].CSES_Handle, user, str(e)))               
+                        print("Error con el usuario {} ({}) al llamar update_CSES. Error: {}".format(
+                            cuenta[0].CSES_Handle, user, str(e)))
                 except BaseException as e:
                     print("Error en update_ranking: {}".format(str(e)))
-            
-            
-            #Update SPOJ
+
+            # Update SPOJ
             if cuenta[0].SPOJ_Handle:
                 print("Llamando a la funcion update_SPOJ para user {} ({})".format(cuenta[0].SPOJ_Handle, user))
                 try:
@@ -93,23 +105,27 @@ def update_ranking(CF_submissions_count = 20):
                         update_SPOJ(user, Problems, request_spoj)
                         update_SPOJ(user, recommended, request_spoj)
                     except BaseException as e:
-                        print("Error con el usuario {} ({}) al llamar update_SPOJ. Error: {}".format(cuenta[0].SPOJ_Handle, user, str(e)))               
+                        print("Error con el usuario {} ({}) al llamar update_SPOJ. Error: {}".format(
+                            cuenta[0].SPOJ_Handle, user, str(e)))
                 except BaseException as e:
                     print("Error en update_ranking: {}".format(str(e)))
-            
-            #Update OnlineJudge
+
+            # Update OnlineJudge
             if cuenta[0].OnlineJudge_Handle:
-                print("Llamando a la funcion update_OnlineJudge para user {} ({})".format(cuenta[0].OnlineJudge_Handle, user))
+                print("Llamando a la funcion update_OnlineJudge para user {} ({})".format(cuenta[0].OnlineJudge_Handle,
+                                                                                          user))
                 try:
                     request_OnlineJudge = submissions_OnlineJudge(cuenta[0].OnlineJudge_Handle)
                     try:
                         update_OnlineJudge(user, Problems, request_OnlineJudge)
                         update_OnlineJudge(user, recommended, request_OnlineJudge)
                     except BaseException as e:
-                        print("Error con el usuario {} ({}) al llamar update_OnlineJudge. Error: {}".format(cuenta[0].OnlineJudge_Handle, user, str(e)))               
+                        print("Error con el usuario {} ({}) al llamar update_OnlineJudge. Error: {}".format(
+                            cuenta[0].OnlineJudge_Handle, user, str(e)))
                 except BaseException as e:
                     print("Error en update_ranking: {}".format(str(e)))
-            
+
+
 """
 Script para testear esta función y medir tiempo
 
@@ -124,18 +140,21 @@ print(end - start)
 
 """
 
+
 @receiver(post_save, sender=Problems, dispatch_uid="update_solved_new_problem")
 def update_solved_new_problem(sender, instance, **kwargs):
     print("Llamando a update_ranking porque agregue un problema nuevo")
     update_ranking.apply_async([200000], countdown=10)
+
 
 @receiver(post_save, sender=Recommended, dispatch_uid="update_solved_new_recommended")
 def update_solved_new_recommended(sender, instance, **kwargs):
     print("Llamando a update_ranking porque agregue un recomendado nuevo")
     update_ranking.apply_async([200000], countdown=10)
 
+
 @shared_task
 def sendEmail(contact):
-    subject='Logik - Nuevo mensaje'
-    body=contact
+    subject = 'Logik - Nuevo mensaje'
+    body = contact
     send_mail(subject, body, sender, [logikEmail])

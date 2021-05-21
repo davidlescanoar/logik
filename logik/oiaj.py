@@ -42,7 +42,6 @@ def update_OIAJ(user, database, request_oiaj):
 
 
 #Validar usuario de OIAJ
-@shared_task
 def validarCuentaOIAJ(OIAJ_Handle_Input, UserID, Logik_Handle, timeInicio):
     if len(str(OIAJ_Handle_Input)) < 1:
         return "Campo OIAJ_Handle_Input vacio"

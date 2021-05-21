@@ -39,7 +39,6 @@ def update_OnlineJudge(user, database, envios):
 
 
 #Actualizar cuenta de OnlineJudge
-@shared_task
 def actualizarCuentaOnlineJudge(OnlineJudge_Handle_Input, UserID, Logik_Handle, fNow):
     if len(str(OnlineJudge_Handle_Input)) < 1:
         return "Campo OnlineJudge_Handle_Input vacio"
