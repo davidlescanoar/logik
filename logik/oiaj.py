@@ -65,12 +65,12 @@ def validarCuentaOIAJ(OIAJ_Handle_Input, UserID, Logik_Handle, timeInicio):
                     Account.objects.filter(AccountID=UserID).update(OIAJ_Handle=OIAJ_Handle_Input)
                 #Si no existía en la DB, lo inserto
                 else:
-                    Account.objects.create(AccountID=UserID, Logik_Handle=Logik_Handle, CF_Handle='', OIAJ_Handle=OIAJ_Handle_Input, CSES_Handle='', SPOJ_Handle='', OnlineJudge_Handle='')
+                    Account.objects.create(AccountID=UserID, Logik_Handle=Logik_Handle, OIAJ_Handle=OIAJ_Handle_Input)
                 
                 print("Usuario {} asoció su handle de OIAJ: {}".format(Logik_Handle, OIAJ_Handle_Input))
                 request_oiaj = submissions_OIAJ(OIAJ_Handle_Input)
                 update_OIAJ(Logik_Handle, Problems, request_oiaj)
-                update_OIAJ(Logik_Handle, recommended, request_oiaj)
+                update_OIAJ(Logik_Handle, Recommended, request_oiaj)
                 print("Usuario {} actualizo correctamente todos los submissions de OIAJ: {}".format(Logik_Handle, OIAJ_Handle_Input))
                 return
     except BaseException as e:

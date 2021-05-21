@@ -62,12 +62,12 @@ def validarCuentaCodeforces(CF_Handle_Input, UserID, Logik_Handle, timeInit):
                     if Account.objects.filter(AccountID=UserID).exists():
                         Account.objects.filter(AccountID=UserID).update(CF_Handle=CF_Handle_Input)
                     else: #Si no existía en la DB, lo inserto
-                        Account.objects.create(AccountID=UserID, Logik_Handle=Logik_Handle, CF_Handle=CF_Handle_Input, OIAJ_Handle='', CSES_Handle='', SPOJ_Handle='', OnlineJudge_Handle='')
+                        Account.objects.create(AccountID=UserID, Logik_Handle=Logik_Handle, CF_Handle=CF_Handle_Input)
 
                     print("Usuario {} asoció su handle de codeforces: {}".format(Logik_Handle, CF_Handle_Input))
                     request_cf2 = submissions_codeforces(CF_Handle_Input, count=2000000)
                     update_Codeforces(Logik_Handle, Problems, request_cf2)
-                    update_Codeforces(Logik_Handle, recommended, request_cf2)
+                    update_Codeforces(Logik_Handle, Recommended, request_cf2)
                     print("Usuario {} actualizo correctamente todos los submissions de codeforces: {}".format(Logik_Handle, CF_Handle_Input))
                     
                     return

@@ -52,12 +52,12 @@ def actualizarCuentaSPOJ(SPOJ_Handle_Input, UserID, Logik_Handle, fNow):
             Account.objects.filter(AccountID=UserID).update(SPOJ_Handle=SPOJ_Handle_Input)
         #Si no existía en la DB, lo inserto
         else:
-            Account.objects.create(AccountID=UserID, Logik_Handle=Logik_Handle, CF_Handle='', OIAJ_Handle='', CSES_Handle='', SPOJ_Handle=SPOJ_Handle_Input, OnlineJudge_Handle='')
+            Account.objects.create(AccountID=UserID, Logik_Handle=Logik_Handle, SPOJ_Handle=SPOJ_Handle_Input)
 
         print("Usuario {} asoció su handle de SPOJ: {}".format(Logik_Handle, SPOJ_Handle_Input))
         request_spoj = submissions_SPOJ(SPOJ_Handle_Input)
         update_SPOJ(Logik_Handle, Problems, request_spoj)
-        update_SPOJ(Logik_Handle, recommended, request_spoj)
+        update_SPOJ(Logik_Handle, Recommended, request_spoj)
         print("Usuario {} actualizo correctamente todos los submissions de SPOJ: {}".format(Logik_Handle, SPOJ_Handle_Input))
     except BaseException as e:
         raise ValueError("Error al asociar cuenta de SPOJ: {}".format(str(e)))

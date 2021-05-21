@@ -2,6 +2,9 @@ import os
 import dj_database_url
 from decouple import config
 
+ALLOWED_HOSTS = ['localhost', 'logik.com.ar', 'www.logik.com.ar']
+
+"""
 ALLOWED_HOSTS = ['logik.com.ar']
 
 # Database
@@ -15,4 +18,4 @@ DATABASES = {
 
 # url del broker al que se conectará celery.
 CELERY_BROKER_URL=os.environ.get("REDIS_URL")
-BROKER_URL=os.environ.get("REDIS_URL")
+BROKER_URL=os.environ.get("REDIS_URL")"""
