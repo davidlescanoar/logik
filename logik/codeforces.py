@@ -70,4 +70,4 @@ def validarCuentaCodeforces(CF_Handle_Input, UserID, Logik_Handle, timeInit):
                     
                     return
     except BaseException as e:
-        raise ValueError("Error al asociar cuenta de codeforces: {}".format(str(e)))
+        print("Error al asociar cuenta de codeforces: {}".format(str(e)))

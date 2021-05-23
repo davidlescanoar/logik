@@ -73,4 +73,4 @@ def validarCuentaOIAJ(OIAJ_Handle_Input, UserID, Logik_Handle, timeInicio):
                 print("Usuario {} actualizo correctamente todos los submissions de OIAJ: {}".format(Logik_Handle, OIAJ_Handle_Input))
                 return
     except BaseException as e:
-        raise ValueError("Error al asociar cuenta de OIAJ: {}".format(str(e)))
+        print("Error al asociar cuenta de OIAJ: {}".format(str(e)))

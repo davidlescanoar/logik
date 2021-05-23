@@ -56,4 +56,4 @@ def actualizarCuentaOnlineJudge(OnlineJudge_Handle_Input, UserID, Logik_Handle, 
         update_OnlineJudge(Logik_Handle, Recommended, request_OnlineJudge)
         print("Usuario {} actualizo correctamente todos los submissions de OnlineJudge: {}".format(Logik_Handle, OnlineJudge_Handle_Input))
     except BaseException as e:
-        raise ValueError("Error al asociar cuenta de OnlineJudge: {}".format(str(e)))
+        print("Error al asociar cuenta de OnlineJudge: {}".format(str(e)))

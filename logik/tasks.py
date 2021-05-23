@@ -31,8 +31,8 @@ def vaciarSolvedBy():
     for p in Problems.objects.all():
         Problems.objects.filter(problem_link=p.problem_link).update(solvedBy="{}")  # Hago el update en la DB
 
-    for p in recommended.objects.all():
-        recommended.objects.filter(problem_link=p.problem_link).update(solvedBy="{}")  # Hago el update en la DB
+    for p in Recommended.objects.all():
+        Recommended.objects.filter(problem_link=p.problem_link).update(solvedBy="{}")  # Hago el update en la DB
 
 
 @shared_task
@@ -61,7 +61,7 @@ def update_ranking(CF_submissions_count=20):
                     request_oiaj = submissions_OIAJ(cuenta[0].OIAJ_Handle)
                     try:
                         update_OIAJ(user, Problems, request_oiaj)
-                        update_OIAJ(user, recommended, request_oiaj)
+                        update_OIAJ(user, Recommended, request_oiaj)
                     except BaseException as e:
                         print("Error con el usuario {} ({}) al llamar update_OIAJ. Error: {}".format(
                             cuenta[0].OIAJ_Handle, user, str(e)))
@@ -75,7 +75,7 @@ def update_ranking(CF_submissions_count=20):
                     request_cf = submissions_codeforces(cuenta[0].CF_Handle, CF_submissions_count)
                     try:
                         update_Codeforces(user, Problems, request_cf)
-                        update_Codeforces(user, recommended, request_cf)
+                        update_Codeforces(user, Recommended, request_cf)
                     except BaseException as e:
                         print("Error con el usuario {} ({}) al llamar update_Codeforces. Error: {}".format(
                             cuenta[0].CF_Handle, user, str(e)))
@@ -89,7 +89,7 @@ def update_ranking(CF_submissions_count=20):
                     request_cses = submissions_CSES(cuenta[0].CSES_Handle)
                     try:
                         update_CSES(user, Problems, request_cses)
-                        update_CSES(user, recommended, request_cses)
+                        update_CSES(user, Recommended, request_cses)
                     except BaseException as e:
                         print("Error con el usuario {} ({}) al llamar update_CSES. Error: {}".format(
                             cuenta[0].CSES_Handle, user, str(e)))
@@ -103,7 +103,7 @@ def update_ranking(CF_submissions_count=20):
                     request_spoj = submissions_SPOJ(cuenta[0].SPOJ_Handle)
                     try:
                         update_SPOJ(user, Problems, request_spoj)
-                        update_SPOJ(user, recommended, request_spoj)
+                        update_SPOJ(user, Recommended, request_spoj)
                     except BaseException as e:
                         print("Error con el usuario {} ({}) al llamar update_SPOJ. Error: {}".format(
                             cuenta[0].SPOJ_Handle, user, str(e)))
@@ -118,7 +118,7 @@ def update_ranking(CF_submissions_count=20):
                     request_OnlineJudge = submissions_OnlineJudge(cuenta[0].OnlineJudge_Handle)
                     try:
                         update_OnlineJudge(user, Problems, request_OnlineJudge)
-                        update_OnlineJudge(user, recommended, request_OnlineJudge)
+                        update_OnlineJudge(user, Recommended, request_OnlineJudge)
                     except BaseException as e:
                         print("Error con el usuario {} ({}) al llamar update_OnlineJudge. Error: {}".format(
                             cuenta[0].OnlineJudge_Handle, user, str(e)))

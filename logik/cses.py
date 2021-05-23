@@ -57,4 +57,4 @@ def actualizarCuentaCSES(CSES_Handle_Input, UserID, Logik_Handle, fNow):
         update_CSES(Logik_Handle, Recommended, request_cses)
         print("Usuario {} actualizo correctamente todos los submissions de CSES: {}".format(Logik_Handle, CSES_Handle_Input))
     except BaseException as e:
-        raise ValueError("Error al asociar cuenta de CSES: {}".format(str(e)))
+        print("Error al asociar cuenta de CSES: {}".format(str(e)))
