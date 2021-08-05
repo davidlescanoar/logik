@@ -50,10 +50,11 @@ def actualizarCuentaOnlineJudge(OnlineJudge_Handle_Input, UserID, Logik_Handle, 
         else:
             Account.objects.create(AccountID=UserID, Logik_Handle=Logik_Handle, OnlineJudge_Handle=OnlineJudge_Handle_Input)
 
-        print("Usuario {} asoció su handle de OnlineJudge: {}".format(Logik_Handle, OnlineJudge_Handle_Input))
+        #print("Usuario {} asoció su handle de OnlineJudge: {}".format(Logik_Handle, OnlineJudge_Handle_Input))
         request_OnlineJudge = submissions_OnlineJudge(OnlineJudge_Handle_Input)
         update_OnlineJudge(Logik_Handle, Problems, request_OnlineJudge)
         update_OnlineJudge(Logik_Handle, Recommended, request_OnlineJudge)
-        print("Usuario {} actualizo correctamente todos los submissions de OnlineJudge: {}".format(Logik_Handle, OnlineJudge_Handle_Input))
+        #print("Usuario {} actualizo correctamente todos los submissions de OnlineJudge: {}".format(Logik_Handle, OnlineJudge_Handle_Input))
     except BaseException as e:
-        print("Error al asociar cuenta de OnlineJudge: {}".format(str(e)))
+        pass
+        #print("Error al asociar cuenta de OnlineJudge: {}".format(str(e)))

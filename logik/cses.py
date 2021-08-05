@@ -51,10 +51,11 @@ def actualizarCuentaCSES(CSES_Handle_Input, UserID, Logik_Handle, fNow):
         else:
             Account.objects.create(AccountID=UserID, Logik_Handle=Logik_Handle, CSES_Handle=CSES_Handle_Input)
 
-        print("Usuario {} asoció su handle de CSES: {}".format(Logik_Handle, CSES_Handle_Input))
+        #print("Usuario {} asoció su handle de CSES: {}".format(Logik_Handle, CSES_Handle_Input))
         request_cses = submissions_CSES(CSES_Handle_Input)
         update_CSES(Logik_Handle, Problems, request_cses)
         update_CSES(Logik_Handle, Recommended, request_cses)
-        print("Usuario {} actualizo correctamente todos los submissions de CSES: {}".format(Logik_Handle, CSES_Handle_Input))
+        #print("Usuario {} actualizo correctamente todos los submissions de CSES: {}".format(Logik_Handle, CSES_Handle_Input))
     except BaseException as e:
-        print("Error al asociar cuenta de CSES: {}".format(str(e)))
+        pass
+        #print("Error al asociar cuenta de CSES: {}".format(str(e)))

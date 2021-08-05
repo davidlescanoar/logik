@@ -54,10 +54,11 @@ def actualizarCuentaSPOJ(SPOJ_Handle_Input, UserID, Logik_Handle, fNow):
         else:
             Account.objects.create(AccountID=UserID, Logik_Handle=Logik_Handle, SPOJ_Handle=SPOJ_Handle_Input)
 
-        print("Usuario {} asoció su handle de SPOJ: {}".format(Logik_Handle, SPOJ_Handle_Input))
+        #print("Usuario {} asoció su handle de SPOJ: {}".format(Logik_Handle, SPOJ_Handle_Input))
         request_spoj = submissions_SPOJ(SPOJ_Handle_Input)
         update_SPOJ(Logik_Handle, Problems, request_spoj)
         update_SPOJ(Logik_Handle, Recommended, request_spoj)
-        print("Usuario {} actualizo correctamente todos los submissions de SPOJ: {}".format(Logik_Handle, SPOJ_Handle_Input))
+        #print("Usuario {} actualizo correctamente todos los submissions de SPOJ: {}".format(Logik_Handle, SPOJ_Handle_Input))
     except BaseException as e:
-        print("Error al asociar cuenta de SPOJ: {}".format(str(e)))
+        pass
+        #print("Error al asociar cuenta de SPOJ: {}".format(str(e)))

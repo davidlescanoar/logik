@@ -66,11 +66,12 @@ def validarCuentaOIAJ(OIAJ_Handle_Input, UserID, Logik_Handle, timeInicio):
                 else:
                     Account.objects.create(AccountID=UserID, Logik_Handle=Logik_Handle, OIAJ_Handle=OIAJ_Handle_Input)
                 
-                print("Usuario {} asoció su handle de OIAJ: {}".format(Logik_Handle, OIAJ_Handle_Input))
+                #print("Usuario {} asoció su handle de OIAJ: {}".format(Logik_Handle, OIAJ_Handle_Input))
                 request_oiaj = submissions_OIAJ(OIAJ_Handle_Input)
                 update_OIAJ(Logik_Handle, Problems, request_oiaj)
                 update_OIAJ(Logik_Handle, Recommended, request_oiaj)
-                print("Usuario {} actualizo correctamente todos los submissions de OIAJ: {}".format(Logik_Handle, OIAJ_Handle_Input))
+                #print("Usuario {} actualizo correctamente todos los submissions de OIAJ: {}".format(Logik_Handle, OIAJ_Handle_Input))
                 return
     except BaseException as e:
-        print("Error al asociar cuenta de OIAJ: {}".format(str(e)))
+        pass
+        #print("Error al asociar cuenta de OIAJ: {}".format(str(e)))

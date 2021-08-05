@@ -52,78 +52,88 @@ def update_ranking(CF_submissions_count=20):
     users = User.objects.all()
 
     for user in users:
-        cuenta = Account.objects.filter(Logik_Handle=user)
+        cuenta = Account.objects.get(Logik_Handle=user)
         if cuenta.exists():
             # Update OIAJ
-            if cuenta[0].OIAJ_Handle:
-                print("Llamando a la funcion update_OIAJ para user {} ({})".format(cuenta[0].OIAJ_Handle, user))
+            if cuenta.OIAJ_Handle:
+                #print("Llamando a la funcion update_OIAJ para user {} ({})".format(cuenta.OIAJ_Handle, user))
                 try:
-                    request_oiaj = submissions_OIAJ(cuenta[0].OIAJ_Handle)
+                    request_oiaj = submissions_OIAJ(cuenta.OIAJ_Handle)
                     try:
                         update_OIAJ(user, Problems, request_oiaj)
                         update_OIAJ(user, Recommended, request_oiaj)
                     except BaseException as e:
-                        print("Error con el usuario {} ({}) al llamar update_OIAJ. Error: {}".format(
-                            cuenta[0].OIAJ_Handle, user, str(e)))
+                        pass
+                        #print("Error con el usuario {} ({}) al llamar update_OIAJ. Error: {}".format(
+                            #cuenta.OIAJ_Handle, user, str(e)))
                 except BaseException as e:
-                    print("Error en update_ranking: {}".format(str(e)))
+                    pass
+                    #print("Error en update_ranking: {}".format(str(e)))
 
             # Update Codeforces
-            if cuenta[0].CF_Handle:
-                print("Llamando a la funcion update_Codeforces para user {} ({})".format(cuenta[0].CF_Handle, user))
+            if cuenta.CF_Handle:
+                #print("Llamando a la funcion update_Codeforces para user {} ({})".format(cuenta.CF_Handle, user))
                 try:
-                    request_cf = submissions_codeforces(cuenta[0].CF_Handle, CF_submissions_count)
+                    request_cf = submissions_codeforces(cuenta.CF_Handle, CF_submissions_count)
                     try:
                         update_Codeforces(user, Problems, request_cf)
                         update_Codeforces(user, Recommended, request_cf)
                     except BaseException as e:
-                        print("Error con el usuario {} ({}) al llamar update_Codeforces. Error: {}".format(
-                            cuenta[0].CF_Handle, user, str(e)))
+                        pass
+                        #print("Error con el usuario {} ({}) al llamar update_Codeforces. Error: {}".format(
+                            #cuenta.CF_Handle, user, str(e)))
                 except BaseException as e:
-                    print("Error en update_ranking: {}".format(str(e)))
+                    pass
+                    #print("Error en update_ranking: {}".format(str(e)))
 
             # Update CSES
-            if cuenta[0].CSES_Handle:
-                print("Llamando a la funcion update_CSES para user {} ({})".format(cuenta[0].CSES_Handle, user))
+            if cuenta.CSES_Handle:
+                #print("Llamando a la funcion update_CSES para user {} ({})".format(cuenta.CSES_Handle, user))
                 try:
-                    request_cses = submissions_CSES(cuenta[0].CSES_Handle)
+                    request_cses = submissions_CSES(cuenta.CSES_Handle)
                     try:
                         update_CSES(user, Problems, request_cses)
                         update_CSES(user, Recommended, request_cses)
                     except BaseException as e:
-                        print("Error con el usuario {} ({}) al llamar update_CSES. Error: {}".format(
-                            cuenta[0].CSES_Handle, user, str(e)))
+                        pass
+                        #print("Error con el usuario {} ({}) al llamar update_CSES. Error: {}".format(
+                            #cuenta.CSES_Handle, user, str(e)))
                 except BaseException as e:
-                    print("Error en update_ranking: {}".format(str(e)))
+                    pass
+                    #print("Error en update_ranking: {}".format(str(e)))
 
             # Update SPOJ
-            if cuenta[0].SPOJ_Handle:
-                print("Llamando a la funcion update_SPOJ para user {} ({})".format(cuenta[0].SPOJ_Handle, user))
+            if cuenta.SPOJ_Handle:
+                #print("Llamando a la funcion update_SPOJ para user {} ({})".format(cuenta.SPOJ_Handle, user))
                 try:
-                    request_spoj = submissions_SPOJ(cuenta[0].SPOJ_Handle)
+                    request_spoj = submissions_SPOJ(cuenta.SPOJ_Handle)
                     try:
                         update_SPOJ(user, Problems, request_spoj)
                         update_SPOJ(user, Recommended, request_spoj)
                     except BaseException as e:
-                        print("Error con el usuario {} ({}) al llamar update_SPOJ. Error: {}".format(
-                            cuenta[0].SPOJ_Handle, user, str(e)))
+                        pass
+                        #print("Error con el usuario {} ({}) al llamar update_SPOJ. Error: {}".format(
+                            #cuenta.SPOJ_Handle, user, str(e)))
                 except BaseException as e:
-                    print("Error en update_ranking: {}".format(str(e)))
+                    pass
+                    #print("Error en update_ranking: {}".format(str(e)))
 
             # Update OnlineJudge
-            if cuenta[0].OnlineJudge_Handle:
-                print("Llamando a la funcion update_OnlineJudge para user {} ({})".format(cuenta[0].OnlineJudge_Handle,
+            if cuenta.OnlineJudge_Handle:
+                #print("Llamando a la funcion update_OnlineJudge para user {} ({})".format(cuenta.OnlineJudge_Handle,
                                                                                           user))
                 try:
-                    request_OnlineJudge = submissions_OnlineJudge(cuenta[0].OnlineJudge_Handle)
+                    request_OnlineJudge = submissions_OnlineJudge(cuenta.OnlineJudge_Handle)
                     try:
                         update_OnlineJudge(user, Problems, request_OnlineJudge)
                         update_OnlineJudge(user, Recommended, request_OnlineJudge)
                     except BaseException as e:
-                        print("Error con el usuario {} ({}) al llamar update_OnlineJudge. Error: {}".format(
-                            cuenta[0].OnlineJudge_Handle, user, str(e)))
+                        pass
+                        #print("Error con el usuario {} ({}) al llamar update_OnlineJudge. Error: {}".format(
+                            #cuenta.OnlineJudge_Handle, user, str(e)))
                 except BaseException as e:
-                    print("Error en update_ranking: {}".format(str(e)))
+                    pass
+                    #print("Error en update_ranking: {}".format(str(e)))
 
 
 """
@@ -143,13 +153,13 @@ print(end - start)
 
 @receiver(post_save, sender=Problems, dispatch_uid="update_solved_new_problem")
 def update_solved_new_problem(sender, instance, **kwargs):
-    print("Llamando a update_ranking porque agregue un problema nuevo")
+    #print("Llamando a update_ranking porque agregue un problema nuevo")
     update_ranking.apply_async([200000], countdown=10)
 
 
 @receiver(post_save, sender=Recommended, dispatch_uid="update_solved_new_recommended")
 def update_solved_new_recommended(sender, instance, **kwargs):
-    print("Llamando a update_ranking porque agregue un recomendado nuevo")
+    #print("Llamando a update_ranking porque agregue un recomendado nuevo")
     update_ranking.apply_async([200000], countdown=10)
 
 
